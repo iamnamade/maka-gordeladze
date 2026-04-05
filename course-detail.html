@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ka">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>კურსის დეტალები | მაკა გორდელაძე</title>
+    <meta name="description" content="შეისწავლე კურსი დეტალურად: ვიდეო გაკვეთილები, დავალებები, ფაილების ატვირთვა, პროგრესი და შეძენის ფუნქცია.">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <script src="js/main.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/courses.js" defer></script>
+  </head>
+  <body data-page="courses">
+    <div data-site-header></div>
+
+    <main class="course-detail-page" data-course-detail-page>
+      <section class="page-hero page-hero--course" data-course-hero>
+        <div class="container">
+          <div class="stack content-width animate-on-scroll">
+            <span class="section-label" style="color: rgba(255,255,255,0.82);">კურსი</span>
+            <h1 data-course-hero-title>კურსი</h1>
+            <div class="breadcrumb">
+              <a href="index.html">მთავარი</a>
+              <span class="divider-dot" aria-hidden="true"></span>
+              <a href="courses.html">კურსები</a>
+              <span class="divider-dot" aria-hidden="true"></span>
+              <span data-course-hero-crumb>კურსი</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="course-detail-layout" data-course-detail-layout></div>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal" id="course-purchase-modal" hidden aria-hidden="true">
+      <div class="modal__backdrop" data-modal-close></div>
+      <div class="modal__dialog" tabindex="-1">
+        <div class="modal__header">
+          <div class="stack-sm">
+            <span class="section-label" style="margin-bottom: 0;">კურსის შეძენა</span>
+            <h3 data-course-payment-title>კურსი</h3>
+          </div>
+          <button class="modal__close" type="button" aria-label="დახურვა" data-modal-close>×</button>
+        </div>
+
+        <div class="modal__body">
+          <div data-course-payment-entry>
+            <div class="payment-layout">
+              <form class="payment-form" id="course-payment-form" data-course-payment-form novalidate>
+                <div class="field">
+                  <label class="field-label" for="course-payment-name">სახელი</label>
+                  <input id="course-payment-name" type="text" autocomplete="given-name" placeholder="სახელი">
+                </div>
+                <div class="field">
+                  <label class="field-label" for="course-payment-surname">გვარი</label>
+                  <input id="course-payment-surname" type="text" autocomplete="family-name" placeholder="გვარი">
+                </div>
+                <div class="field">
+                  <label class="field-label" for="course-payment-number">ბარათის ნომერი</label>
+                  <input id="course-payment-number" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="1234 5678 9012 3456">
+                </div>
+                <div class="payment-form__row payment-form__row--compact">
+                  <div class="field">
+                    <label class="field-label" for="course-payment-expiry">ვადა (MM/YY)</label>
+                    <input id="course-payment-expiry" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/YY">
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="course-payment-cvv">CVV</label>
+                    <input id="course-payment-cvv" type="password" inputmode="numeric" autocomplete="cc-csc" placeholder="123">
+                  </div>
+                </div>
+                <div class="payment-helper">გადახდა სიმულირებულია. კურსი დაუყოვნებლივ ჩაირთვება შენს პროფილზე.</div>
+                <div class="payment-status" data-course-payment-status></div>
+              </form>
+
+              <div class="stack">
+                <div class="payment-card-preview">
+                  <span class="badge" style="background: rgba(255,255,255,0.16); color: #fff;">ონლაინ კურსი</span>
+                  <div class="payment-card-preview__number">•••• •••• •••• 2026</div>
+                  <div class="payment-card-preview__footer">
+                    <div>
+                      <div class="help-text" style="color: rgba(255,255,255,0.7);">ინსტრუქტორი</div>
+                      <strong>მაკა გორდელაძე</strong>
+                    </div>
+                    <div>
+                      <div class="help-text" style="color: rgba(255,255,255,0.7);">წვდომა</div>
+                      <strong>უვადო</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="payment-summary-card">
+                  <h3>შეკვეთის შეჯამება</h3>
+                  <div class="booking-summary__item" style="border-bottom-color: rgba(255,255,255,0.14);">
+                    <div>
+                      <strong>კურსი</strong>
+                      <p data-course-payment-title>კურსი</p>
+                    </div>
+                    <div>
+                      <strong>ფასი</strong>
+                      <p class="payment-summary-card__total" data-course-payment-price>₾0</p>
+                    </div>
+                  </div>
+                  <div class="booking-summary__item" style="border-bottom: 0; padding-bottom: 0;">
+                    <div>
+                      <strong>მიღებ</strong>
+                      <p>სრული წვდომა, დავალებები, სერტიფიკატი</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="confirmation-state hide" data-course-payment-confirmation>
+            <div class="confirmation-state__icon">✅</div>
+            <div class="stack-sm">
+              <h3><span data-course-payment-success-title>კურსი</span> გააქტიურდა!</h3>
+              <p>ახლა შეგიძლია გახსნა ყველა გაკვეთილი, მონიშნო დავალებები და ატვირთო ფოტოები უშუალოდ კურსის შიგნით.</p>
+            </div>
+            <button class="btn btn-primary" type="button" data-course-payment-confirm-button>კურსის გახსნა <span class="btn-arrow">↗</span></button>
+          </div>
+        </div>
+
+        <div class="modal__footer">
+          <button class="btn btn-primary" type="submit" form="course-payment-form">შეიძინე <span data-course-payment-price>₾0</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div data-site-footer></div>
+  </body>
+</html>

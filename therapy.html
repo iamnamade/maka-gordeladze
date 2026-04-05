@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ka">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>თერაპია | მაკა გორდელაძე</title>
+    <meta name="description" content="დაჯავშნე ინდივიდუალური ან ჯგუფური თერაპიის სესია მაკა გორდელაძესთან.">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <script src="js/main.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/calendar.js" defer></script>
+    <script src="js/payment.js" defer></script>
+  </head>
+  <body data-page="therapy">
+    <div data-site-header></div>
+
+    <main class="therapy-page" data-therapy-page>
+      <section class="page-hero page-hero--therapy">
+        <div class="container centered">
+          <div class="stack content-width centered animate-on-scroll">
+            <span class="section-label" style="justify-content: center; color: rgba(255,255,255,0.82);">თერაპია</span>
+            <h1>თერაპია</h1>
+            <div class="breadcrumb" style="justify-content: center;">
+              <a href="index.html">მთავარი</a>
+              <span class="divider-dot" aria-hidden="true"></span>
+              <span>თერაპია</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-heading centered animate-on-scroll">
+            <span class="section-label">ფორმატი</span>
+            <h2>აირჩიე <em>თერაპიის ტიპი</em></h2>
+            <p>შეგიძლია აირჩიო ინდივიდუალური შეხვედრა ან ჯგუფური ფორმატი. ფასი და დრო ავტომატურად განახლდება.</p>
+          </div>
+
+          <div class="therapy-type-grid">
+            <button class="therapy-type-card is-selected animate-on-scroll" type="button" data-therapy-type="individual" aria-pressed="true">
+              <div class="therapy-type-card__header">
+                <span class="therapy-type-card__icon">🧍</span>
+                <div class="therapy-type-card__meta">
+                  <h3>ინდივიდუალური თერაპია</h3>
+                  <span class="muted">შენს ტემპზე მორგებული პირადი სივრცე</span>
+                </div>
+                <span class="therapy-type-card__check">✓</span>
+              </div>
+              <ul class="therapy-type-card__bullets">
+                <li>1-on-1 სესია</li>
+                <li>50 წთ</li>
+                <li>₾80/სესია</li>
+              </ul>
+            </button>
+
+            <button class="therapy-type-card animate-on-scroll" type="button" data-therapy-type="group" aria-pressed="false">
+              <div class="therapy-type-card__header">
+                <span class="therapy-type-card__icon">👥</span>
+                <div class="therapy-type-card__meta">
+                  <h3>ჯგუფური თერაპია</h3>
+                  <span class="muted">გაზიარებული გამოცდილება და მხარდაჭერა</span>
+                </div>
+                <span class="therapy-type-card__check">✓</span>
+              </div>
+              <ul class="therapy-type-card__bullets">
+                <li>4-8 ადამიანი</li>
+                <li>90 წთ</li>
+                <li>₾40/ადამიანი</li>
+              </ul>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-alt">
+        <div class="container">
+          <div class="booking-layout">
+            <div class="card calendar-shell animate-on-scroll">
+              <div class="section-heading" style="margin-bottom: 1.5rem;">
+                <span class="section-label">დაჯავშნა</span>
+                <h2>დრო <em>აირჩიე</em></h2>
+              </div>
+
+              <div class="calendar-header">
+                <h3 data-calendar-month>აპრილი 2026</h3>
+                <div class="calendar-nav">
+                  <button type="button" aria-label="წინა თვე" data-calendar-prev>←</button>
+                  <button type="button" aria-label="შემდეგი თვე" data-calendar-next>→</button>
+                </div>
+              </div>
+
+              <div class="calendar-weekdays" aria-hidden="true">
+                <span>ორშ</span>
+                <span>სამ</span>
+                <span>ოთხ</span>
+                <span>ხუთ</span>
+                <span>პარ</span>
+                <span>შაბ</span>
+                <span>კვ</span>
+              </div>
+
+              <div class="calendar-grid" data-calendar-grid></div>
+
+              <div class="slots-panel">
+                <div class="space-between">
+                  <h3 data-slots-title>აირჩიე დღე, რათა დროები გამოჩნდეს</h3>
+                  <span class="badge">ხელმისაწვდომი სლოტები</span>
+                </div>
+                <div class="slot-grid" data-slots-grid>
+                  <div class="calendar-empty">ჯერ თარიღი არ არის არჩეული.</div>
+                </div>
+              </div>
+            </div>
+
+            <aside class="card booking-summary sticky-panel animate-on-scroll">
+              <div class="section-heading" style="margin-bottom: 0;">
+                <span class="section-label">შეჯამება</span>
+                <h3>შენი ჯავშანი</h3>
+              </div>
+
+              <div class="booking-summary__group">
+                <div class="booking-summary__item">
+                  <div>
+                    <strong>არჩეული თარიღი</strong>
+                    <p class="muted" data-summary-date>არ არის არჩეული</p>
+                  </div>
+                  <div>
+                    <strong>დრო</strong>
+                    <p class="muted" data-summary-time>აირჩიე დრო</p>
+                  </div>
+                </div>
+                <div class="booking-summary__item">
+                  <div>
+                    <strong>ტიპი</strong>
+                    <p class="muted" data-summary-type>ინდივიდუალური თერაპია</p>
+                  </div>
+                  <div>
+                    <strong>ფასი</strong>
+                    <p class="booking-summary__price" data-summary-price>₾80</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="booking-summary__note" data-summary-note>
+                დაჯავშნის დასასრულებლად საჭირო იქნება შესვლა.
+              </div>
+
+              <button class="btn btn-primary" type="button" data-open-payment disabled>
+                გადახდაზე გადასვლა <span class="btn-arrow">→</span>
+              </button>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal payment-modal" id="payment-modal" hidden aria-hidden="true">
+      <div class="modal__backdrop" data-modal-close></div>
+      <div class="modal__dialog" tabindex="-1">
+        <div class="modal__header">
+          <div class="stack-sm">
+            <span class="section-label" style="margin-bottom: 0;">გადახდა</span>
+            <h3>გადახდა</h3>
+          </div>
+          <button class="modal__close" type="button" aria-label="დახურვა" data-modal-close>×</button>
+        </div>
+
+        <div class="modal__body">
+          <div id="payment-entry" data-payment-entry>
+            <div class="payment-layout">
+              <form class="payment-form" id="payment-form" data-payment-form novalidate>
+                <div class="field">
+                  <label class="field-label" for="payment-name">სახელი</label>
+                  <input id="payment-name" name="name" type="text" autocomplete="given-name" placeholder="სახელი">
+                </div>
+
+                <div class="field">
+                  <label class="field-label" for="payment-surname">გვარი</label>
+                  <input id="payment-surname" name="surname" type="text" autocomplete="family-name" placeholder="გვარი">
+                </div>
+
+                <div class="field">
+                  <label class="field-label" for="payment-card-number">ბარათის ნომერი</label>
+                  <input id="payment-card-number" name="cardNumber" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="1234 5678 9012 3456">
+                </div>
+
+                <div class="payment-form__row payment-form__row--compact">
+                  <div class="field">
+                    <label class="field-label" for="payment-expiry">ვადა (MM/YY)</label>
+                    <input id="payment-expiry" name="expiry" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/YY">
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="payment-cvv">CVV</label>
+                    <input id="payment-cvv" name="cvv" type="password" inputmode="numeric" autocomplete="cc-csc" placeholder="123">
+                  </div>
+                </div>
+
+                <div class="payment-helper">გადახდა სიმულირებულია Stripe-ready სტილში. მონაცემები რეალურად არ იგზავნება.</div>
+                <div class="payment-status" data-payment-status></div>
+              </form>
+
+              <div class="stack">
+                <div class="payment-card-preview">
+                  <span class="badge" style="background: rgba(255,255,255,0.16); color: #fff;">Secure Card</span>
+                  <div class="payment-card-preview__number" data-card-preview-number>0000 0000 0000 0000</div>
+                  <div class="payment-card-preview__footer">
+                    <div>
+                      <div class="help-text" style="color: rgba(255,255,255,0.7);">სახელი / გვარი</div>
+                      <strong data-card-preview-name>სახელი გვარი</strong>
+                    </div>
+                    <div>
+                      <div class="help-text" style="color: rgba(255,255,255,0.7);">ვადა</div>
+                      <strong data-card-preview-expiry>MM/YY</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="payment-summary-card">
+                  <h3>ჯავშნის შეჯამება</h3>
+                  <div class="booking-summary__item" style="border-bottom-color: rgba(255,255,255,0.14);">
+                    <div>
+                      <strong>ტიპი</strong>
+                      <p data-modal-type>ინდივიდუალური თერაპია</p>
+                    </div>
+                    <div>
+                      <strong>დრო</strong>
+                      <p data-modal-time>აირჩიე დრო</p>
+                    </div>
+                  </div>
+                  <div class="booking-summary__item" style="border-bottom-color: rgba(255,255,255,0.14);">
+                    <div>
+                      <strong>თარიღი</strong>
+                      <p data-modal-date>არ არის არჩეული</p>
+                    </div>
+                    <div>
+                      <strong>სულ</strong>
+                      <p class="payment-summary-card__total" data-modal-total>₾80</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="confirmation-state hide" data-payment-confirmation>
+            <div class="confirmation-state__icon">✅</div>
+            <div class="stack-sm">
+              <h3>დაჯავშნა წარმატებულია!</h3>
+              <p>დადასტურება გაიგზავნება ელ-ფოსტაზე და ჩაიწერება შენს პირად პროფილში.</p>
+            </div>
+            <div class="confirmation-state__meta">
+              <div><strong>ტიპი:</strong> <span data-confirm-type>ინდივიდუალური თერაპია</span></div>
+              <div><strong>თარიღი:</strong> <span data-confirm-date>არ არის არჩეული</span></div>
+              <div><strong>დრო:</strong> <span data-confirm-time>აირჩიე დრო</span></div>
+            </div>
+            <a class="btn btn-primary" href="dashboard.html" data-payment-dashboard>Dashboard-ზე გადასვლა <span class="btn-arrow">↗</span></a>
+          </div>
+        </div>
+
+        <div class="modal__footer">
+          <button class="btn btn-outline" type="button" data-modal-close>გაუქმება</button>
+          <button class="btn btn-primary" type="submit" form="payment-form" data-payment-submit>
+            გადახდა ₾80
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div data-site-footer></div>
+  </body>
+</html>

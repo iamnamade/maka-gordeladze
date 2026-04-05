@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ka">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>პროფილი | მაკა გორდელაძე</title>
+    <meta
+      name="description"
+      content="მომხმარებლის პირადი პროფილი: კურსების პროგრესი, თერაპიის ჯავშნები, დავალებები, კომენტარები და პარამეტრები."
+    >
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <script src="js/main.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/courses.js" defer></script>
+    <script src="js/dashboard.js" defer></script>
+  </head>
+  <body data-page="dashboard">
+    <div data-site-header></div>
+
+    <main class="dashboard-page" data-dashboard-page>
+      <section class="section section--dashboard">
+        <div class="container">
+          <div class="dashboard-layout">
+            <aside class="dashboard-sidebar card" aria-label="პროფილის მენიუ">
+              <div class="dashboard-sidebar__user" data-dashboard-user-card></div>
+
+              <nav class="dashboard-nav" data-dashboard-nav aria-label="პროფილის განყოფილებები">
+                <button class="dashboard-nav__link is-active" type="button" data-dashboard-tab-target="overview">
+                  <span class="dashboard-nav__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M3 13.2 12 4l9 9.2"></path><path d="M6 10.8V20h12v-9.2"></path></svg>
+                  </span>
+                  <span>მთავარი</span>
+                </button>
+                <button class="dashboard-nav__link" type="button" data-dashboard-tab-target="courses">
+                  <span class="dashboard-nav__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M4 5h11a3 3 0 0 1 3 3v11H7a3 3 0 0 0-3 3V5z"></path><path d="M7 5h10v14"></path><path d="M9 9h5"></path><path d="M9 13h5"></path></svg>
+                  </span>
+                  <span>ჩემი კურსები</span>
+                </button>
+                <button class="dashboard-nav__link" type="button" data-dashboard-tab-target="bookings">
+                  <span class="dashboard-nav__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4"></path><path d="M8 3v4"></path><path d="M3 10h18"></path></svg>
+                  </span>
+                  <span>დაჯავშნები</span>
+                </button>
+                <button class="dashboard-nav__link" type="button" data-dashboard-tab-target="tasks">
+                  <span class="dashboard-nav__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M9 11.5 11 14l4-5"></path><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M9 4V2"></path></svg>
+                  </span>
+                  <span>დავალებები</span>
+                </button>
+                <button class="dashboard-nav__link" type="button" data-dashboard-tab-target="comments">
+                  <span class="dashboard-nav__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4 3V8a2 2 0 0 1 2-2z"></path><path d="M8 11h8"></path><path d="M8 14h5"></path></svg>
+                  </span>
+                  <span>კომენტარები</span>
+                </button>
+                <button class="dashboard-nav__link" type="button" data-dashboard-tab-target="settings">
+                  <span class="dashboard-nav__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 0 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 0 1-4 0v-.2a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.5-1H3a2 2 0 0 1 0-4h.2a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h.1a1.7 1.7 0 0 0 1-1.5V3a2 2 0 0 1 4 0v.2a1.7 1.7 0 0 0 1 1.5h.1a1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 0 1 0 4h-.2a1.7 1.7 0 0 0-1.5 1z"></path></svg>
+                  </span>
+                  <span>პარამეტრები</span>
+                </button>
+              </nav>
+
+              <div class="dashboard-sidebar__footer">
+                <button class="btn btn-outline dashboard-logout" type="button" data-dashboard-logout>გასვლა</button>
+              </div>
+            </aside>
+
+            <section class="dashboard-main">
+              <div class="dashboard-main__content" data-dashboard-content></div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <nav class="dashboard-mobile-nav" data-dashboard-mobile-nav aria-label="პროფილის მობილური მენიუ">
+      <button class="dashboard-mobile-nav__item is-active" type="button" data-dashboard-tab-target="overview">
+        <span aria-hidden="true">⌂</span>
+        <span>მთავარი</span>
+      </button>
+      <button class="dashboard-mobile-nav__item" type="button" data-dashboard-tab-target="courses">
+        <span aria-hidden="true">📚</span>
+        <span>კურსები</span>
+      </button>
+      <button class="dashboard-mobile-nav__item" type="button" data-dashboard-tab-target="bookings">
+        <span aria-hidden="true">📅</span>
+        <span>ჯავშნები</span>
+      </button>
+      <button class="dashboard-mobile-nav__item" type="button" data-dashboard-tab-target="tasks">
+        <span aria-hidden="true">📝</span>
+        <span>დავალებები</span>
+      </button>
+      <button class="dashboard-mobile-nav__item" type="button" data-dashboard-tab-target="comments">
+        <span aria-hidden="true">💬</span>
+        <span>კომენტები</span>
+      </button>
+      <button class="dashboard-mobile-nav__item" type="button" data-dashboard-tab-target="settings">
+        <span aria-hidden="true">⚙</span>
+        <span>პარამეტრები</span>
+      </button>
+    </nav>
+
+    <div data-site-footer></div>
+  </body>
+</html>

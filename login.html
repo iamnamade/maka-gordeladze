@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ka">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>შესვლა | მაკა გორდელაძე</title>
+    <meta name="description" content="შედი მაკა გორდელაძის ფსიქოლოგიურ და სასწავლო პლატფორმაზე.">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <script src="js/main.js" defer></script>
+    <script src="js/auth.js" defer></script>
+  </head>
+  <body data-page="login">
+    <div data-site-header></div>
+
+    <main class="auth-page" data-login-page>
+      <section class="container">
+        <div class="auth-shell">
+          <div class="auth-layout">
+            <aside class="auth-side animate-on-scroll">
+              <span class="section-label" style="color: rgba(255,255,255,0.78);">დაბრუნდი</span>
+              <h2>გააგრძელე სწავლა და <em style="color:#ffd2bc;">ზრუნვა საკუთარ თავზე</em></h2>
+              <p>
+                ერთი სივრცე კურსებისთვის, თერაპიის დაჯავშნისთვის, დავალებებისთვის და პირადი პროგრესის სანახავად.
+              </p>
+              <div class="auth-demo">
+                <strong>დემო ანგარიშები</strong>
+                <div><strong>მომხმარებელი:</strong> <code>user@test.ge</code> / <code>test123</code></div>
+                <div><strong>ადმინი:</strong> <code>admin@test.ge</code> / <code>admin123</code></div>
+              </div>
+              <div class="cluster">
+                <button class="btn btn-light" type="button" data-fill-demo="user">მომხმარებლის შევსება</button>
+                <button class="btn btn-light" type="button" data-fill-demo="admin">ადმინის შევსება</button>
+              </div>
+            </aside>
+
+            <div class="auth-card auth-card--narrow animate-on-scroll">
+              <div class="auth-header">
+                <div class="auth-brand">
+                  <span class="auth-brand__mark">
+                    <svg viewBox="0 0 48 48" aria-hidden="true">
+                      <path d="M12 16c0-4.42 3.58-8 8-8 3.67 0 6.77 2.47 7.72 5.84A8 8 0 1 1 34 28h-4.5A7.5 7.5 0 0 0 24 22a7.5 7.5 0 0 0-5.5 6H14a8 8 0 0 1-2-5.33V16z"></path>
+                      <path d="M34 32a8 8 0 0 1-16 0h4.5A7.5 7.5 0 0 0 24 38a7.5 7.5 0 0 0 5.5-6H34z"></path>
+                    </svg>
+                  </span>
+                  <span>მაკა გორდელაძე</span>
+                </div>
+                <div class="stack-sm">
+                  <h2>შესვლა</h2>
+                  <p>შეიყვანე ელ-ფოსტა და პაროლი, ან გამოიყენე სიმულირებული Google ავტორიზაცია.</p>
+                </div>
+              </div>
+
+              <form class="auth-form" data-login-form novalidate>
+                <div class="field">
+                  <label class="field-label" for="login-email">ელ-ფოსტა <span class="required-mark" aria-hidden="true">*</span></label>
+                  <input id="login-email" name="email" type="email" autocomplete="email" placeholder="მაგ: user@test.ge" required>
+                  <span class="error-text" data-error-for="email"></span>
+                </div>
+
+                <div class="field password-field">
+                  <label class="field-label" for="login-password">პაროლი <span class="required-mark" aria-hidden="true">*</span></label>
+                  <input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="შეიყვანე პაროლი" required>
+                  <button class="password-toggle" type="button" aria-label="პაროლის ჩვენება" aria-pressed="false" data-password-toggle="login-password">
+                    <span data-password-toggle-icon>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 12s4-7 10.5-7 10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12z"></path><circle cx="12" cy="12" r="3.5"></circle></svg>
+                    </span>
+                  </button>
+                  <span class="error-text" data-error-for="password"></span>
+                </div>
+
+                <div class="auth-status" data-login-status></div>
+
+                <div class="auth-form__actions">
+                  <button class="btn btn-primary" type="submit">შესვლა</button>
+                </div>
+
+                <div class="divider-text"><span>ან</span></div>
+
+                <button class="google-btn w-full" type="button" data-google-login>
+                  <span class="google-btn__icon">G</span>
+                  <span>Google-ით შესვლა</span>
+                </button>
+              </form>
+
+              <div class="auth-demo" style="margin-top: 1.25rem;">
+                <strong>დემო მონაცემები</strong>
+                <div>მომხმარებელი: <code>user@test.ge</code> / <code>test123</code></div>
+                <div>ადმინი: <code>admin@test.ge</code> / <code>admin123</code></div>
+                <div class="help-text">ადმინის ანგარიშით შესვლისას გადამისამართდები `/admin/` პანელზე.</div>
+              </div>
+
+              <div class="auth-inline-links" style="margin-top: 1.2rem;">
+                <span>ანგარიში არ გაქვს?</span>
+                <a href="register.html"><strong>დარეგისტრირდი</strong></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div data-site-footer></div>
+  </body>
+</html>

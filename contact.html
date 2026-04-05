@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ka">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>კონტაქტი | მაკა გორდელაძე</title>
+    <meta name="description" content="დაგვიკავშირდით და მიიღეთ მხარდაჭერა მაკა გორდელაძის ფსიქოლოგიურ და საგანმანათლებლო სერვისებზე.">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <script src="js/main.js" defer></script>
+    <script src="js/auth.js" defer></script>
+  </head>
+  <body data-page="contact">
+    <div data-site-header></div>
+
+    <main class="contact-page">
+      <section class="page-hero page-hero--contact">
+        <div class="container centered">
+          <div class="stack content-width centered animate-on-scroll">
+            <span class="section-label" style="justify-content: center; color: rgba(255,255,255,0.82);">კონტაქტი</span>
+            <h1>კონტაქტი</h1>
+            <div class="breadcrumb" style="justify-content: center;">
+              <a href="index.html">მთავარი</a>
+              <span class="divider-dot" aria-hidden="true"></span>
+              <span>კონტაქტი</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="contact-grid">
+            <div class="contact-info stack animate-on-scroll">
+              <span class="section-label">დაგვიკავშირდით</span>
+              <h2>ჩვენ შენთან ვართ, <em>ყოველთვის</em></h2>
+              <p>თბილი მხარდაჭერა და უსაფრთხო სივრცე შენთვის. მოგვწერე ნებისმიერი კითხვით — პასუხს სწრაფად და ყურადღებით მოგცემთ.</p>
+
+              <div class="contact-info__items">
+                <div class="contact-info__card">
+                  <div class="icon-box">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.77 19.77 0 0 1-8.63-3.07A19.52 19.52 0 0 1 5.15 12.8 19.77 19.77 0 0 1 2.08 4.11 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.89.33 1.76.62 2.59a2 2 0 0 1-.45 2.11L8 9.94a16 16 0 0 0 6.06 6.06l1.52-1.23a2 2 0 0 1 2.11-.45c.83.29 1.7.5 2.59.62A2 2 0 0 1 22 16.92z"></path></svg>
+                  </div>
+                  <div>
+                    <strong>+995 555 12 34 56</strong>
+                    <p class="muted">ტელეფონი</p>
+                  </div>
+                </div>
+                <div class="contact-info__card">
+                  <div class="icon-box">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"></path></svg>
+                  </div>
+                  <div>
+                    <strong>თბილისი, საქართველო</strong>
+                    <p class="muted">მისამართი</p>
+                  </div>
+                </div>
+                <div class="contact-info__card">
+                  <div class="icon-box">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v.4L12 13 2 6.4V6a2 2 0 0 1 2-2z"></path><path d="M22 8.3V18a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.3l9.4 6.27a1 1 0 0 0 1.2 0L22 8.3z"></path></svg>
+                  </div>
+                  <div>
+                    <strong>info@example.ge</strong>
+                    <p class="muted">ელ-ფოსტა</p>
+                  </div>
+                </div>
+                <div class="contact-info__card">
+                  <div class="icon-box">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v5l3 3"></path><circle cx="12" cy="12" r="9"></circle></svg>
+                  </div>
+                  <div>
+                    <strong>ორშ-პარ: 10:00-20:00</strong>
+                    <p class="muted">სამუშაო საათები</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-form card animate-on-scroll">
+              <span class="section-label">დაგვიწერე</span>
+              <h2>შეტყობინება <em>სწრაფად</em></h2>
+              <form class="contact-form__body" data-contact-form novalidate>
+                <div class="form-grid">
+                  <label class="form-field">
+                    <span>სახელი</span>
+                    <input class="input" type="text" name="name" placeholder="სახელი" required>
+                  </label>
+                  <label class="form-field">
+                    <span>ელ-ფოსტა</span>
+                    <input class="input" type="email" name="email" placeholder="example@mail.com" required>
+                  </label>
+                </div>
+                <div class="form-grid form-grid--two">
+                  <label class="form-field">
+                    <span>ტელეფონი</span>
+                    <input class="input" type="tel" name="phone" placeholder="+995 555 12 34 56">
+                  </label>
+                  <label class="form-field">
+                    <span>სერვისის არჩევა</span>
+                    <select class="input" name="service">
+                      <option>ინდივიდუალური თერაპია</option>
+                      <option>ჯგუფური თერაპია</option>
+                      <option>კურსები</option>
+                      <option>კონსულტაცია</option>
+                    </select>
+                  </label>
+                </div>
+                <label class="form-field">
+                  <span>როგორ დაგვეხმარება?</span>
+                  <select class="input" name="topic">
+                    <option>სტრესის მართვა</option>
+                    <option>პიროვნული განვითარება</option>
+                    <option>ურთიერთობები</option>
+                    <option>სხვა</option>
+                  </select>
+                </label>
+                <label class="form-field">
+                  <span>შეტყობინება</span>
+                  <textarea class="input" name="message" rows="4" placeholder="მოკლედ მოგვწერე შენი სათხოვარი" required></textarea>
+                </label>
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="consent" name="agreement" required>
+                  <span class="checkmark"></span>
+                  <span class="label-text">ვეთანხმები მონაცემთა დამუშავებას</span>
+                </label>
+                <button class="btn btn-primary" type="submit">გაგზავნა <span class="btn-arrow">↗</span></button>
+                <div class="form-success" data-contact-success hidden>
+                  შეტყობინება მიღებულია. პასუხს მალე მიიღებ.
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-sm">
+        <div class="container">
+          <div class="map-card">
+            <iframe
+              title="Tbilisi Map"
+              src="https://maps.google.com/maps?q=Tbilisi,Georgia&output=embed"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div data-site-footer></div>
+  </body>
+</html>
