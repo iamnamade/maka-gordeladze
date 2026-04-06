@@ -5,13 +5,12 @@
     activeModal: null,
     lastFocusedElement: null,
   };
+  const REMOVED_COURSE_TITLES = new Set(["ემოციური წიგნიერება", "ოჯახური კომუნიკაცია"]);
   const FALLBACK_SEARCH_COURSES = [
     { id: 1, title: "არტთერაპია", cat: "არტთერაპია" },
     { id: 2, title: "მშობლების კურსი", cat: "მშობლებისთვის" },
     { id: 3, title: "ინტერპერსონალური კომუნიკაცია", cat: "კომუნიკაცია" },
     { id: 4, title: "ფსიქოლოგიის საფუძვლები", cat: "ფსიქოლოგია" },
-    { id: 5, title: "ემოციური წიგნიერება", cat: "ფსიქოლოგია" },
-    { id: 6, title: "ოჯახური კომუნიკაცია", cat: "მშობლებისთვის" },
     { id: 7, title: "შემოქმედებითი თვითგამოხატვა", cat: "არტთერაპია" },
     { id: 8, title: "სტრესთან გამკლავება", cat: "ფსიქოლოგია" },
   ];
@@ -758,11 +757,13 @@
     const source =
       window.MakaCourses?.getCourses?.() || (Array.isArray(storedCourses) && storedCourses.length ? storedCourses : FALLBACK_SEARCH_COURSES);
 
-    return source.map((course) => ({
+    return source
+      .filter((course) => !REMOVED_COURSE_TITLES.has(String(course?.title || "")))
+      .map((course) => ({
       title: course.title,
       tag: course.cat || "კურსი",
       href: `${getBasePath()}course-detail.html?id=${course.id}`,
-    }));
+      }));
   }
 
   function findSearchMatches(query) {

@@ -1,6 +1,8 @@
 (() => {
   const COURSE_STORAGE_KEY = window.Auth?.STORAGE_KEYS?.courses || "courses";
   const DEFAULT_VIDEO_URL = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
+  const IMAGE_FALLBACK_URL = "https://picsum.photos/seed/fallback/800/500";
+  const REMOVED_COURSE_TITLES = new Set(["ემოციური წიგნიერება", "ოჯახური კომუნიკაცია"]);
   const FILTERABLE_CATEGORIES = ["არტთერაპია", "მშობლებისთვის", "კომუნიკაცია", "ფსიქოლოგია"];
   const BASE_COURSES = [
     {
@@ -16,7 +18,7 @@
       freeLessons: 12,
       price: 0,
       originalPrice: 0,
-      image: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&q=80&fit=crop",
+      image: "https://images.pexels.com/photos/6288110/pexels-photo-6288110.jpeg?auto=compress&cs=tinysrgb&w=800",
       imageFallback: "https://picsum.photos/seed/arttherapy/400/225",
       imageAlt: "არტთერაპიისთვის განკუთვნილი ფერადი შემოქმედებითი მასალები",
       heroImage: "https://picsum.photos/seed/art-hero/1600/720",
@@ -38,7 +40,7 @@
       freeLessons: 2,
       price: 120,
       originalPrice: 180,
-      image: "https://images.unsplash.com/photo-1536640712-4d4c36ff0e4e?w=800&q=80&fit=crop",
+      image: "https://images.pexels.com/photos/7447261/pexels-photo-7447261.jpeg?auto=compress&cs=tinysrgb&w=800",
       imageFallback: "https://picsum.photos/seed/parentscourse/400/225",
       imageAlt: "მშობელი და ბავშვი ყურადღებიანი კომუნიკაციის პროცესში",
       heroImage: "https://picsum.photos/seed/parent-hero/1600/720",
@@ -60,7 +62,7 @@
       freeLessons: 2,
       price: 90,
       originalPrice: 0,
-      image: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=800&q=80&fit=crop",
+      image: "https://images.pexels.com/photos/7055274/pexels-photo-7055274.jpeg?auto=compress&cs=tinysrgb&w=800",
       imageFallback: "https://picsum.photos/seed/interpersonal/400/225",
       imageAlt: "ორი ადამიანი დიალოგისა და ურთიერთკავშირის პროცესში",
       heroImage: "https://picsum.photos/seed/comm-hero/1600/720",
@@ -82,7 +84,7 @@
       freeLessons: 8,
       price: 0,
       originalPrice: 0,
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80&fit=crop",
+      image: "https://images.pexels.com/photos/7176132/pexels-photo-7176132.jpeg?auto=compress&cs=tinysrgb&w=800",
       imageFallback: "https://picsum.photos/seed/psychbasics/400/225",
       imageAlt: "ფსიქოლოგიის საფუძვლების სასწავლო და დაკვირვების კონტექსტი",
       heroImage: "https://picsum.photos/seed/psych-hero/1600/720",
@@ -90,50 +92,6 @@
       reviewCount: 42,
       students: 244,
       sales: 244,
-    },
-    {
-      id: 5,
-      title: "ემოციური წიგნიერება",
-      cat: "ფსიქოლოგია",
-      free: false,
-      lessons: 14,
-      hours: 11,
-      desc: "ემოციების ამოცნობა, დასახელება და რეგულაცია",
-      fullDescription:
-        "ეს კურსი აგეხმარება უკეთ დაინახო საკუთარი ემოციური პატერნები, გაარჩიო ტრიგერები და შექმნა უფრო მდგრადი თვითრეგულაციის ყოველდღიური ჩარჩო.",
-      freeLessons: 3,
-      price: 110,
-      originalPrice: 150,
-      image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=800&q=80&fit=crop",
-      imageFallback: "https://picsum.photos/seed/emotionalhygiene/400/225",
-      imageAlt: "ემოციური თვითრეფლექსიის მშვიდი და გააზრებული მომენტი",
-      heroImage: "https://picsum.photos/seed/emotion-hero/1600/720",
-      rating: 4.8,
-      reviewCount: 27,
-      students: 139,
-      sales: 88,
-    },
-    {
-      id: 6,
-      title: "ოჯახური კომუნიკაცია",
-      cat: "მშობლებისთვის",
-      free: false,
-      lessons: 11,
-      hours: 8,
-      desc: "ოჯახში კონფლიქტის შემცირება და თანამშრომლობის გაძლიერება",
-      fullDescription:
-        "ოჯახური დიალოგის, შეთანხმებებისა და ემპათიური კონტაქტის პრაქტიკული მოდელი, რომელიც გაჩვენებს როგორ იქმნება უსაფრთხო და სანდო გარემო სახლში.",
-      freeLessons: 2,
-      price: 95,
-      originalPrice: 0,
-      image: "https://images.unsplash.com/photo-1511895426328-dc8714191011?w=800&q=80&fit=crop",
-      imageFallback: "https://picsum.photos/seed/familycommunication/400/225",
-      imageAlt: "ოჯახის წევრებს შორის თბილი საუბარი და ურთიერთგაგება",
-      heroImage: "https://picsum.photos/seed/family-hero/1600/720",
-      rating: 4.7,
-      reviewCount: 14,
-      students: 96,
-      sales: 61,
     },
     {
       id: 7,
@@ -370,7 +328,7 @@
     };
   }
 
-  const DEFAULT_COURSES = BASE_COURSES.map(buildCourse);
+  const DEFAULT_COURSES = BASE_COURSES.filter((course) => !REMOVED_COURSE_TITLES.has(course.title)).map(buildCourse);
   const DEFAULT_COURSE_MEDIA = new Map(
     DEFAULT_COURSES.map((course) => [
       String(course.id),
@@ -421,7 +379,9 @@
       return clone(DEFAULT_COURSES);
     }
 
-    const normalized = existing.map((course) => syncCourseMedia(course?.sections ? course : buildCourse(course)));
+    const normalized = existing
+      .filter((course) => !REMOVED_COURSE_TITLES.has(String(course?.title || "")))
+      .map((course) => syncCourseMedia(course?.sections ? course : buildCourse(course)));
     writeStorageValue(COURSE_STORAGE_KEY, normalized);
     return normalized;
   }
@@ -720,9 +680,7 @@
     return `
       <article class="card course-catalog-card animate-on-scroll">
         <div class="course-catalog-card__media">
-          <img src="${escapeHtml(course.image)}" alt="${escapeHtml(course.title)}" ${
-            course.imageFallback ? `onerror="this.onerror=null;this.src='${escapeHtml(course.imageFallback)}';"` : ""
-          }>
+          <img class="optimized-media" src="${escapeHtml(course.image)}" alt="${escapeHtml(course.title)}" onerror="this.onerror=null;this.src='${IMAGE_FALLBACK_URL}';">
           <div class="course-catalog-card__badges">
             <span class="badge">${escapeHtml(course.cat)}</span>
             <span class="badge ${course.free ? "badge-free" : "badge-paid"}">${course.free ? "უფასო" : "ფასიანი"}</span>
@@ -962,7 +920,7 @@
     if (!course.free && !enrollment) {
       return `
         <section class="card purchase-card">
-          <img src="${escapeHtml(course.image)}" alt="${escapeHtml(course.title)}">
+          <img class="optimized-media" src="${escapeHtml(course.image)}" alt="${escapeHtml(course.title)}" onerror="this.onerror=null;this.src='${IMAGE_FALLBACK_URL}';">
           <div class="stack-sm">
             <div class="cluster">
               <span class="badge badge-paid">30% ფასდაკლება</span>
