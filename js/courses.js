@@ -2,7 +2,12 @@
   const COURSE_STORAGE_KEY = window.Auth?.STORAGE_KEYS?.courses || "courses";
   const DEFAULT_VIDEO_URL = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
   const IMAGE_FALLBACK_URL = "https://picsum.photos/seed/fallback/800/500";
-  const REMOVED_COURSE_TITLES = new Set(["ემოციური წიგნიერება", "ოჯახური კომუნიკაცია"]);
+  const REMOVED_COURSE_TITLES = new Set([
+    "ემოციური წიგნიერება",
+    "ოჯახური კომუნიკაცია",
+    "შემოქმედებითი თვითგამოხატვა",
+    "სტრესთან გამკლავება",
+  ]);
   const FILTERABLE_CATEGORIES = ["არტთერაპია", "მშობლებისთვის", "კომუნიკაცია", "ფსიქოლოგია"];
   const BASE_COURSES = [
     {
@@ -18,10 +23,10 @@
       freeLessons: 12,
       price: 0,
       originalPrice: 0,
-      image: "https://images.pexels.com/photos/6288110/pexels-photo-6288110.jpeg?auto=compress&cs=tinysrgb&w=800",
+      image: "https://images.pexels.com/photos/29247752/pexels-photo-29247752/free-photo-of-young-girl-engaged-in-creative-drawing-indoors.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       imageFallback: "https://picsum.photos/seed/arttherapy/400/225",
       imageAlt: "არტთერაპიისთვის განკუთვნილი ფერადი შემოქმედებითი მასალები",
-      heroImage: "https://picsum.photos/seed/art-hero/1600/720",
+      heroImage: "https://mentalist.wpengine.com/wp-content/uploads/2025/08/Mentalist-Slider-img-02.jpg",
       rating: 4.9,
       reviewCount: 24,
       students: 182,
@@ -29,7 +34,7 @@
     },
     {
       id: 2,
-      title: "მშობლების კურსი",
+      title: "კურსი მშობლებისთვის",
       cat: "მშობლებისთვის",
       free: false,
       lessons: 18,
@@ -40,10 +45,10 @@
       freeLessons: 2,
       price: 120,
       originalPrice: 180,
-      image: "https://images.pexels.com/photos/7447261/pexels-photo-7447261.jpeg?auto=compress&cs=tinysrgb&w=800",
+      image: "https://images.pexels.com/photos/7447257/pexels-photo-7447257.jpeg",
       imageFallback: "https://picsum.photos/seed/parentscourse/400/225",
       imageAlt: "მშობელი და ბავშვი ყურადღებიანი კომუნიკაციის პროცესში",
-      heroImage: "https://picsum.photos/seed/parent-hero/1600/720",
+      heroImage: "https://mentalist.wpengine.com/wp-content/uploads/2025/08/Mentalist-Service-img-01.jpg",
       rating: 4.8,
       reviewCount: 31,
       students: 146,
@@ -62,10 +67,10 @@
       freeLessons: 2,
       price: 90,
       originalPrice: 0,
-      image: "https://images.pexels.com/photos/7055274/pexels-photo-7055274.jpeg?auto=compress&cs=tinysrgb&w=800",
+      image: "https://images.pexels.com/photos/9870769/pexels-photo-9870769.jpeg",
       imageFallback: "https://picsum.photos/seed/interpersonal/400/225",
       imageAlt: "ორი ადამიანი დიალოგისა და ურთიერთკავშირის პროცესში",
-      heroImage: "https://picsum.photos/seed/comm-hero/1600/720",
+      heroImage: "https://mentalist.wpengine.com/wp-content/uploads/2025/08/Mentalist-Service-img-02.jpg",
       rating: 4.8,
       reviewCount: 18,
       students: 128,
@@ -84,10 +89,10 @@
       freeLessons: 8,
       price: 0,
       originalPrice: 0,
-      image: "https://images.pexels.com/photos/7176132/pexels-photo-7176132.jpeg?auto=compress&cs=tinysrgb&w=800",
+      image: "https://images.pexels.com/photos/36460459/pexels-photo-36460459.jpeg",
       imageFallback: "https://picsum.photos/seed/psychbasics/400/225",
       imageAlt: "ფსიქოლოგიის საფუძვლების სასწავლო და დაკვირვების კონტექსტი",
-      heroImage: "https://picsum.photos/seed/psych-hero/1600/720",
+      heroImage: "https://mentalist.wpengine.com/wp-content/uploads/2025/12/Mentalist-Breadcrumb.jpg",
       rating: 4.9,
       reviewCount: 42,
       students: 244,
@@ -106,10 +111,10 @@
       freeLessons: 9,
       price: 0,
       originalPrice: 0,
-      image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80&fit=crop",
+      image: "https://mentalist.wpengine.com/wp-content/uploads/2025/08/Home-slider-01.jpg",
       imageFallback: "https://picsum.photos/seed/creativeexpression/400/225",
       imageAlt: "შემოქმედებითი თვითგამოხატვისთვის განკუთვნილი ფერადი სამუშაო სივრცე",
-      heroImage: "https://picsum.photos/seed/creative-hero/1600/720",
+      heroImage: "https://mentalist.wpengine.com/wp-content/uploads/2025/08/Home-slider-01.jpg",
       rating: 4.9,
       reviewCount: 19,
       students: 164,
@@ -128,10 +133,10 @@
       freeLessons: 2,
       price: 130,
       originalPrice: 170,
-      image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80&fit=crop",
+      image: "https://mentalist.wpengine.com/wp-content/uploads/2025/08/Mentalist-Slider-img-02.jpg",
       imageFallback: "https://picsum.photos/seed/stresscourse/400/225",
       imageAlt: "სიმშვიდისა და სტრესთან გამკლავების პრაქტიკის ამსახველი გარემო",
-      heroImage: "https://picsum.photos/seed/stress-hero/1600/720",
+      heroImage: "https://mentalist.wpengine.com/wp-content/uploads/2025/08/Mentalist-Slider-img-02.jpg",
       rating: 4.8,
       reviewCount: 22,
       students: 121,
@@ -329,6 +334,7 @@
   }
 
   const DEFAULT_COURSES = BASE_COURSES.filter((course) => !REMOVED_COURSE_TITLES.has(course.title)).map(buildCourse);
+  const DEFAULT_COURSE_MAP = new Map(DEFAULT_COURSES.map((course) => [String(course.id), course]));
   const DEFAULT_COURSE_MEDIA = new Map(
     DEFAULT_COURSES.map((course) => [
       String(course.id),
@@ -371,6 +377,47 @@
     return nextCourse;
   }
 
+  function syncCourseWithDefaults(course) {
+    if (!course || typeof course !== "object") {
+      return course;
+    }
+
+    const defaultCourse = DEFAULT_COURSE_MAP.get(String(course.id));
+
+    if (!defaultCourse) {
+      return course;
+    }
+
+    return {
+      ...defaultCourse,
+      ...course,
+      title: defaultCourse.title,
+      cat: defaultCourse.cat,
+      desc: defaultCourse.desc,
+      fullDescription: defaultCourse.fullDescription,
+      image: defaultCourse.image,
+      imageFallback: defaultCourse.imageFallback,
+      imageAlt: defaultCourse.imageAlt,
+      heroImage: defaultCourse.heroImage,
+      lessons: defaultCourse.lessons,
+      hours: defaultCourse.hours,
+      freeLessons: defaultCourse.freeLessons,
+      free: defaultCourse.free,
+      sections: defaultCourse.sections,
+      reviews: defaultCourse.reviews,
+      instructor: defaultCourse.instructor,
+      instructorRole: defaultCourse.instructorRole,
+      rating: defaultCourse.rating,
+      reviewCount: defaultCourse.reviewCount,
+      students: defaultCourse.students,
+      sales: Number.isFinite(Number(course.sales)) ? Number(course.sales) : Number(defaultCourse.sales || 0),
+      price: Number.isFinite(Number(course.price)) ? Number(course.price) : Number(defaultCourse.price || 0),
+      originalPrice: Number.isFinite(Number(course.originalPrice))
+        ? Number(course.originalPrice)
+        : Number(defaultCourse.originalPrice || 0),
+    };
+  }
+
   function seedCourses() {
     const existing = readStorageValue(COURSE_STORAGE_KEY, []);
 
@@ -381,7 +428,14 @@
 
     const normalized = existing
       .filter((course) => !REMOVED_COURSE_TITLES.has(String(course?.title || "")))
-      .map((course) => syncCourseMedia(course?.sections ? course : buildCourse(course)));
+      .map((course) => syncCourseMedia(syncCourseWithDefaults(course?.sections ? course : buildCourse(course))));
+
+    DEFAULT_COURSES.forEach((course) => {
+      if (!normalized.some((item) => String(item.id) === String(course.id))) {
+        normalized.push(clone(course));
+      }
+    });
+
     writeStorageValue(COURSE_STORAGE_KEY, normalized);
     return normalized;
   }
@@ -611,6 +665,273 @@
     return imageBase64;
   }
 
+  function escapeRegExp(value) {
+    return String(value ?? "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  function formatFileSize(bytes) {
+    const size = Number(bytes || 0);
+
+    if (!Number.isFinite(size) || size <= 0) {
+      return "";
+    }
+
+    if (size >= 1024 * 1024) {
+      const megabytes = size / (1024 * 1024);
+      return `${megabytes >= 10 ? megabytes.toFixed(0) : megabytes.toFixed(1)} MB`;
+    }
+
+    if (size >= 1024) {
+      return `${Math.round(size / 1024)} KB`;
+    }
+
+    return `${size} B`;
+  }
+
+  function formatDateTime(value) {
+    if (!value) {
+      return "";
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return "";
+    }
+
+    return new Intl.DateTimeFormat("ka-GE", {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    }).format(date);
+  }
+
+  function getLessonShortTitle(course, lesson) {
+    const fallback = String(lesson?.title || "").trim();
+
+    if (!fallback) {
+      return "";
+    }
+
+    const pattern = new RegExp(`^გაკვეთილი\\s+\\d+:\\s*${escapeRegExp(course?.title || "")}\\s*[—-]\\s*`, "u");
+    const compactTitle = fallback.replace(pattern, "").replace(/^გაკვეთილი\s+\d+:\s*/u, "").trim();
+
+    return compactTitle || fallback;
+  }
+
+  function getPreferredOpenTaskIndex(course, lessonId, user = getCurrentUser()) {
+    const lesson = findLesson(course, lessonId);
+    const tasks = normalizeArray(lesson?.tasks);
+
+    if (!tasks.length) {
+      return -1;
+    }
+
+    const firstIncomplete = tasks.findIndex((task, index) => !getTaskChecked(user, course.id, lessonId, index));
+    return firstIncomplete >= 0 ? firstIncomplete : 0;
+  }
+
+  function getCompletedTaskCount(course, lessonId, user = getCurrentUser()) {
+    const lesson = findLesson(course, lessonId);
+    return normalizeArray(lesson?.tasks).filter((task, index) => getTaskChecked(user, course.id, lessonId, index)).length;
+  }
+
+  function getTaskStatusLabel(checked, isOpen) {
+    if (checked) {
+      return "შესრულებულია";
+    }
+
+    if (isOpen) {
+      return "მიმდინარეობს";
+    }
+
+    return "დასაწყები";
+  }
+
+  function getTaskHelperText(index) {
+    const helperTexts = [
+      "დაწერე მოკლე დაკვირვება ან გამოცდილება.",
+      "სცადე პრაქტიკაში და დააფიქსირე შედეგი.",
+      "ატვირთე ფოტო, ჩანაწერი ან მოკლე შეჯამება.",
+    ];
+
+    return helperTexts[index % helperTexts.length];
+  }
+
+  function normalizeSubmissionAttachment(rawAttachment = {}) {
+    const type = String(rawAttachment.type || "application/octet-stream");
+
+    return {
+      id: rawAttachment.id || uid("attachment"),
+      name: String(rawAttachment.name || "ფაილი").trim(),
+      type,
+      size: Number(rawAttachment.size || 0),
+      dataUrl: String(rawAttachment.dataUrl || rawAttachment.imageBase64 || ""),
+      isImage: Boolean(rawAttachment.isImage || type.startsWith("image/")),
+    };
+  }
+
+  function normalizeLessonSubmission(rawSubmission = {}) {
+    return {
+      id: rawSubmission.id || uid("submission"),
+      courseId: Number(rawSubmission.courseId || 0),
+      lessonId: String(rawSubmission.lessonId || ""),
+      text: String(rawSubmission.text || "").trim(),
+      attachments: normalizeArray(rawSubmission.attachments).map(normalizeSubmissionAttachment),
+      submittedAt: String(rawSubmission.submittedAt || ""),
+      updatedAt: String(rawSubmission.updatedAt || rawSubmission.submittedAt || ""),
+    };
+  }
+
+  function createSubmissionAttachment(file, dataUrl) {
+    const type = String(file?.type || "application/octet-stream");
+
+    return normalizeSubmissionAttachment({
+      id: uid("attachment"),
+      name: String(file?.name || "ფაილი"),
+      type,
+      size: Number(file?.size || 0),
+      dataUrl,
+      isImage: type.startsWith("image/"),
+    });
+  }
+
+  function getLessonSubmission(user, courseId, lessonId) {
+    return (
+      normalizeArray(user?.lessonSubmissions)
+        .map(normalizeLessonSubmission)
+        .find((entry) => Number(entry.courseId) === Number(courseId) && entry.lessonId === lessonId) || null
+    );
+  }
+
+  function saveLessonSubmission(courseId, lessonId, payload = {}) {
+    const currentUser = getCurrentUser();
+
+    if (!currentUser) {
+      return null;
+    }
+
+    const timestamp = new Date().toISOString();
+    const existing = getLessonSubmission(currentUser, courseId, lessonId);
+    const nextSubmissions = normalizeArray(currentUser.lessonSubmissions)
+      .map(normalizeLessonSubmission)
+      .filter((entry) => !(Number(entry.courseId) === Number(courseId) && entry.lessonId === lessonId));
+
+    const submission = normalizeLessonSubmission({
+      id: existing?.id || payload.id || uid("submission"),
+      courseId,
+      lessonId,
+      text: payload.text,
+      attachments: payload.attachments,
+      submittedAt: existing?.submittedAt || payload.submittedAt || timestamp,
+      updatedAt: timestamp,
+    });
+
+    nextSubmissions.push(submission);
+    window.Auth?.updateCurrentUser?.({ lessonSubmissions: nextSubmissions });
+
+    return submission;
+  }
+
+  function buildMentorComment(course, lesson) {
+    const lessonTitle = getLessonShortTitle(course, lesson);
+
+    return {
+      id: `mentor-${lesson.id}`,
+      authorType: "mentor",
+      authorName: course.instructor || "მაკა გორდელაძე",
+      authorRole: "მენტორის რჩევა",
+      createdAt: "",
+      message: `ვიდეოს შემდეგ მოკლედ დაწერე, შენთვის რას ნიშნავდა "${lessonTitle}" და რომელი სავარჯიშო სცადე პრაქტიკაში. თუ გაქვს ნამუშევარი, ერთი-ორი ფოტო სრულიად საკმარისია.`,
+    };
+  }
+
+  function getStoredLessonComments(user, courseId, lessonId) {
+    return normalizeArray(user?.lessonComments)
+      .filter((entry) => Number(entry.courseId) === Number(courseId) && String(entry.lessonId || "") === String(lessonId || ""))
+      .map((entry) => ({
+        id: entry.id || uid("comment"),
+        authorType: entry.authorType === "mentor" ? "mentor" : "student",
+        authorName: String(entry.authorName || "").trim() || "თქვენ",
+        authorRole: String(entry.authorRole || "").trim() || "მსმენელი",
+        createdAt: String(entry.createdAt || ""),
+        message: String(entry.message || "").trim(),
+      }))
+      .filter((entry) => entry.message)
+      .sort((a, b) => new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime());
+  }
+
+  function addLessonComment(courseId, lessonId, message) {
+    const currentUser = getCurrentUser();
+
+    if (!currentUser) {
+      return null;
+    }
+
+    const trimmedMessage = String(message || "").trim();
+
+    if (!trimmedMessage) {
+      return null;
+    }
+
+    const comment = {
+      id: uid("comment"),
+      courseId: Number(courseId),
+      lessonId,
+      authorType: "student",
+      authorName: `${currentUser.name || ""} ${currentUser.surname || ""}`.trim() || "თქვენ",
+      authorRole: "მსმენელი",
+      createdAt: new Date().toISOString(),
+      message: trimmedMessage,
+    };
+
+    window.Auth?.updateCurrentUser?.({
+      lessonComments: [...normalizeArray(currentUser.lessonComments), comment],
+    });
+
+    return comment;
+  }
+
+  function getLessonThread(course, lesson, user) {
+    return [buildMentorComment(course, lesson), ...getStoredLessonComments(user, course.id, lesson.id)];
+  }
+
+  function getSubmissionDraft(state, courseId, lessonId, user) {
+    const key = `${courseId}:${lessonId}`;
+
+    if (!state.submissionDrafts[key]) {
+      const savedSubmission = getLessonSubmission(user, courseId, lessonId);
+      state.submissionDrafts[key] = savedSubmission
+        ? {
+            id: savedSubmission.id,
+            text: savedSubmission.text,
+            attachments: savedSubmission.attachments.map((attachment) => clone(attachment)),
+            submittedAt: savedSubmission.submittedAt,
+            updatedAt: savedSubmission.updatedAt,
+          }
+        : {
+            id: "",
+            text: "",
+            attachments: [],
+            submittedAt: "",
+            updatedAt: "",
+          };
+    }
+
+    return state.submissionDrafts[key];
+  }
+
+  function getCommentDraft(state, courseId, lessonId) {
+    const key = `${courseId}:${lessonId}`;
+
+    if (typeof state.commentDrafts[key] !== "string") {
+      state.commentDrafts[key] = "";
+    }
+
+    return state.commentDrafts[key];
+  }
+
   function purchaseCourse(course) {
     const currentUser = getCurrentUser();
 
@@ -648,62 +969,78 @@
     };
   }
 
+  function getCourseCardIcon(course) {
+    const category = String(course?.cat || "");
+    const icons = {
+      "არტთერაპია": `
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 3c5 0 9 3.8 9 8.2 0 3.7-3 6.4-6.2 6.4h-1.3c-.6 0-.9.7-.5 1.1.5.5.7 1.2.7 1.8 0 1.2-.9 2.1-2.2 2.1C7 22.6 3 18.4 3 12.9 3 7.4 7.1 3 12 3Z"></path>
+          <circle cx="8" cy="11" r="1"></circle>
+          <circle cx="11" cy="8" r="1"></circle>
+          <circle cx="15" cy="9" r="1"></circle>
+          <path d="M17.8 14.1c-.7 1.2-2 2-3.6 2h-1.4"></path>
+        </svg>
+      `,
+      "მშობლებისთვის": `
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="8" cy="8" r="2.6"></circle>
+          <circle cx="16" cy="7.4" r="2.2"></circle>
+          <circle cx="12.4" cy="14.3" r="2.4"></circle>
+          <path d="M4.5 18.5a3.8 3.8 0 0 1 7.1-1.8"></path>
+          <path d="M13.7 17a3.4 3.4 0 0 1 5.8 1.5"></path>
+          <path d="M8.4 20.2a4.4 4.4 0 0 1 8 0"></path>
+        </svg>
+      `,
+      "კომუნიკაცია": `
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 6.5c0-1.9 1.5-3.5 3.4-3.5h7.2c1.9 0 3.4 1.6 3.4 3.5v4.7c0 1.9-1.5 3.5-3.4 3.5H11l-3.7 3v-3H8.4C6.5 14.7 5 13.1 5 11.2Z"></path>
+          <path d="M8.8 8.6h6.4"></path>
+          <path d="M8.8 11.2h4.6"></path>
+        </svg>
+      `,
+      "ფსიქოლოგია": `
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9.2 4.5c-2.7.2-4.7 2.4-4.7 5 0 1.8.9 3.4 2.3 4.3.8.5 1.2 1.4 1.2 2.3v1.1"></path>
+          <path d="M14.8 4.5c2.7.2 4.7 2.4 4.7 5 0 1.8-.9 3.4-2.3 4.3-.8.5-1.2 1.4-1.2 2.3v1.1"></path>
+          <path d="M8 19h8"></path>
+          <path d="M9.5 22h5"></path>
+          <path d="M9 10.2c.9-.6 1.8-.9 3-.9 2.2 0 3.6 1.2 3.6 3 0 1.6-.9 2.4-2.3 3.2-.8.5-1.3 1.1-1.3 2"></path>
+        </svg>
+      `,
+    };
+
+    return icons[category] || icons["ფსიქოლოგია"];
+  }
+
   function renderCatalogCard(course, user) {
     const enrollment = getEnrollment(user, course.id);
-    const progress = getCourseProgress(course, user);
-    const completedLessons = getCompletedLessonsCount(course, user);
-    const totalLessons = flattenLessons(course).length;
-    const pricingMarkup = enrollment
-      ? `
-        <div class="catalog-card__progress">
-          <div class="course-card__meta">
-            <strong>${progress}% პროგრესი</strong>
-            <span>${completedLessons}/${totalLessons} გაკვეთილი</span>
-          </div>
-          <div class="progress"><span style="width: ${progress}%"></span></div>
-        </div>
-      `
-      : `
-        <div class="catalog-card__price-row">
-          <div class="price-stack">
-            <strong class="price-tag">${escapeHtml(toCurrency(course.price))}</strong>
-            ${
-              Number(course.originalPrice) > Number(course.price) && Number(course.price) > 0
-                ? `<span class="price-strike">₾${escapeHtml(course.originalPrice)}</span>`
-                : ""
-            }
-          </div>
-          <span class="muted">${course.free ? "ყველა გაკვეთილი ღიაა" : `${course.freeLessons} უფასო გაკვეთილი`}</span>
-        </div>
-      `;
+    const detailHref = `course-detail.html?id=${escapeHtml(course.id)}`;
+    const statusClass = course.free ? "badge-free" : "badge-paid";
+    const statusLabel = course.free ? "უფასო" : "ფასიანი";
+    const actionLabel = enrollment ? "გაგრძელება" : "აღმოაჩინე";
 
     return `
-      <article class="card course-catalog-card animate-on-scroll">
-        <div class="course-catalog-card__media">
-          <img class="optimized-media" src="${escapeHtml(course.image)}" alt="${escapeHtml(course.title)}" onerror="this.onerror=null;this.src='${IMAGE_FALLBACK_URL}';">
-          <div class="course-catalog-card__badges">
-            <span class="badge">${escapeHtml(course.cat)}</span>
-            <span class="badge ${course.free ? "badge-free" : "badge-paid"}">${course.free ? "უფასო" : "ფასიანი"}</span>
-          </div>
+      <a class="card course-catalog-card animate-on-scroll" href="${detailHref}" data-course-card-state="${course.free ? "free" : "paid"}" aria-label="${escapeHtml(course.title)}">
+        <div class="course-catalog-card__header">
+          <h3>${escapeHtml(course.title)}</h3>
+          <span class="course-catalog-card__icon" aria-hidden="true">${getCourseCardIcon(course)}</span>
         </div>
-        <div class="course-catalog-card__body">
-          <div class="stack-sm">
-            <h3>${escapeHtml(course.title)}</h3>
-            <p class="muted">ინსტრუქტორი: მაკა გორდელაძე</p>
-            <p class="catalog-card__desc">${escapeHtml(course.desc)}</p>
-          </div>
-          <div class="catalog-card__stats">
-            <span>⏱ ${escapeHtml(course.hours)} საათი</span>
-            <span>📚 ${escapeHtml(course.lessons)} ლექცია</span>
-            <span>⭐ ${escapeHtml(course.rating)}</span>
-          </div>
+        <div class="course-catalog-card__reveal">
           <div class="catalog-card__divider"></div>
-          ${pricingMarkup}
-          <div class="course-card__footer">
-            <a class="link-arrow" href="course-detail.html?id=${escapeHtml(course.id)}">კურსი →</a>
+          <p class="catalog-card__desc">${escapeHtml(course.desc)}</p>
+          <div class="course-catalog-card__meta" aria-label="კურსის მოკლე მონაცემები">
+            <span class="course-catalog-card__meta-item">${escapeHtml(course.lessons)} ლექცია</span>
+            <span class="course-catalog-card__meta-item">${escapeHtml(course.hours)} საათი</span>
+            <span class="course-catalog-card__meta-item">ონლაინ ფორმატი</span>
           </div>
+          <span class="course-catalog-card__cta" aria-hidden="true">${actionLabel} <span aria-hidden="true">→</span></span>
         </div>
-      </article>
+        <div class="course-catalog-card__media">
+          <img class="optimized-media" src="${escapeHtml(course.image)}" alt="${escapeHtml(course.imageAlt || course.title)}" onerror="this.onerror=null;this.src='${IMAGE_FALLBACK_URL}';">
+          <span class="course-catalog-card__status ${statusClass}">${statusLabel}</span>
+          <span class="course-catalog-card__duration">ხანგრძლივობა • ${escapeHtml(course.hours)} საათი</span>
+        </div>
+      </a>
     `;
   }
 
@@ -725,6 +1062,18 @@
       filter: "all",
       query: "",
     };
+    const params = new URLSearchParams(window.location.search);
+    const categoryFilter = params.get("category");
+    if (categoryFilter && ["free", "paid", ...FILTERABLE_CATEGORIES].includes(categoryFilter)) {
+      state.filter = categoryFilter;
+    }
+    const queryFilter = params.get("q");
+    if (queryFilter) {
+      state.query = queryFilter;
+      if (searchInput) {
+        searchInput.value = queryFilter;
+      }
+    }
 
     const storedQuery = localStorage.getItem("courseSearchQuery");
     if (storedQuery) {
@@ -808,18 +1157,82 @@
     render();
   }
 
-  function renderLessonPlayer(course, lesson, hasAccess) {
+  function renderLessonHeader(course, lesson, lessonOrder, totalLessons, user, hasAccess) {
+    const progress = getCourseProgress(course, user);
+    const completedLessons = getCompletedLessonsCount(course, user);
+    const completedTasks = getCompletedTaskCount(course, lesson.id, user);
+    const totalTasks = normalizeArray(lesson.tasks).length;
+    const isCompleted = getLessonCompletionState(getEnrollment(user, course.id), lesson.id);
+
+    return `
+      <section class="card lesson-overview lesson-overview--workspace">
+        <div class="lesson-overview__top">
+          <div class="breadcrumb breadcrumb--muted lesson-overview__breadcrumb">
+            <a href="courses.html">კურსები</a>
+            <span class="breadcrumb__slash" aria-hidden="true">/</span>
+            <span>${escapeHtml(course.title)}</span>
+            <span class="breadcrumb__slash" aria-hidden="true">/</span>
+            <span>${escapeHtml(`გაკვეთილი ${lessonOrder}`)}</span>
+          </div>
+          <span class="lesson-overview__status${hasAccess ? "" : " is-locked"}">${hasAccess ? (isCompleted ? "დასრულებულია" : "აქტიური გაკვეთილი") : "ფასიანი გაკვეთილი"}</span>
+        </div>
+
+        <div class="lesson-overview__body">
+          <div class="lesson-overview__content stack-sm">
+            <div class="lesson-overview__eyebrow-row">
+              <span class="lesson-overview__eyebrow">${escapeHtml(course.title)}</span>
+              <span class="lesson-overview__divider" aria-hidden="true"></span>
+              <span class="lesson-overview__eyebrow">${escapeHtml(`გაკვეთილი ${lessonOrder} / ${totalLessons}`)}</span>
+              <span class="lesson-overview__divider" aria-hidden="true"></span>
+              <span class="lesson-overview__eyebrow">${escapeHtml(lesson.duration)}</span>
+            </div>
+            <h2>${escapeHtml(getLessonShortTitle(course, lesson))}</h2>
+            <p class="lesson-overview__lead">ჯერ უყურე ვიდეოს, შემდეგ შეასრულე ქვემოთ მოცემული ნაბიჯები და ბოლოს ერთიანად შეინახე შენი პასუხი, ფოტოები ან ფაილები.</p>
+          </div>
+
+          <div class="lesson-overview__aside">
+            <div class="lesson-progress-card">
+              <div class="lesson-progress-card__meta">
+                <strong>${progress}% პროგრესი</strong>
+                <span>${completedLessons}/${totalLessons} გაკვეთილი</span>
+              </div>
+              <div class="progress progress--soft"><span style="width: ${progress}%"></span></div>
+              <div class="lesson-progress-card__footer">
+                <span>${completedTasks}/${totalTasks} დავალება მონიშნულია</span>
+                <span>${hasAccess ? (isCompleted ? "ნანახი" : "მიმდინარე") : "დაბლოკილი"}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderLessonPlayer(course, lesson, hasAccess, isCompleted) {
+    const videoPoster = lesson.poster || course.image;
+
     if (!hasAccess) {
       return `
-        <section class="card lesson-player-card">
+        <section class="card lesson-player-card lesson-player-card--locked">
+          <div class="lesson-section-heading">
+            <div class="stack-sm">
+              <span class="section-label" style="margin-bottom: 0;">ვიდეო</span>
+              <h3>გაკვეთილის ვიდეო</h3>
+            </div>
+            <div class="lesson-section-heading__meta">
+              <span class="lesson-chip">${escapeHtml(lesson.duration)}</span>
+              <span class="lesson-chip lesson-chip--locked">ჩაკეტილი</span>
+            </div>
+          </div>
+
           <div class="lesson-player lesson-player--locked" style="background-image: linear-gradient(180deg, rgba(18,14,12,0.44), rgba(18,14,12,0.72)), url('${escapeHtml(
-            course.image,
+            videoPoster,
           )}')">
             <div class="lesson-lock-card">
-              <div class="lesson-lock-card__icon">🔒</div>
-              <h3>ეს გაკვეთილი ფასიანია</h3>
-              <p>კურსის სრული შინაარსი, პრაქტიკული დავალებები და ფაილების ატვირთვა გაიხსნება შეძენის შემდეგ.</p>
-              <button class="btn btn-primary" type="button" data-course-purchase>კურსის შეძენა ${escapeHtml(
+              <div class="lesson-lock-card__icon" aria-hidden="true">◎</div>
+              <h3>სრული გაკვეთილი გაიხსნება შეძენის შემდეგ</h3>
+              <p>ვიდეო, პრაქტიკული დავალებები, ფაილების ატვირთვა და კომენტარების სივრცე ხელმისაწვდომი გახდება სრული წვდომის აქტივაციის შემდეგ.</p>
+              <button class="btn btn-primary" type="button" data-course-purchase>კურსის გახსნა ${escapeHtml(
                 toCurrency(course.price),
               )} <span class="btn-arrow">→</span></button>
             </div>
@@ -830,139 +1243,407 @@
 
     return `
       <section class="card lesson-player-card">
-        <div class="lesson-player" data-player-shell>
-          <video data-lesson-video controls playsinline preload="metadata" poster="${escapeHtml(course.image)}">
-            <source src="${escapeHtml(lesson.videoUrl)}" type="video/mp4">
-          </video>
-          <button class="player-overlay" type="button" aria-label="ვიდეოს ჩართვა ან დაპაუზება" data-player-toggle>
-            ▶
+        <div class="lesson-section-heading">
+          <div class="stack-sm">
+            <span class="section-label" style="margin-bottom: 0;">ვიდეო</span>
+            <h3>გაკვეთილის ვიდეო</h3>
+          </div>
+          <div class="lesson-section-heading__meta">
+            <span class="lesson-chip">${escapeHtml(lesson.duration)}</span>
+            <span class="lesson-chip${isCompleted ? " lesson-chip--complete" : ""}">${isCompleted ? "ნანახია" : "უყურე ბოლომდე"}</span>
+          </div>
+        </div>
+
+        <div class="lesson-player-shell">
+          <div class="lesson-player" data-player-shell>
+            <video data-lesson-video controls playsinline preload="metadata" poster="${escapeHtml(videoPoster)}">
+              <source src="${escapeHtml(lesson.videoUrl)}" type="video/mp4">
+            </video>
+            <button class="player-overlay" type="button" aria-label="ვიდეოს ჩართვა ან დაპაუზება" data-player-toggle>
+              ▶
+            </button>
+          </div>
+        </div>
+
+        <div class="lesson-player__footer">
+          <p>${escapeHtml(getLessonShortTitle(course, lesson))}-ის ნახვის შემდეგ შეგიძლია პირდაპირ გადახვიდე დავალებებზე და შემდეგ შენს პასუხზე.</p>
+          <button class="btn ${isCompleted ? "btn-outline" : "btn-primary"} lesson-inline-action" type="button" data-lesson-complete>
+            ${isCompleted ? "გაკვეთილი დასრულებულია" : "მონიშნე როგორც ნანახი"}
           </button>
         </div>
       </section>
     `;
   }
 
-  function renderTasks(course, lesson, user, state, hasAccess) {
-    if (!hasAccess) {
-      return `
-        <section class="card lesson-tasks">
-          <div class="stack-sm">
-            <h3>📋 დავალებები</h3>
-            <div class="empty-state">ეს დავალებები გაიხსნება კურსის შეძენის შემდეგ.</div>
-          </div>
-        </section>
-      `;
-    }
-
-    const tasks = normalizeArray(lesson.tasks);
-
+  function renderLessonIntro(course, lesson) {
     return `
-      <section class="card lesson-tasks">
-        <div class="stack">
+      <section class="card lesson-description lesson-description--workspace">
+        <div class="lesson-section-heading lesson-section-heading--compact">
           <div class="stack-sm">
-            <h3>📋 დავალებები</h3>
-            <p class="muted">გამოიყენე ეს სავარჯიშოები ყოველდღიურ ცხოვრებაში.</p>
-            ${
-              user
-                ? ""
-                : '<div class="catalog-note">დავალებების მონიშვნისა და ფაილების შენახვისთვის გაიარე ავტორიზაცია.</div>'
-            }
+            <span class="section-label" style="margin-bottom: 0;">შინაარსი</span>
+            <h3>რას ეხება ეს გაკვეთილი</h3>
           </div>
-          <ul class="task-list">
-            ${tasks
-              .map((task, index) => {
-                const checked = user ? getTaskChecked(user, course.id, lesson.id, index) : false;
-                const upload = user ? getTaskUpload(user, course.id, lesson.id, index) : null;
-                const isOpen = Number(state.openTaskIndex) === index;
+        </div>
 
-                return `
-                  <li class="task-item${isOpen ? " is-open" : ""}">
-                    <div class="task-item__header">
-                      <button class="task-check${checked ? " is-checked" : ""}" type="button" data-task-check="${index}">
-                        <span>${checked ? "✓" : ""}</span>
-                      </button>
-                      <div class="task-item__summary">
-                        <strong>${escapeHtml(task.title)}</strong>
-                        <span class="help-text">${checked ? "დასრულებულია" : "მონიშნე შესრულების შემდეგ"}</span>
-                      </div>
-                      <button class="task-toggle" type="button" data-task-toggle="${index}">
-                        ${isOpen ? "−" : "+"}
-                      </button>
-                    </div>
-                    <div class="task-item__body">
-                      <p>${escapeHtml(task.details)}</p>
-                      <div class="task-item__actions">
-                        <button class="task-upload-btn" type="button" data-task-upload="${index}" ${user ? "" : "disabled"}>
-                          ფოტოს ატვირთვა
-                        </button>
-                        <input class="hide" type="file" accept="image/*" data-task-input="${index}">
-                      </div>
-                      ${
-                        upload?.imageBase64
-                          ? `<img class="task-upload-preview" src="${upload.imageBase64}" alt="${escapeHtml(task.title)}">`
-                          : ""
-                      }
-                    </div>
-                  </li>
-                `;
-              })
-              .join("")}
-          </ul>
+        <div class="lesson-description__content">
+          <p>${escapeHtml(lesson.description)}</p>
+          <p>ქვემოთ ნახავ ნაბიჯ-ნაბიჯ დავალებებს, რომ თეორია მშვიდად გადაიტანო პრაქტიკაში და შემდეგ ერთ სივრცეში შეინახო საკუთარი პასუხი.</p>
         </div>
       </section>
     `;
   }
 
-  function renderSidebarCard(course, user) {
-    const enrollment = getEnrollment(user, course.id);
-    const progress = getCourseProgress(course, user);
+  function renderTasks(course, lesson, user, state, hasAccess) {
+    const tasks = normalizeArray(lesson.tasks);
+    const completedTasks = tasks.filter((task, index) => getTaskChecked(user, course.id, lesson.id, index)).length;
 
-    if (!course.free && !enrollment) {
+    if (!hasAccess) {
       return `
-        <section class="card purchase-card">
-          <img class="optimized-media" src="${escapeHtml(course.image)}" alt="${escapeHtml(course.title)}" onerror="this.onerror=null;this.src='${IMAGE_FALLBACK_URL}';">
-          <div class="stack-sm">
-            <div class="cluster">
-              <span class="badge badge-paid">30% ფასდაკლება</span>
-              <span class="badge">${escapeHtml(course.cat)}</span>
+        <section class="card lesson-tasks lesson-tasks--locked">
+          <div class="lesson-section-heading">
+            <div class="stack-sm">
+              <span class="section-label" style="margin-bottom: 0;">დავალებები</span>
+              <h3>პრაქტიკული ნაბიჯები</h3>
             </div>
-            <div class="purchase-card__price">
-              <strong>${escapeHtml(toCurrency(course.price))}</strong>
-              ${Number(course.originalPrice) > Number(course.price) ? `<span class="price-strike">₾${escapeHtml(course.originalPrice)}</span>` : ""}
+            <div class="lesson-section-heading__meta">
+              <span class="lesson-chip lesson-chip--locked">დაბლოკილი</span>
             </div>
-            <button class="btn btn-primary" type="button" data-course-purchase>შეიძინე კურსი <span class="btn-arrow">→</span></button>
           </div>
-          <ul class="check-list">
-            <li>სრული წვდომა</li>
-            <li>სერტიფიკატი</li>
-            <li>უვადო წვდომა</li>
-          </ul>
+          <div class="lesson-empty-state">
+            <strong>ეს ნაწილი კურსის შეძენის შემდეგ გაიხსნება.</strong>
+            <p>სრული წვდომით ნახავ დავალებების განმარტებას, შენს პასუხის განყოფილებას და უკუკავშირის ნაკადს.</p>
+          </div>
         </section>
       `;
     }
 
     return `
-      <section class="card purchase-card purchase-card--active">
+      <section class="card lesson-tasks">
+        <div class="lesson-section-heading">
+          <div class="stack-sm">
+            <span class="section-label" style="margin-bottom: 0;">დავალებები</span>
+            <h3>რა ნაბიჯები უნდა შეასრულო</h3>
+          </div>
+          <div class="lesson-section-heading__meta">
+            <span class="lesson-chip">${completedTasks}/${tasks.length} შესრულებულია</span>
+          </div>
+        </div>
+
+        <div class="lesson-tasks__intro">
+          <p>გაიარე ეს ნაბიჯები შენი ტემპით. თითოეულ დავალებას შეგიძლია გაეცნო დეტალურად, მონიშნო შესრულება და შემდეგ ქვემოთ დაამატო ერთიანი პასუხი.</p>
+          ${user ? "" : '<div class="catalog-note">მონიშვნის, პასუხის შენახვის და კომენტარების დასამატებლად გაიარე ავტორიზაცია.</div>'}
+        </div>
+
+        <ul class="task-list lesson-task-list">
+          ${tasks
+            .map((task, index) => {
+              const checked = user ? getTaskChecked(user, course.id, lesson.id, index) : false;
+              const isOpen = Number(state.openTaskIndex) === index;
+              const taskBodyId = `lesson-task-panel-${escapeHtml(lesson.id)}-${index}`;
+
+              return `
+                <li class="task-item lesson-task${isOpen ? " is-open" : ""}${checked ? " is-complete" : ""}" data-task-state="${
+                  checked ? "complete" : isOpen ? "active" : "idle"
+                }">
+                  <div class="lesson-task__header">
+                    <button class="task-check lesson-task__check${checked ? " is-checked" : ""}" type="button" data-task-check="${index}" aria-label="${
+                      checked ? "შესრულების მონიშვნის გაუქმება" : "დავალების შესრულებულად მონიშვნა"
+                    }">
+                      <span>${checked ? "✓" : ""}</span>
+                    </button>
+
+                    <button class="lesson-task__trigger" type="button" data-task-toggle="${index}" aria-expanded="${isOpen ? "true" : "false"}" aria-controls="${taskBodyId}">
+                      <span class="lesson-task__summary">
+                        <strong>${escapeHtml(task.title)}</strong>
+                        <span>${escapeHtml(getTaskHelperText(index))}</span>
+                      </span>
+
+                      <span class="lesson-task__side">
+                        <span class="lesson-task__status">${escapeHtml(getTaskStatusLabel(checked, isOpen))}</span>
+                        <span class="lesson-task__toggle" aria-hidden="true">${isOpen ? "−" : "+"}</span>
+                      </span>
+                    </button>
+                  </div>
+
+                  <div class="task-item__body lesson-task__body" id="${taskBodyId}">
+                    <p>${escapeHtml(task.details)}</p>
+
+                    <div class="lesson-task__hint">
+                      <strong>რჩევა</strong>
+                      <span>როდესაც ამ ნაბიჯს დაასრულებ, ქვემოთ არსებულ განყოფილებაში შეგიძლია დაწერო მოკლე პასუხი და დაურთო ფოტო ან ფაილი.</span>
+                    </div>
+
+                    <div class="lesson-task__actions">
+                      <button class="btn btn-outline lesson-inline-action" type="button" data-scroll-submission>შენი პასუხის განყოფილებაზე გადასვლა</button>
+                    </div>
+                  </div>
+                </li>
+              `;
+            })
+            .join("")}
+        </ul>
+      </section>
+    `;
+  }
+
+  function renderSubmissionAttachments(attachments) {
+    if (!attachments.length) {
+      return `
+        <div class="lesson-submission__empty">
+          <strong>ჯერ ფაილი არ დაგიმატებია.</strong>
+          <p>შეგიძლია ატვირთო ფოტო, PDF ან სხვა მოკლე ფაილი, რომელიც აჩვენებს როგორ შეასრულე დავალება.</p>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="lesson-attachment-grid">
+        ${attachments
+          .map((attachment) => {
+            const fileSize = formatFileSize(attachment.size);
+
+            return `
+              <article class="lesson-attachment-card${attachment.isImage ? " is-image" : ""}">
+                ${
+                  attachment.isImage && attachment.dataUrl
+                    ? `<img src="${attachment.dataUrl}" alt="${escapeHtml(attachment.name)}">`
+                    : `<div class="lesson-attachment-card__icon" aria-hidden="true">${escapeHtml(
+                        attachment.name.slice(0, 1).toUpperCase(),
+                      )}</div>`
+                }
+                <div class="lesson-attachment-card__copy">
+                  <strong>${escapeHtml(attachment.name)}</strong>
+                  <span>${escapeHtml(fileSize || attachment.type || "ფაილი")}</span>
+                </div>
+                <button class="lesson-attachment-card__remove" type="button" data-draft-attachment-remove="${escapeHtml(
+                  attachment.id,
+                )}" aria-label="ფაილის წაშლა">
+                  ×
+                </button>
+              </article>
+            `;
+          })
+          .join("")}
+      </div>
+    `;
+  }
+
+  function renderSubmissionSection(course, lesson, user, state, hasAccess) {
+    const draft = getSubmissionDraft(state, course.id, lesson.id, user);
+
+    if (!hasAccess) {
+      return `
+        <section class="card lesson-submission lesson-submission--locked" id="lesson-submission">
+          <div class="lesson-section-heading">
+            <div class="stack-sm">
+              <span class="section-label" style="margin-bottom: 0;">შენი პასუხი</span>
+              <h3>შესრულებული დავალების შენახვა</h3>
+            </div>
+          </div>
+          <div class="lesson-empty-state">
+            <strong>პასუხის გაგზავნა ამჟამად მიუწვდომელია.</strong>
+            <p>ამ სივრცეში შეგეძლება ტექსტის დაწერა, ფოტოების ატვირთვა და საბოლოო პასუხის შენახვა მას შემდეგ, რაც კურსის სრული წვდომა გააქტიურდება.</p>
+          </div>
+        </section>
+      `;
+    }
+
+    return `
+      <section class="card lesson-submission" id="lesson-submission">
+        <div class="lesson-section-heading">
+          <div class="stack-sm">
+            <span class="section-label" style="margin-bottom: 0;">შენი პასუხი</span>
+            <h3>შენი შესრულებული დავალება</h3>
+          </div>
+          ${
+            draft.submittedAt
+              ? `<span class="lesson-submission__saved">ბოლო შენახვა ${escapeHtml(formatDateTime(draft.updatedAt || draft.submittedAt))}</span>`
+              : ""
+          }
+        </div>
+
+        <p class="lesson-submission__intro">აქ შეგიძლია ერთიანად აღწერო შენი გამოცდილება, ატვირთო ფოტოები ან ფაილები და მშვიდად შეინახო პასუხი მოგვიანებით გასაზიარებლად.</p>
+
+        ${user ? "" : '<div class="catalog-note">პასუხის შესანახად გაიარე ავტორიზაცია.</div>'}
+
+        <form class="lesson-submission__form" data-lesson-submission-form>
+          <div class="lesson-field">
+            <label class="field-label" for="lesson-submission-text-${escapeHtml(lesson.id)}">ტექსტური პასუხი</label>
+            <textarea id="lesson-submission-text-${escapeHtml(
+              lesson.id,
+            )}" rows="7" data-submission-text placeholder="მოკლედ აღწერე როგორ შეასრულე დავალებები, რა შენიშნე და რა იყო შენთვის განსაკუთრებით მნიშვნელოვანი." ${
+              user ? "" : "disabled"
+            }>${escapeHtml(draft.text)}</textarea>
+          </div>
+
+          <div class="lesson-upload-panel">
+            <div class="lesson-upload-panel__copy">
+              <strong>ფოტოები და ფაილები</strong>
+              <p>ატვირთე ნამუშევარი, ჩანაწერი, ფოტო ან სხვა მოკლე მასალა. რამდენიმე ფაილის დამატებაც შეგიძლია.</p>
+            </div>
+
+            <div class="lesson-upload-panel__actions">
+              <button class="btn btn-outline lesson-inline-action" type="button" data-submission-pick ${user ? "" : "disabled"}>ფაილის დამატება</button>
+              <span>JPG, PNG, PDF, DOCX</span>
+            </div>
+
+            <input class="hide" type="file" multiple accept="image/*,.pdf,.doc,.docx,.txt" data-submission-input ${user ? "" : "disabled"}>
+          </div>
+
+          <div class="lesson-submission__preview">
+            ${renderSubmissionAttachments(draft.attachments)}
+          </div>
+
+          <div class="lesson-submission__footer">
+            <p>${user ? "ჯერ გადაამოწმე ტექსტი და დამატებული მასალები, შემდეგ დააჭირე შენახვას." : "ავტორიზაციის შემდეგ აქვე გააქტიურდება შენახვა და ფაილების დამატება."}</p>
+            <button class="btn btn-primary" type="submit" ${user ? "" : "disabled"}>პასუხის შენახვა</button>
+          </div>
+        </form>
+      </section>
+    `;
+  }
+
+  function renderFeedbackSection(course, lesson, user, state, hasAccess) {
+    const thread = getLessonThread(course, lesson, user);
+    const commentDraft = getCommentDraft(state, course.id, lesson.id);
+
+    return `
+      <section class="card lesson-feedback">
+        <div class="lesson-section-heading">
+          <div class="stack-sm">
+            <span class="section-label" style="margin-bottom: 0;">უკუკავშირი</span>
+            <h3>კომენტარები და კითხვა-პასუხი</h3>
+          </div>
+          <div class="lesson-section-heading__meta">
+            <span class="lesson-chip lesson-chip--muted">დამატებითი კომენტარები</span>
+          </div>
+        </div>
+
+        <p class="lesson-feedback__intro">ეს სივრცე განკუთვნილია დამატებითი კითხვისთვის, მოკლე პასუხებისთვის და მენტორთან უფრო მშვიდი შემდგომი კომუნიკაციისთვის. ძირითადი პასუხი კი ზემოთ ინახება.</p>
+
+        <div class="lesson-feedback__thread">
+          ${thread
+            .map((entry) => {
+              const meta = [entry.authorRole, formatDateTime(entry.createdAt)].filter(Boolean).join(" / ");
+              const avatarLabel =
+                entry.authorType === "mentor"
+                  ? "მ"
+                  : String(entry.authorName || "თქვენ")
+                      .split(/\s+/)
+                      .filter(Boolean)
+                      .map((part) => part[0] || "")
+                      .join("")
+                      .slice(0, 2)
+                      .toUpperCase() || "თ";
+
+              return `
+                <article class="lesson-comment${entry.authorType === "mentor" ? " is-mentor" : " is-student"}">
+                  <div class="lesson-comment__avatar" aria-hidden="true">${escapeHtml(avatarLabel)}</div>
+                  <div class="lesson-comment__bubble">
+                    <div class="lesson-comment__meta">
+                      <strong>${escapeHtml(entry.authorName)}</strong>
+                      <span>${escapeHtml(meta)}</span>
+                    </div>
+                    <p>${escapeHtml(entry.message)}</p>
+                  </div>
+                </article>
+              `;
+            })
+            .join("")}
+        </div>
+
+        ${
+          hasAccess
+            ? `
+              ${user ? "" : '<div class="catalog-note">კომენტარის დასაწერად გაიარე ავტორიზაცია.</div>'}
+              <form class="lesson-feedback__form" data-lesson-comment-form>
+                <div class="lesson-field">
+                  <label class="field-label" for="lesson-comment-text-${escapeHtml(lesson.id)}">მოკლე პასუხი ან კითხვა</label>
+                  <textarea id="lesson-comment-text-${escapeHtml(
+                    lesson.id,
+                  )}" rows="4" data-comment-text placeholder="თუ გინდა, აქ დაუსვი დამატებითი კითხვა ან დატოვე მოკლე კომენტარი." ${
+                    user ? "" : "disabled"
+                  }>${escapeHtml(commentDraft)}</textarea>
+                </div>
+
+                <div class="lesson-feedback__form-footer">
+                  <p>ეს ველი არის დამატებითი კომუნიკაციისთვის და არ ცვლის მთავარ დავალების პასუხს.</p>
+                  <button class="btn btn-outline lesson-inline-action" type="submit" ${user ? "" : "disabled"}>კომენტარის დამატება</button>
+                </div>
+              </form>
+            `
+            : `
+              <div class="lesson-empty-state lesson-empty-state--quiet">
+                <strong>კომენტარების სივრცე გაიხსნება სრული წვდომის შემდეგ.</strong>
+                <p>ვიდეოს, დავალებების და პასუხის განყოფილებასთან ერთად კომენტარების ნაკადიც სრულად გააქტიურდება.</p>
+              </div>
+            `
+        }
+      </section>
+    `;
+  }
+
+  function renderSidebarCard(course, lesson, lessonOrder, user) {
+    const enrollment = getEnrollment(user, course.id);
+    const progress = getCourseProgress(course, user);
+    const hasCourseFullAccess = hasCourseAccess(course, user);
+
+    if (!course.free && !hasCourseFullAccess) {
+      return `
+        <section class="card purchase-card lesson-sidebar-card lesson-sidebar-card--purchase">
+          <img class="optimized-media" src="${escapeHtml(course.image)}" alt="${escapeHtml(course.title)}" onerror="this.onerror=null;this.src='${IMAGE_FALLBACK_URL}';">
+          <div class="stack-sm">
+            <div class="cluster">
+              <span class="badge badge-paid">სრული წვდომა</span>
+              <span class="badge">${escapeHtml(course.cat)}</span>
+            </div>
+            <h3>${escapeHtml(course.title)}</h3>
+            <p>ახლა უყურებ ${escapeHtml(`გაკვეთილს ${lessonOrder}`)}. სრული წვდომით გახსნილი იქნება ყველა გაკვეთილი, დავალებების სივრცე და უკუკავშირის განყოფილება.</p>
+            <div class="purchase-card__price">
+              <strong>${escapeHtml(toCurrency(course.price))}</strong>
+            </div>
+            <button class="btn btn-primary" type="button" data-course-purchase>შეიძინე კურსი <span class="btn-arrow">→</span></button>
+          </div>
+          <div class="lesson-sidebar-card__facts">
+            <span>${escapeHtml(course.lessons)} გაკვეთილი</span>
+            <span>${escapeHtml(course.hours)} საათი</span>
+            <span>${escapeHtml(course.freeLessons)} უფასო გაკვეთილი</span>
+          </div>
+        </section>
+      `;
+    }
+
+    return `
+      <section class="card purchase-card purchase-card--active lesson-sidebar-card">
         <div class="cluster">
           <span class="badge ${course.free ? "badge-free" : "badge-paid"}">${course.free ? "უფასო კურსი" : "აქტიური წვდომა"}</span>
           <span class="badge">${escapeHtml(course.cat)}</span>
         </div>
         <h3>${escapeHtml(course.title)}</h3>
-        <p>${course.free ? "კურსი სრულად ხელმისაწვდომია." : "შეძენა წარმატებით დასრულებულია და სრული შინაარსი გახსნილია."}</p>
+        <p>მიმდინარე გაკვეთილი: ${escapeHtml(`გაკვეთილი ${lessonOrder}`)}. გვერდი აგებულია ისე, რომ ვიდეო, დავალებები და პასუხის შენახვა იყოს ერთ წყობილ ნაკადად.</p>
         <div class="course-card__meta">
           <strong>${progress}% პროგრესი</strong>
           <span>${getCompletedLessonsCount(course, user)}/${flattenLessons(course).length} გაკვეთილი</span>
         </div>
-        <div class="progress"><span style="width: ${progress}%"></span></div>
+        <div class="progress progress--soft"><span style="width: ${progress}%"></span></div>
+        <div class="lesson-sidebar-card__facts">
+          <span>${escapeHtml(lesson.duration)} ვიდეო</span>
+          <span>${escapeHtml(normalizeArray(lesson.tasks).length)} დავალება</span>
+          <span>${enrollment ? "პროფილში ინახება" : "წვდომა გააქტიურებულია"}</span>
+        </div>
       </section>
     `;
   }
 
   function renderCourseContents(course, activeLessonId, openSectionId, user) {
+    const lessonOrderMap = new Map(flattenLessons(course).map((lesson, index) => [lesson.id, index + 1]));
+
     return `
-      <section class="card course-contents">
+      <section class="card course-contents course-contents--workspace">
         <div class="space-between">
-          <h3>კურსის შინაარსი</h3>
+          <div class="stack-sm">
+            <span class="section-label" style="margin-bottom: 0;">კურსის გზამკვლევი</span>
+          </div>
           <span class="badge">${escapeHtml(course.lessons)} გაკვეთილი</span>
         </div>
         <div class="course-contents__list">
@@ -985,12 +1666,16 @@
                         .map((lesson) => {
                           const isActive = lesson.id === activeLessonId;
                           const locked = !hasLessonAccess(course, lesson.id, user);
+                          const lessonOrder = lessonOrderMap.get(lesson.id) || 1;
+                          const statusLabel = locked ? "ჩაკეტილი" : lesson.isFree && !course.free ? "უფასო" : "გახსნილი";
+
                           return `
                             <button class="lesson-row${isActive ? " is-active" : ""}${locked ? " is-locked" : ""}" type="button" data-lesson-target="${escapeHtml(
                               lesson.id,
                             )}">
                               <span class="lesson-row__title">
-                                ${locked ? "🔒" : lesson.isFree && !course.free ? "🆓" : "✅"} ${escapeHtml(lesson.title)}
+                                <strong>${escapeHtml(getLessonShortTitle(course, lesson))}</strong>
+                                <span>${escapeHtml(`გაკვეთილი ${lessonOrder}`)} / ${escapeHtml(statusLabel)}</span>
                               </span>
                               <span class="lesson-row__meta">${escapeHtml(lesson.duration)}</span>
                             </button>
@@ -1008,25 +1693,50 @@
     `;
   }
 
-  function renderReviewSnippet(course) {
+  function renderCourseFacts(course, lesson) {
     return `
-      <section class="card course-reviews-snippet">
+      <section class="card course-facts course-facts--workspace">
         <div class="stack-sm">
-          <h3>⭐⭐⭐⭐⭐ ${escapeHtml(course.rating)} (${escapeHtml(course.reviewCount)} შეფასება)</h3>
-          ${normalizeArray(course.reviews)
-            .slice(0, 3)
-            .map(
-              (review) => `
-                <article class="review-mini">
-                  <strong>${escapeHtml(review.name)}</strong>
-                  <span class="muted">${escapeHtml(review.role)} • ${"⭐".repeat(review.rating)}</span>
-                  <p>${escapeHtml(review.comment)}</p>
-                </article>
-              `,
-            )
-            .join("")}
+          <div class="space-between">
+            <h3>კურსის ფორმატი</h3>
+            <span class="badge">${escapeHtml(course.cat)}</span>
+          </div>
+          <div class="course-facts__grid">
+            <div class="course-fact">
+              <strong>${escapeHtml(course.lessons)}</strong>
+              <span>გაკვეთილი</span>
+            </div>
+            <div class="course-fact">
+              <strong>${escapeHtml(course.hours)}</strong>
+              <span>საათი</span>
+            </div>
+            <div class="course-fact">
+              <strong>${escapeHtml(lesson.duration)}</strong>
+              <span>მიმდინარე ვიდეო</span>
+            </div>
+            <div class="course-fact">
+              <strong>${escapeHtml(course.free ? "უფასო" : toCurrency(course.price))}</strong>
+              <span>${course.free ? "წვდომა" : "ფასი"}</span>
+            </div>
+          </div>
+          <p class="muted">${escapeHtml(course.fullDescription)}</p>
         </div>
       </section>
+    `;
+  }
+
+  function renderLessonNavigation(course, previousLesson, nextLesson) {
+    return `
+      <nav class="course-nav lesson-navigation" aria-label="გაკვეთილებს შორის ნავიგაცია">
+        <button class="lesson-navigation__button lesson-navigation__button--prev" type="button" data-lesson-nav="prev" ${previousLesson ? "" : "disabled"}>
+          <span class="lesson-navigation__label">წინა გაკვეთილი</span>
+          <strong>${previousLesson ? escapeHtml(getLessonShortTitle(course, previousLesson)) : "ეს პირველი გაკვეთილია"}</strong>
+        </button>
+        <button class="lesson-navigation__button lesson-navigation__button--next" type="button" data-lesson-nav="next" ${nextLesson ? "" : "disabled"}>
+          <span class="lesson-navigation__label">შემდეგი გაკვეთილი</span>
+          <strong>${nextLesson ? escapeHtml(getLessonShortTitle(course, nextLesson)) : "ეს ბოლო გაკვეთილია"}</strong>
+        </button>
+      </nav>
     `;
   }
 
@@ -1037,74 +1747,40 @@
     const previousLesson = flatLessons[activeIndex - 1] || null;
     const nextLesson = flatLessons[activeIndex + 1] || null;
     const hasAccess = hasLessonAccess(course, activeLesson.id, user);
-    const progress = getCourseProgress(course, user);
+    const isCompleted = getLessonCompletionState(getEnrollment(user, course.id), activeLesson.id);
     const lessonOrder = activeIndex + 1;
+
+    getSubmissionDraft(state, course.id, activeLesson.id, user);
+    getCommentDraft(state, course.id, activeLesson.id);
 
     return `
       <div class="course-detail-layout__main">
-        <div class="stack">
-          <section class="card lesson-overview">
-            <div class="stack-sm">
-              <div class="breadcrumb breadcrumb--muted">
-                <a href="courses.html">კურსები</a>
-                <span class="divider-dot" aria-hidden="true"></span>
-                <span>${escapeHtml(course.title)}</span>
-                <span class="divider-dot" aria-hidden="true"></span>
-                <span>${escapeHtml(activeLesson.title)}</span>
-              </div>
-              <div class="lesson-overview__row">
-                <div class="stack-sm">
-                  <span class="badge">გაკვეთილი ${lessonOrder} / ${flatLessons.length}</span>
-                  <h2>${escapeHtml(activeLesson.title)}</h2>
-                </div>
-                <div class="lesson-overview__progress">
-                  <div class="course-card__meta">
-                    <strong>${progress}% პროგრესი</strong>
-                    <span>${getCompletedLessonsCount(course, user)} დასრულებული გაკვეთილი</span>
-                  </div>
-                  <div class="progress"><span style="width: ${progress}%"></span></div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          ${renderLessonPlayer(course, activeLesson, hasAccess)}
-
-          <section class="card lesson-description">
-            <div class="stack-sm">
-              <h3>${escapeHtml(activeLesson.title)}</h3>
-              <p>${escapeHtml(activeLesson.description)}</p>
-            </div>
-          </section>
-
+        <div class="stack lesson-workspace">
+          ${renderLessonHeader(course, activeLesson, lessonOrder, flatLessons.length, user, hasAccess)}
+          ${renderLessonPlayer(course, activeLesson, hasAccess, isCompleted)}
+          ${renderLessonIntro(course, activeLesson)}
           ${renderTasks(course, activeLesson, user, state, hasAccess)}
-
-          <div class="course-nav">
-            <button class="btn btn-outline" type="button" data-lesson-nav="prev" ${previousLesson ? "" : "disabled"}>← წინა გაკვეთილი</button>
-            <button class="btn btn-primary" type="button" data-lesson-nav="next" ${nextLesson ? "" : "disabled"}>შემდეგი გაკვეთილი →</button>
-          </div>
+          ${renderSubmissionSection(course, activeLesson, user, state, hasAccess)}
+          ${renderFeedbackSection(course, activeLesson, user, state, hasAccess)}
+          ${renderLessonNavigation(course, previousLesson, nextLesson)}
         </div>
       </div>
 
       <aside class="course-detail-layout__sidebar">
-        <div class="stack">
-          ${renderSidebarCard(course, user)}
+        <div class="stack lesson-sidebar">
+          ${renderSidebarCard(course, activeLesson, lessonOrder, user)}
           ${renderCourseContents(course, activeLesson.id, state.openSectionId, user)}
-          <section class="card instructor-card">
+          <section class="card instructor-card instructor-card--workspace">
             <div class="instructor-card__profile">
-              <img src="https://picsum.photos/seed/team1/200/200" alt="მაკა გორდელაძე">
+              <span class="instructor-card__mark" aria-hidden="true">◎</span>
               <div class="stack-sm">
                 <h3>მაკა გორდელაძე</h3>
                 <p class="muted">ფსიქოლოგი | პედაგოგი</p>
+                <p>თერაპიისა და საგანმანათლებლო პროგრამების ავტორი, რომელიც თეორიულ ცოდნას ყოველდღიურ პრაქტიკად გარდაქმნის მშვიდ და გასაგებ ნაბიჯებად.</p>
               </div>
             </div>
-            <div class="cluster">
-              <span>⭐ 4.9</span>
-              <span>150+ სტუდენტი</span>
-              <span>6 კურსი</span>
-            </div>
           </section>
-          ${renderReviewSnippet(course)}
+          ${renderCourseFacts(course, activeLesson)}
         </div>
       </aside>
     `;
@@ -1154,7 +1830,7 @@
 
     const hero = page.querySelector("[data-course-hero]");
     const heroTitle = page.querySelector("[data-course-hero-title]");
-    const heroBreadcrumb = page.querySelector("[data-course-hero-crumb]");
+    const heroBreadcrumbTrail = page.querySelector(".breadcrumb--hero-course");
     const layout = page.querySelector("[data-course-detail-layout]");
     const purchaseModal = document.getElementById("course-purchase-modal");
     const purchaseForm = purchaseModal?.querySelector("[data-course-payment-form]");
@@ -1182,21 +1858,36 @@
       return;
     }
 
+    const initialLessonId = params.get("lesson") || flattenLessons(course)[0]?.id;
+    const initialLesson = findLesson(course, initialLessonId);
     const state = {
       courseId: course.id,
-      activeLessonId: params.get("lesson") || flattenLessons(course)[0]?.id,
-      openSectionId: course.sections[0]?.id || "",
-      openTaskIndex: 0,
+      activeLessonId: initialLessonId,
+      openSectionId: initialLesson?.sectionId || course.sections[0]?.id || "",
+      openTaskIndex: getPreferredOpenTaskIndex(course, initialLessonId, getCurrentUser()),
       activeCourse: course,
+      submissionDrafts: {},
+      commentDrafts: {},
     };
 
-    function setHero(currentCourse) {
-      if (heroTitle) {
-        heroTitle.textContent = currentCourse.title;
+    function setHeroTitle(title) {
+      if (!heroTitle) {
+        return;
       }
 
-      if (heroBreadcrumb) {
-        heroBreadcrumb.textContent = currentCourse.title;
+      const normalizedTitle = String(title || "").trim();
+      heroTitle.textContent = normalizedTitle === "კურსი მშობლებისთვის" ? "მშობლებისთვის" : normalizedTitle;
+    }
+
+    function setHero(currentCourse) {
+      setHeroTitle(currentCourse.title);
+
+      if (heroBreadcrumbTrail) {
+        heroBreadcrumbTrail.innerHTML = `
+          <a href="index.html">მთავარი</a>
+          <span class="breadcrumb__slash" aria-hidden="true">/</span>
+          <span data-course-hero-crumb aria-current="page">${escapeHtml(currentCourse.title)}</span>
+        `;
       }
 
       if (hero) {
@@ -1294,6 +1985,7 @@
       const currentCourse = state.activeCourse;
       const currentUser = getCurrentUser();
       const lessons = flattenLessons(currentCourse);
+      const draftKey = `${currentCourse.id}:${state.activeLessonId}`;
 
       layout.querySelectorAll("[data-section-toggle]").forEach((button) => {
         button.addEventListener("click", () => {
@@ -1313,7 +2005,7 @@
 
           state.activeLessonId = lessonId;
           state.openSectionId = lesson.sectionId;
-          state.openTaskIndex = 0;
+          state.openTaskIndex = getPreferredOpenTaskIndex(currentCourse, lessonId, getCurrentUser());
 
           if (currentCourse.free && currentUser) {
             ensureEnrollment(currentCourse);
@@ -1338,7 +2030,20 @@
 
           state.activeLessonId = targetLesson.id;
           state.openSectionId = targetLesson.sectionId;
-          state.openTaskIndex = 0;
+          state.openTaskIndex = getPreferredOpenTaskIndex(currentCourse, targetLesson.id, getCurrentUser());
+          rerender();
+        });
+      });
+
+      layout.querySelectorAll("[data-lesson-complete]").forEach((button) => {
+        button.addEventListener("click", () => {
+          if (!currentUser) {
+            window.MakaUI?.showToast?.("გაკვეთილის მონიშვნისთვის გაიარე ავტორიზაცია.", "info");
+            return;
+          }
+
+          markLessonCompleted(currentCourse, state.activeLessonId);
+          window.MakaUI?.showToast?.("გაკვეთილი მონიშნულია როგორც ნანახი.", "success");
           rerender();
         });
       });
@@ -1365,35 +2070,168 @@
         });
       });
 
-      layout.querySelectorAll("[data-task-upload]").forEach((button) => {
+      layout.querySelectorAll("[data-scroll-submission]").forEach((button) => {
         button.addEventListener("click", () => {
-          if (!currentUser) {
-            window.MakaUI?.showToast?.("ფოტოს ასატვირთად საჭიროა ავტორიზაცია.", "info");
-            return;
-          }
-
-          const index = button.dataset.taskUpload;
-          layout.querySelector(`[data-task-input="${index}"]`)?.click();
+          layout.querySelector("#lesson-submission")?.scrollIntoView({ behavior: "smooth", block: "start" });
         });
       });
 
-      layout.querySelectorAll("[data-task-input]").forEach((input) => {
-        input.addEventListener("change", async (event) => {
-          const fileInput = event.currentTarget;
-          const file = fileInput.files?.[0];
+      layout.querySelectorAll("[data-submission-text]").forEach((textarea) => {
+        textarea.addEventListener("input", (event) => {
+          const field = event.currentTarget;
+          getSubmissionDraft(state, currentCourse.id, state.activeLessonId, currentUser).text = String(field.value || "");
+        });
+      });
 
-          if (!file) {
+      layout.querySelectorAll("[data-comment-text]").forEach((textarea) => {
+        textarea.addEventListener("input", (event) => {
+          const field = event.currentTarget;
+          state.commentDrafts[draftKey] = String(field.value || "");
+        });
+      });
+
+      layout.querySelectorAll("[data-submission-pick]").forEach((button) => {
+        button.addEventListener("click", () => {
+          if (!currentUser) {
+            window.MakaUI?.showToast?.("ფაილების დასამატებლად გაიარე ავტორიზაცია.", "info");
             return;
           }
 
+          layout.querySelector("[data-submission-input]")?.click();
+        });
+      });
+
+      layout.querySelectorAll("[data-submission-input]").forEach((input) => {
+        input.addEventListener("change", async (event) => {
+          const fileInput = event.currentTarget;
+          const selectedFiles = [...(fileInput.files || [])];
+
+          if (!selectedFiles.length) {
+            return;
+          }
+
+          if (!currentUser) {
+            window.MakaUI?.showToast?.("ფაილების დასამატებლად გაიარე ავტორიზაცია.", "info");
+            fileInput.value = "";
+            return;
+          }
+
+          const draft = getSubmissionDraft(state, currentCourse.id, state.activeLessonId, currentUser);
+          const availableSlots = Math.max(0, 6 - draft.attachments.length);
+
+          if (!availableSlots) {
+            window.MakaUI?.showToast?.("ერთ გაკვეთილზე მაქსიმუმ 6 ფაილის დამატებაა შესაძლებელი.", "info");
+            fileInput.value = "";
+            return;
+          }
+
+          const filesToRead = selectedFiles.slice(0, availableSlots);
+          const nextAttachments = [];
+
           try {
-            const imageBase64 = await readFileAsBase64(file);
-            saveTaskUpload(currentCourse.id, state.activeLessonId, Number(fileInput.dataset.taskInput), imageBase64);
-            window.MakaUI?.showToast?.("ფოტო შენახულია დავალებაში.", "success");
-            rerender();
+            for (const file of filesToRead) {
+              if (Number(file.size || 0) > 4 * 1024 * 1024) {
+                window.MakaUI?.showToast?.(`"${file.name}" აღემატება 4 MB-ს და ვერ დაემატა.`, "info");
+                continue;
+              }
+
+              const dataUrl = await readFileAsBase64(file);
+              nextAttachments.push(createSubmissionAttachment(file, dataUrl));
+            }
           } catch (error) {
             window.MakaUI?.showToast?.("ფაილის ატვირთვა ვერ მოხერხდა.", "error");
+            fileInput.value = "";
+            return;
           }
+
+          if (nextAttachments.length) {
+            draft.attachments = [...draft.attachments, ...nextAttachments];
+            window.MakaUI?.showToast?.("ფაილები დაემატა პასუხს.", "success");
+            rerender();
+          }
+
+          fileInput.value = "";
+        });
+      });
+
+      layout.querySelectorAll("[data-draft-attachment-remove]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const attachmentId = button.dataset.draftAttachmentRemove || "";
+          const draft = getSubmissionDraft(state, currentCourse.id, state.activeLessonId, currentUser);
+          draft.attachments = draft.attachments.filter((attachment) => attachment.id !== attachmentId);
+          rerender();
+        });
+      });
+
+      layout.querySelectorAll("[data-lesson-submission-form]").forEach((form) => {
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          if (!currentUser) {
+            window.MakaUI?.showToast?.("პასუხის შესანახად გაიარე ავტორიზაცია.", "info");
+            return;
+          }
+
+          const draft = getSubmissionDraft(state, currentCourse.id, state.activeLessonId, currentUser);
+          const text = String(draft.text || "").trim();
+
+          if (!text && !draft.attachments.length) {
+            window.MakaUI?.showToast?.("გთხოვ, დაამატე ტექსტური პასუხი ან მინიმუმ ერთი ფაილი.", "info");
+            return;
+          }
+
+          const savedSubmission = saveLessonSubmission(currentCourse.id, state.activeLessonId, {
+            id: draft.id,
+            text,
+            attachments: draft.attachments,
+            submittedAt: draft.submittedAt,
+          });
+
+          if (!savedSubmission) {
+            window.MakaUI?.showToast?.("პასუხის შენახვა ვერ მოხერხდა.", "error");
+            return;
+          }
+
+          state.submissionDrafts[draftKey] = {
+            id: savedSubmission.id,
+            text: savedSubmission.text,
+            attachments: savedSubmission.attachments.map((attachment) => clone(attachment)),
+            submittedAt: savedSubmission.submittedAt,
+            updatedAt: savedSubmission.updatedAt,
+          };
+
+          markLessonCompleted(currentCourse, state.activeLessonId);
+          window.MakaUI?.showToast?.("პასუხი შენახულია.", "success");
+          rerender();
+        });
+      });
+
+      layout.querySelectorAll("[data-lesson-comment-form]").forEach((form) => {
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          if (!currentUser) {
+            window.MakaUI?.showToast?.("კომენტარის დასაწერად გაიარე ავტორიზაცია.", "info");
+            return;
+          }
+
+          const message = String(state.commentDrafts[draftKey] || "").trim();
+
+          if (!message) {
+            window.MakaUI?.showToast?.("გთხოვ, კომენტარის ტექსტი შეავსო.", "info");
+            return;
+          }
+
+          const comment = addLessonComment(currentCourse.id, state.activeLessonId, message);
+
+          if (!comment) {
+            window.MakaUI?.showToast?.("კომენტარის დამატება ვერ მოხერხდა.", "error");
+            return;
+          }
+
+          state.commentDrafts[draftKey] = "";
+          window.MakaUI?.showToast?.("კომენტარი დაემატა.", "success");
+          rerender();
         });
       });
     }

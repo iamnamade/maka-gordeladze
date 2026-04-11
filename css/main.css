@@ -1,4 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Serif+Georgian:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap");
+
+@font-face {
+  font-family: "Nino Mtavruli";
+  src: url("../fonts/bpg_nino_mtavruli_normal.ttf") format("truetype");
+  font-display: swap;
+  unicode-range: U+10A0-10FF, U+1C90-1CBF, U+2D00-2D2F;
+}
 
 :root {
   --color-bg: #faf7f2;
@@ -49,7 +56,7 @@ body {
     radial-gradient(circle at top right, rgba(139, 58, 42, 0.06), transparent 28%),
     var(--color-bg);
   color: var(--color-text-muted);
-  font-family: "Noto Serif Georgian", Georgia, serif;
+  font-family: "Nino Mtavruli", Georgia, serif;
   font-size: 17px;
   line-height: 1.7;
   text-rendering: optimizeLegibility;
@@ -66,7 +73,7 @@ input,
 select,
 textarea,
 nav {
-  font-family: "Noto Serif Georgian", Georgia, serif;
+  font-family: "Nino Mtavruli", Georgia, serif;
 }
 
 h1,
@@ -75,7 +82,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Cormorant Garamond", "Noto Serif Georgian", Georgia, serif;
+  font-family: "Nino Mtavruli", "Cormorant Garamond", Georgia, serif;
 }
 
 :lang(en),
@@ -2553,26 +2560,33 @@ section[id] {
 }
 
 .divider-text {
-  position: relative;
-  text-align: center;
-  color: #8a7b6d;
-  font-size: 0.92rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  width: 100%;
+  color: #928274;
+  font-size: 0.88rem;
+  line-height: 1;
 }
 
-.divider-text::before {
+.divider-text::before,
+.divider-text::after {
   content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  border-top: 1px solid rgba(226, 218, 208, 0.9);
+  flex: 1 1 auto;
+  height: 1px;
+  background: rgba(226, 218, 208, 0.84);
 }
 
 .divider-text span {
-  position: relative;
-  display: inline-block;
-  padding: 0 0.9rem;
-  background: rgba(255, 255, 255, 0.96);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: 1.35rem;
+  padding: 0;
+  background: transparent;
+  white-space: nowrap;
 }
 
 .interest-grid {

@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>კურსები | მაკა გორდელაძე</title>
-    <meta name="description" content="გაეცანი მაკა გორდელაძის ონლაინ კურსებს: ფსიქოლოგია, კომუნიკაცია, არტთერაპია და მშობლებისთვის შექმნილი პრაქტიკული პროგრამები.">
+    <meta name="description" content="გაეცანი მაკა გორდელაძის ონლაინ კურსებს: არტთერაპია, მშობლებისთვის, კომუნიკაცია და ფსიქოლოგიის საფუძვლები.">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/redesign.css">
     <script src="js/main.js" defer></script>
     <script src="js/auth.js" defer></script>
     <script src="js/courses.js" defer></script>
@@ -15,15 +16,14 @@
     <div data-site-header></div>
 
     <main class="courses-page" data-courses-page>
-      <section class="page-hero page-hero--courses">
+      <section class="page-hero page-hero--courses" aria-labelledby="courses-hero-title">
         <div class="container centered">
-          <div class="stack content-width centered animate-on-scroll">
-            <span class="section-label" style="justify-content: center; color: rgba(255,255,255,0.82);">კურსები</span>
-            <h1>კურსები</h1>
-            <div class="breadcrumb" style="justify-content: center;">
+          <div class="courses-hero__content stack centered animate-on-scroll">
+            <h1 id="courses-hero-title">კურსები</h1>
+            <div class="breadcrumb breadcrumb--hero" aria-label="breadcrumb">
               <a href="index.html">მთავარი</a>
-              <span class="divider-dot" aria-hidden="true"></span>
-              <span>კურსები</span>
+              <span class="breadcrumb__slash" aria-hidden="true">/</span>
+              <span aria-current="page">კურსები</span>
             </div>
           </div>
         </div>
@@ -31,10 +31,11 @@
 
       <section class="section">
         <div class="container">
-          <div class="section-heading centered animate-on-scroll">
-            <span class="section-label">ონლაინ სწავლა</span>
-            <h2>სწავლა <em>შენთვის მორგებული</em> ტემპით</h2>
-            <p>აირჩიე სასურველი მიმართულება, გაფილტრე შედეგები და გახსენი კურსი დეტალური გაკვეთილებით, დავალებებითა და პროგრესის შენახვით.</p>
+          <div class="courses-overview animate-on-scroll">
+            <div class="section-heading">
+              <span class="section-label">ონლაინ სწავლა</span>
+              <h2>აირჩიე კურსი, რომელიც <em>ახლა გჭირდება</em></h2>
+            </div>
           </div>
 
           <div class="catalog-toolbar card animate-on-scroll">
@@ -52,11 +53,6 @@
               <label class="sr-only" for="course-search">კურსის ძებნა</label>
               <input id="course-search" type="search" placeholder="კურსის ძებნა..." data-course-search>
             </div>
-          </div>
-
-          <div class="catalog-results__meta animate-on-scroll">
-            <strong data-results-count>0 კურსი</strong>
-            <span class="muted">ყველა კურსი იქმნება მაკა გორდელაძის ფსიქოლოგიურ და საგანმანათლებლო პრაქტიკაზე დაყრდნობით.</span>
           </div>
 
           <div class="courses-grid" data-courses-grid></div>

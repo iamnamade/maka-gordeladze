@@ -7,6 +7,7 @@
     <meta name="description" content="შეისწავლე კურსი დეტალურად: ვიდეო გაკვეთილები, დავალებები, ფაილების ატვირთვა, პროგრესი და შეძენის ფუნქცია.">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/redesign.css">
     <script src="js/main.js" defer></script>
     <script src="js/auth.js" defer></script>
     <script src="js/courses.js" defer></script>
@@ -14,22 +15,20 @@
   <body data-page="courses">
     <div data-site-header></div>
 
-    <main class="course-detail-page" data-course-detail-page>
-      <section class="page-hero page-hero--course" data-course-hero>
+    <main class="course-detail-page course-detail-page--workspace" data-course-detail-page>
+      <template data-course-hero>
         <div class="container">
-          <div class="stack content-width animate-on-scroll">
+          <div class="course-detail-hero__content stack animate-on-scroll">
             <span class="section-label" style="color: rgba(255,255,255,0.82);">კურსი</span>
             <h1 data-course-hero-title>კურსი</h1>
-            <div class="breadcrumb">
+            <div class="breadcrumb breadcrumb--hero-course" aria-label="breadcrumb">
               <a href="index.html">მთავარი</a>
-              <span class="divider-dot" aria-hidden="true"></span>
-              <a href="courses.html">კურსები</a>
-              <span class="divider-dot" aria-hidden="true"></span>
-              <span data-course-hero-crumb>კურსი</span>
+              <span class="breadcrumb__slash" aria-hidden="true">/</span>
+              <span data-course-hero-crumb>კურსი მშობლებისთვის</span>
             </div>
           </div>
         </div>
-      </section>
+      </template>
 
       <section class="section">
         <div class="container">

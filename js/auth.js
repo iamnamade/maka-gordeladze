@@ -23,6 +23,8 @@
       enrolledCourses: [],
       bookings: [],
       taskUploads: [],
+      lessonSubmissions: [],
+      lessonComments: [],
       reviews: [],
     },
     {
@@ -38,6 +40,8 @@
       enrolledCourses: [],
       bookings: [],
       taskUploads: [],
+      lessonSubmissions: [],
+      lessonComments: [],
       reviews: [],
     },
   ];
@@ -91,6 +95,8 @@
       enrolledCourses: normalizeArray(rawUser.enrolledCourses),
       bookings: normalizeArray(rawUser.bookings),
       taskUploads: normalizeArray(rawUser.taskUploads),
+      lessonSubmissions: normalizeArray(rawUser.lessonSubmissions),
+      lessonComments: normalizeArray(rawUser.lessonComments),
       reviews: normalizeArray(rawUser.reviews),
     };
   }
@@ -285,6 +291,8 @@
       enrolledCourses: [],
       bookings: [],
       taskUploads: [],
+      lessonSubmissions: [],
+      lessonComments: [],
       reviews: [],
     });
 
@@ -683,6 +691,7 @@
     }
 
     const selectedCategories = new Set();
+    const hasInterestStep = Boolean(stepPanels[2]) && interestButtons.length > 0;
 
     function getPasswordStrength(value) {
       const length = value.length;
@@ -720,6 +729,11 @@
 
     function updateStep(step) {
       currentStep = step;
+      if (!hasInterestStep) {
+        setStatus(status, "", "");
+        return;
+      }
+
       Object.entries(stepPanels).forEach(([panelStep, panel]) => {
         panel?.classList.toggle("is-active", Number(panelStep) === step);
       });
@@ -755,7 +769,9 @@
     });
 
     backButton?.addEventListener("click", () => {
-      updateStep(1);
+      if (hasInterestStep) {
+        updateStep(1);
+      }
     });
 
     googleButton?.addEventListener("click", () => {
@@ -787,14 +803,30 @@
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
+      const validation = validateRegisterCredentials(form);
+      if (!validation.isValid) {
+        setStatus(status, "გთხოვთ გაასწოროთ მონიშნული ველები.", "error");
+        return;
+      }
 
-      if (currentStep === 1) {
-        const validation = validateRegisterCredentials(form);
-        if (!validation.isValid) {
-          setStatus(status, "გთხოვთ გაასწოროთ მონიშნული ველები.", "error");
+      if (!hasInterestStep) {
+        const result = register(validation.values);
+
+        if (!result.ok) {
+          setStatus(status, result.message, "error");
+          showAuthToast(result.message, "error");
           return;
         }
 
+        setStatus(status, result.message, "success");
+        showAuthToast(result.message, "success");
+        window.setTimeout(() => {
+          window.location.href = getPostAuthRedirect(result.user);
+        }, 500);
+        return;
+      }
+
+      if (currentStep === 1) {
         draftValues = validation.values;
         updateStep(2);
         return;

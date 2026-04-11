@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>თერაპია | მაკა გორდელაძე</title>
-    <meta name="description" content="დაჯავშნე ინდივიდუალური ან ჯგუფური თერაპიის სესია მაკა გორდელაძესთან.">
+    <meta
+      name="description"
+      content="დაჯავშნე ინდივიდუალური ან ჯგუფური თერაპიის სესია მაკა გორდელაძესთან მშვიდ, თბილ და პროფესიონალურ გარემოში."
+    >
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/redesign.css">
     <script src="js/main.js" defer></script>
     <script src="js/auth.js" defer></script>
     <script src="js/calendar.js" defer></script>
@@ -16,35 +20,102 @@
     <div data-site-header></div>
 
     <main class="therapy-page" data-therapy-page>
-      <section class="page-hero page-hero--therapy">
+      <section class="page-hero page-hero--therapy" aria-labelledby="therapy-hero-title">
         <div class="container centered">
-          <div class="stack content-width centered animate-on-scroll">
-            <span class="section-label" style="justify-content: center; color: rgba(255,255,255,0.82);">თერაპია</span>
-            <h1>თერაპია</h1>
-            <div class="breadcrumb" style="justify-content: center;">
+          <div class="therapy-hero__content stack centered animate-on-scroll">
+            <h1 id="therapy-hero-title">თერაპია</h1>
+            <div class="breadcrumb breadcrumb--hero" aria-label="breadcrumb">
               <a href="index.html">მთავარი</a>
-              <span class="divider-dot" aria-hidden="true"></span>
-              <span>თერაპია</span>
+              <span class="breadcrumb__slash" aria-hidden="true">/</span>
+              <span aria-current="page">თერაპია</span>
             </div>
           </div>
         </div>
       </section>
 
       <section class="section">
+        <div class="container split-layout therapy-intro">
+          <div class="stack animate-on-scroll">
+            <div class="section-heading">
+              <span class="section-label">მუშაობის ფორმატი</span>
+              <h2>მშვიდი სივრცე, <em>შენზე მორგებული</em> პროცესით</h2>
+              <p>
+                თერაპიული პროცესი შენს ტემპს, გამოცდილებას და საჭიროებებს ერგება. თითოეული
+                შეხვედრა იგეგმება უსაფრთხო, სანდო და მკაფიო სტრუქტურით, რათა ყურადღება მთლიანად
+                შენს შინაგან პროცესზე დარჩეს.
+              </p>
+              <p>
+                შეგიძლია აირჩიო ინდივიდუალური ან ჯგუფური ფორმატი. ორივე შემთხვევაში მიღებ
+                პროფესიონალურ მხარდაჭერას, ემპათიურ კომუნიკაციას და სივრცეს, სადაც ცვლილება
+                ბუნებრივად და მშვიდად ვითარდება.
+              </p>
+            </div>
+
+            <div class="therapy-intro__benefits">
+              <article class="card therapy-intro__card">
+                <div class="therapy-intro__card-top">
+                  <span class="icon-box" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"></path>
+                      <path d="M5.5 20a6.5 6.5 0 0 1 13 0"></path>
+                    </svg>
+                  </span>
+                  <h3>ინდივიდუალური პროცესი</h3>
+                </div>
+                <p>უფრო ღრმა მუშაობა პირად გამოცდილებაზე, ემოციებზე და ურთიერთობებზე.</p>
+              </article>
+
+              <article class="card therapy-intro__card">
+                <div class="therapy-intro__card-top">
+                  <span class="icon-box" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+                      <path d="M16.5 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"></path>
+                      <path d="M3.5 20a5.5 5.5 0 0 1 9 0"></path>
+                      <path d="M13 20a4.5 4.5 0 0 1 7 0"></path>
+                    </svg>
+                  </span>
+                  <h3>ჯგუფური მხარდაჭერა</h3>
+                </div>
+                <p>გაზიარებული გამოცდილება, ახალი პერსპექტივები და ურთიერთდამხმარე გარემო.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="therapy-intro__media media-frame animate-on-scroll">
+            <img
+              class="optimized-media"
+              src="https://images.pexels.com/photos/5699455/pexels-photo-5699455.jpeg"
+              alt="თერაპიული შეხვედრის მშვიდი გარემო"
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-alt therapy-types-section">
         <div class="container">
           <div class="section-heading centered animate-on-scroll">
             <span class="section-label">ფორმატი</span>
             <h2>აირჩიე <em>თერაპიის ტიპი</em></h2>
-            <p>შეგიძლია აირჩიო ინდივიდუალური შეხვედრა ან ჯგუფური ფორმატი. ფასი და დრო ავტომატურად განახლდება.</p>
+            <p>აირჩიე შენთვის შესაბამისი ფორმატი. კალენდარი და დაჯავშნის დეტალები ავტომატურად განახლდება.</p>
           </div>
 
           <div class="therapy-type-grid">
             <button class="therapy-type-card is-selected animate-on-scroll" type="button" data-therapy-type="individual" aria-pressed="true">
               <div class="therapy-type-card__image">
-                <img class="optimized-media" src="https://images.pexels.com/photos/36729385/pexels-photo-36729385.jpeg?auto=compress&cs=tinysrgb&w=800" alt="ინდივიდუალური თერაპია" onerror="this.onerror=null;this.src='https://picsum.photos/seed/fallback/800/500'">
+                <img
+                  class="optimized-media"
+                  src="https://images.pexels.com/photos/8560221/pexels-photo-8560221.jpeg"
+                  alt="ინდივიდუალური თერაპია"
+                >
               </div>
               <div class="therapy-type-card__header">
-                <span class="therapy-type-card__icon">🧍</span>
+                <span class="therapy-type-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <circle cx="12" cy="7.5" r="3.2"></circle>
+                    <path d="M6.5 19.25c.8-3.15 3-5.05 5.5-5.05s4.7 1.9 5.5 5.05"></path>
+                  </svg>
+                </span>
                 <div class="therapy-type-card__meta">
                   <h3>ინდივიდუალური თერაპია</h3>
                   <span class="muted">შენს ტემპზე მორგებული პირადი სივრცე</span>
@@ -60,10 +131,23 @@
 
             <button class="therapy-type-card animate-on-scroll" type="button" data-therapy-type="group" aria-pressed="false">
               <div class="therapy-type-card__image">
-                <img class="optimized-media" src="https://images.pexels.com/photos/7176305/pexels-photo-7176305.jpeg?auto=compress&cs=tinysrgb&w=800" alt="ჯგუფური თერაპია" onerror="this.onerror=null;this.src='https://picsum.photos/seed/fallback/800/500'">
+                <img
+                  class="optimized-media"
+                  src="https://images.pexels.com/photos/7176305/pexels-photo-7176305.jpeg"
+                  alt="ჯგუფური თერაპია"
+                >
               </div>
               <div class="therapy-type-card__header">
-                <span class="therapy-type-card__icon">👥</span>
+                <span class="therapy-type-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <circle cx="12" cy="8.1" r="2.9"></circle>
+                    <circle cx="6.9" cy="9.3" r="2.35"></circle>
+                    <circle cx="17.1" cy="9.3" r="2.35"></circle>
+                    <path d="M8.15 18.85c.72-2.4 2.14-3.85 3.85-3.85s3.13 1.45 3.85 3.85"></path>
+                    <path d="M2.9 18.85c.5-1.82 1.6-2.95 3.06-2.95 1 0 1.88.53 2.53 1.48"></path>
+                    <path d="M21.1 18.85c-.5-1.82-1.6-2.95-3.06-2.95-1 0-1.88.53-2.53 1.48"></path>
+                  </svg>
+                </span>
                 <div class="therapy-type-card__meta">
                   <h3>ჯგუფური თერაპია</h3>
                   <span class="muted">გაზიარებული გამოცდილება და მხარდაჭერა</span>
@@ -80,18 +164,18 @@
         </div>
       </section>
 
-      <section class="section section-alt">
+      <section class="section">
         <div class="container">
-          <div class="booking-layout">
+          <div class="booking-layout booking-layout--minimal">
             <div class="card calendar-shell animate-on-scroll">
-              <div class="section-heading" style="margin-bottom: 1.5rem;">
+              <div class="calendar-shell__intro stack-sm">
                 <span class="section-label">დაჯავშნა</span>
-                <h2>დრო <em>აირჩიე</em></h2>
+                <p>აირჩიე სასურველი დღე. დეტალები და ხელმისაწვდომი დრო მარჯვნივ მაშინვე განახლდება.</p>
               </div>
 
               <div class="calendar-header">
                 <h3 data-calendar-month>აპრილი 2026</h3>
-                <div class="calendar-nav">
+                <div class="calendar-nav" aria-label="კალენდრის ნავიგაცია">
                   <button type="button" aria-label="წინა თვე" data-calendar-prev>←</button>
                   <button type="button" aria-label="შემდეგი თვე" data-calendar-next>→</button>
                 </div>
@@ -108,43 +192,54 @@
               </div>
 
               <div class="calendar-grid" data-calendar-grid></div>
-
-              <div class="slots-panel">
-                <div class="space-between">
-                  <h3 data-slots-title>აირჩიე დღე, რათა დროები გამოჩნდეს</h3>
-                  <span class="badge">ხელმისაწვდომი სლოტები</span>
-                </div>
-                <div class="slot-grid" data-slots-grid>
-                  <div class="calendar-empty">ჯერ თარიღი არ არის არჩეული.</div>
-                </div>
-              </div>
             </div>
 
-            <aside class="card booking-summary sticky-panel animate-on-scroll">
-              <div class="section-heading" style="margin-bottom: 0;">
-                <span class="section-label">შეჯამება</span>
-                <h3>შენი ჯავშანი</h3>
+            <aside class="card booking-summary sticky-panel animate-on-scroll" aria-live="polite">
+              <div class="booking-summary__header stack-sm">
+                <span class="section-label">არჩეული სესია</span>
+                <h3>ჯავშნის დეტალები</h3>
+                <p>მინიმალური და მკაფიო არჩევანი, რომ დაჯავშნა რამდენიმე ნაბიჯში დასრულდეს.</p>
               </div>
 
-              <div class="booking-summary__group">
-                <div class="booking-summary__item">
+              <div class="booking-summary__placeholder" data-summary-placeholder>
+                აირჩიე თარიღი კალენდრიდან და აქ გამოჩნდება სესიის ტიპი, ფასი, ხელმისაწვდომი დრო და დაჯავშნის ღილაკი.
+              </div>
+
+              <div class="booking-summary__content" data-summary-content hidden>
+                <div class="booking-summary__hero">
                   <div>
-                    <strong>არჩეული თარიღი</strong>
-                    <p class="muted" data-summary-date>არ არის არჩეული</p>
+                    <span class="booking-summary__eyebrow">არჩეული თარიღი</span>
+                    <h4 data-summary-date>არ არის არჩეული</h4>
                   </div>
-                  <div>
-                    <strong>დრო</strong>
-                    <p class="muted" data-summary-time>აირჩიე დრო</p>
+                  <span class="booking-summary__status" data-summary-status>ხელმისაწვდომია</span>
+                </div>
+
+                <div class="booking-summary__group booking-summary__group--minimal">
+                  <div class="booking-summary__item">
+                    <span>სესიის ტიპი</span>
+                    <strong data-summary-type>ინდივიდუალური თერაპია</strong>
+                  </div>
+                  <div class="booking-summary__item">
+                    <span>ხანგრძლივობა</span>
+                    <strong data-summary-duration>50 წთ</strong>
+                  </div>
+                  <div class="booking-summary__item">
+                    <span>დრო</span>
+                    <strong data-summary-time>10:00</strong>
+                  </div>
+                  <div class="booking-summary__item">
+                    <span>ფასი</span>
+                    <strong class="booking-summary__price" data-summary-price>₾80</strong>
                   </div>
                 </div>
-                <div class="booking-summary__item">
-                  <div>
-                    <strong>ტიპი</strong>
-                    <p class="muted" data-summary-type>ინდივიდუალური თერაპია</p>
+
+                <div class="booking-summary__slots stack-sm">
+                  <div class="space-between booking-summary__slots-head">
+                    <strong data-slots-title>აირჩიე დრო</strong>
+                    <span class="badge">დროები</span>
                   </div>
-                  <div>
-                    <strong>ფასი</strong>
-                    <p class="booking-summary__price" data-summary-price>₾80</p>
+                  <div class="slot-grid" data-slots-grid>
+                    <div class="calendar-empty">ჯერ თარიღი არ არის არჩეული.</div>
                   </div>
                 </div>
               </div>
@@ -154,7 +249,7 @@
               </div>
 
               <button class="btn btn-primary" type="button" data-open-payment disabled>
-                გადახდაზე გადასვლა <span class="btn-arrow">→</span>
+                დაჯავშნა <span class="btn-arrow">→</span>
               </button>
             </aside>
           </div>

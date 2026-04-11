@@ -5,16 +5,30 @@
     activeModal: null,
     lastFocusedElement: null,
   };
-  const REMOVED_COURSE_TITLES = new Set(["ემოციური წიგნიერება", "ოჯახური კომუნიკაცია"]);
+  const REMOVED_COURSE_TITLES = new Set([
+    "ემოციური წიგნიერება",
+    "ოჯახური კომუნიკაცია",
+    "შემოქმედებითი თვითგამოხატვა",
+    "სტრესთან გამკლავება",
+  ]);
   const FALLBACK_SEARCH_COURSES = [
     { id: 1, title: "არტთერაპია", cat: "არტთერაპია" },
-    { id: 2, title: "მშობლების კურსი", cat: "მშობლებისთვის" },
+    { id: 2, title: "კურსი მშობლებისთვის", cat: "მშობლებისთვის" },
     { id: 3, title: "ინტერპერსონალური კომუნიკაცია", cat: "კომუნიკაცია" },
     { id: 4, title: "ფსიქოლოგიის საფუძვლები", cat: "ფსიქოლოგია" },
-    { id: 7, title: "შემოქმედებითი თვითგამოხატვა", cat: "არტთერაპია" },
-    { id: 8, title: "სტრესთან გამკლავება", cat: "ფსიქოლოგია" },
   ];
+  const SITE_CONTACT = {
+    phone: "+995 555 12 34 56",
+    phoneHref: "tel:+995555123456",
+    email: "info@makagordeladze.ge",
+    emailHref: "mailto:info@makagordeladze.ge",
+    location: "თბილისი, საქართველო",
+  };
+  const SITE_SOCIALS = [];
+  const NAV_DROPDOWN_CLOSE_DELAY = 160;
   let globalEventsBound = false;
+  let activeDesktopNavDropdown = null;
+  let activeDesktopNavCloseTimer = 0;
 
   function onReady(callback) {
     if (document.readyState === "loading") {
@@ -78,20 +92,22 @@
       return "contact";
     }
 
+    if (path.endsWith("/maka.html")) {
+      return "maka";
+    }
+
     return "home";
   }
 
   function getPageHref(pageId) {
     const base = getBasePath();
     const current = getCurrentPageId();
-    const homePrefix = current === "home" ? "" : `${base}index.html`;
 
     const routes = {
       home: current === "home" ? "#home" : `${base}index.html`,
       therapy: `${base}therapy.html`,
       courses: `${base}courses.html`,
-      about: `${homePrefix}#about`,
-      blog: `${homePrefix}#blog`,
+      about: `${base}maka.html`,
       contact: `${base}contact.html`,
       login: `${base}login.html`,
       dashboard: `${base}dashboard.html`,
@@ -103,10 +119,14 @@
 
   function getIcon(name) {
     const icons = {
+      location:
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-13a7 7 0 1 0-14 0c0 6.8 7 13 7 13z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>',
       phone:
         '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.77 19.77 0 0 1-8.63-3.07A19.52 19.52 0 0 1 5.15 12.8 19.77 19.77 0 0 1 2.08 4.11 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.89.33 1.76.62 2.59a2 2 0 0 1-.45 2.11L8 9.94a16 16 0 0 0 6.06 6.06l1.52-1.23a2 2 0 0 1 2.11-.45c.83.29 1.7.5 2.59.62A2 2 0 0 1 22 16.92z"></path></svg>',
       mail:
         '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v.4L12 13 2 6.4V6a2 2 0 0 1 2-2z"></path><path d="M22 8.3V18a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.3l9.4 6.27a1 1 0 0 0 1.2 0L22 8.3z"></path></svg>',
+      clock:
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v5l3 3"></path><circle cx="12" cy="12" r="9"></circle></svg>',
       search:
         '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>',
       close:
@@ -120,19 +140,37 @@
       x:
         '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 5 14 14"></path><path d="M19 5 5 19"></path></svg>',
       logo:
-        '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M12 16c0-4.42 3.58-8 8-8 3.67 0 6.77 2.47 7.72 5.84A8 8 0 1 1 34 28h-4.5A7.5 7.5 0 0 0 24 22a7.5 7.5 0 0 0-5.5 6H14a8 8 0 0 1-2-5.33V16z"></path><path d="M34 32a8 8 0 0 1-16 0h4.5A7.5 7.5 0 0 0 24 38a7.5 7.5 0 0 0 5.5-6H34z"></path></svg>',
+        '<svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M7 24c0-5 4-9 9-9 3.6 0 6.3 1.8 8 5.3C22.3 25.2 19.6 27 16 27c-5 0-9-4-9-9Z"></path><path d="M41 24c0 5-4 9-9 9-3.6 0-6.3-1.8-8-5.3C25.7 22.8 28.4 21 32 21c5 0 9 4 9 9Z"></path><path d="M16 24c2.2-4.2 4.9-6.3 8-6.3S29.8 19.8 32 24c-2.2 4.2-4.9 6.3-8 6.3S18.2 28.2 16 24Z"></path><path d="M20.5 29.5 16.6 33.4"></path></svg>',
     };
 
     return icons[name] || "";
   }
 
   function renderSocialLinks(variant = "header") {
-    const items = [
+    return SITE_SOCIALS.filter((item) => item?.href)
+      .map(
+        (item) => `
+          <a class="social-link social-link--${variant}" href="${escapeHtml(item.href)}" aria-label="${escapeHtml(item.label)}" target="_blank" rel="noreferrer noopener">
+            ${item.svg}
+          </a>
+        `,
+      )
+      .join("");
+  }
+
+  function getTopbarSocialItems() {
+    return [
       {
         label: "Facebook",
         href: "#",
         svg:
           '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>',
+      },
+      {
+        label: "X",
+        href: "#",
+        svg:
+          '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.112 8.127L22.75 22h-6.548l-5.128-6.689L5.22 22H1.96l7.607-8.694L1.55 2h6.714l4.635 6.113L18.244 2Zm-1.143 18.05h1.805L7.276 3.855H5.34L17.101 20.05Z"/></svg>',
       },
       {
         label: "Instagram",
@@ -147,16 +185,45 @@
           '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>',
       },
     ];
+  }
+
+  function renderContactTopbarSocialLinks() {
+    const items = getTopbarSocialItems();
 
     return items
       .map(
         (item) => `
-          <a class="social-link social-link--${variant}" href="${item.href}" aria-label="${item.label}">
+          <a class="social-link social-link--header" href="${escapeHtml(item.href)}" aria-label="${escapeHtml(item.label)}" target="_blank" rel="noreferrer noopener">
             ${item.svg}
           </a>
         `,
       )
       .join("");
+  }
+
+  function renderMobileMenuSocialLinks() {
+    const items = getTopbarSocialItems();
+
+    return items
+      .map(
+        (item) => `
+          <a class="mobile-nav__social-link" href="${escapeHtml(item.href)}" aria-label="${escapeHtml(item.label)}" target="_blank" rel="noreferrer noopener">
+            ${item.svg}
+          </a>
+        `,
+      )
+      .join("");
+  }
+
+  function renderSiteLogo({ href, variant = "" }) {
+    const classes = ["site-logo", variant].filter(Boolean).join(" ");
+
+    return `
+      <a class="${classes}" href="${href}" aria-label="მაკა გორდელაძე">
+        <span class="site-logo__mark">${getIcon("logo")}</span>
+        <span class="site-logo__text">მაკა გორდელაძე</span>
+      </a>
+    `;
   }
 
   function renderSiteHeader() {
@@ -167,74 +234,114 @@
     }
 
     const currentPage = getCurrentPageId();
-    const currentUser = window.Auth?.getCurrentUser?.() || null;
-    const dashboardHref = currentUser?.role === "admin" ? getPageHref("admin") : getPageHref("dashboard");
-    const navLinks = [
+    const leftLinks = [
       { id: "home", label: "მთავარი", href: getPageHref("home") },
-      { id: "therapy", label: "თერაპია", href: getPageHref("therapy") },
-      { id: "courses", label: "კურსები", href: getPageHref("courses") },
-      { id: "about", label: "ჩემ შესახებ", href: getPageHref("about") },
-      { id: "blog", label: "ბლოგი", href: getPageHref("blog") },
+      { id: "about", label: "მაკას შესახებ", href: getPageHref("about") },
+    ];
+    const therapyLinks = [
+      { label: "ინდივიდუალური", href: `${getPageHref("therapy")}?type=individual` },
+      { label: "ჯგუფური", href: `${getPageHref("therapy")}?type=group` },
+    ];
+    const courseLinks = [
+      { label: "არტთერაპია", href: `${getPageHref("courses")}?category=${encodeURIComponent("არტთერაპია")}` },
+      { label: "კურსი მშობლებისთვის", href: `${getPageHref("courses")}?category=${encodeURIComponent("მშობლებისთვის")}` },
+      { label: "ინტერპერსონალური კომუნიკაცია", href: `${getPageHref("courses")}?category=${encodeURIComponent("კომუნიკაცია")}` },
+      { label: "ფსიქოლოგიის საფუძვლები", href: `${getPageHref("courses")}?category=${encodeURIComponent("ფსიქოლოგია")}` },
+    ];
+    const rightLinks = [
       { id: "contact", label: "კონტაქტი", href: getPageHref("contact") },
     ];
+    const socialMarkup = renderContactTopbarSocialLinks();
+    const mobileMenuSocialMarkup = renderMobileMenuSocialLinks();
 
-    const navMarkup = navLinks
-      .map((link) => {
-        const isActive =
-          (link.id === "home" && currentPage === "home") ||
-          (link.id === "therapy" && currentPage === "therapy") ||
-          (link.id === "courses" && currentPage === "courses") ||
-          (link.id === "contact" && currentPage === "contact");
-        return `<a class="nav-link${isActive ? " is-active" : ""}" href="${link.href}">${link.label}</a>`;
-      })
-      .join("");
+    const currentHash = window.location.hash || "";
+    const topbarSocialLabel = socialMarkup ? "გამოგვყევი:" : "";
+    const renderDesktopLink = (link) => {
+      const isActive =
+        (link.id === "home" && currentPage === "home" && (!currentHash || currentHash === "#home")) ||
+        (link.id === "about" && (currentPage === "maka" || (currentPage === "home" && currentHash === "#about"))) ||
+        (link.id === "contact" && ["contact", "login", "register"].includes(currentPage));
 
-    const profileMarkup = currentUser
-      ? `<a class="btn btn-outline profile-button" href="${dashboardHref}">პროფილი <span class="btn-arrow">↗</span></a>`
-      : `<a class="btn btn-outline profile-button" href="${getPageHref("login")}">შესვლა <span class="btn-arrow">↗</span></a>`;
+      return `<a class="nav-link${isActive ? " is-active" : ""}" href="${link.href}">${link.label}</a>`;
+    };
+    const renderDropdown = (label, href, items, isActive) => `
+      <div class="nav-dropdown${isActive ? " is-active" : ""}">
+        <a class="nav-link nav-link--dropdown${isActive ? " is-active" : ""}" href="${href}">
+          <span>${label}</span>
+          <span class="nav-caret" aria-hidden="true">▪</span>
+        </a>
+        <div class="nav-dropdown__menu">
+          ${items
+            .map(
+              (item) => `
+                <a class="nav-dropdown__item" href="${item.href}">
+                  <span>${item.label}</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+              `,
+            )
+            .join("")}
+        </div>
+      </div>
+    `;
+    const centerNavMarkup = `
+      ${leftLinks.map(renderDesktopLink).join("")}
+      ${renderDropdown("თერაპია", getPageHref("therapy"), therapyLinks, currentPage === "therapy")}
+      ${renderDropdown("კურსები", getPageHref("courses"), courseLinks, currentPage === "courses")}
+      ${rightLinks.map(renderDesktopLink).join("")}
+    `;
 
     const markup = `
       <header class="site-header" data-sticky-header>
         <div class="topbar">
           <div class="topbar__inner">
             <div class="topbar__info">
-              <a href="tel:+995555123456">${getIcon("phone")} <span data-latin>+995 555 12 34 56</span></a>
-              <a href="mailto:info@makagordeladze.ge">${getIcon("mail")} <span data-latin>info@makagordeladze.ge</span></a>
+              <a href="${SITE_CONTACT.phoneHref}">${getIcon("phone")} <span data-latin>${SITE_CONTACT.phone}</span></a>
+              <a href="${SITE_CONTACT.emailHref}">${getIcon("mail")} <span data-latin>${SITE_CONTACT.email}</span></a>
+              <a href="${getPageHref("contact")}">${getIcon("location")} <span>${SITE_CONTACT.location}</span></a>
             </div>
-            <div class="topbar__social">
-              <span>გამოგვყევი:</span>
-              <div class="social-links">${renderSocialLinks("header")}</div>
+            <div class="topbar__side">
+              ${socialMarkup
+                ? `
+                  <div class="topbar__social" aria-label="სოციალური ქსელები">
+                    ${topbarSocialLabel ? `<span>${topbarSocialLabel}</span>` : ""}
+                    <div class="social-links">${socialMarkup}</div>
+                  </div>
+                `
+                : ""}
             </div>
           </div>
         </div>
         <div class="navbar" data-search-component>
           <div class="navbar__inner navbar-shell">
             <div class="nav-content" data-nav-content>
-              <a class="site-logo" href="${getPageHref("home")}" aria-label="მაკა გორდელაძე">
-                <span class="site-logo__mark">${getIcon("logo")}</span>
-                <span>მაკა გორდელაძე</span>
-              </a>
-              <nav class="nav-links" aria-label="მთავარი ნავიგაცია">${navMarkup}</nav>
-              <div class="nav-actions">
-                <button class="nav-search" type="button" aria-label="ძიება" aria-expanded="false" data-search-trigger>
-                  ${getIcon("search")}
-                </button>
-                ${profileMarkup}
-                <a class="btn btn-primary" href="${getPageHref("therapy")}">დაჯავშნე სესია <span class="btn-arrow">↗</span></a>
-                <button class="hamburger" type="button" aria-label="მენიუს გახსნა" aria-expanded="false" data-nav-toggle>
-                  <span class="hamburger__box" aria-hidden="true">
-                    <span class="hamburger__line"></span>
-                    <span class="hamburger__line"></span>
-                    <span class="hamburger__line"></span>
-                  </span>
-                </button>
+              <div class="nav-layout">
+                <div class="nav-brand">
+                  ${renderSiteLogo({ href: getPageHref("home"), variant: "site-logo--header" })}
+                </div>
+                <nav class="nav-group nav-group--center" aria-label="მთავარი ნავიგაცია">
+                  ${centerNavMarkup}
+                </nav>
+                <div class="nav-actions">
+                  <button class="nav-search" type="button" aria-label="ძიება" aria-expanded="false" data-search-trigger>
+                    ${getIcon("search")}
+                  </button>
+                  <a class="btn btn-primary" href="${getPageHref("therapy")}">დაჯავშნა <span class="btn-arrow">↗</span></a>
+                  <button class="hamburger" type="button" aria-label="მენიუს გახსნა" aria-expanded="false" data-nav-toggle>
+                    <span class="hamburger__box" aria-hidden="true">
+                      <span class="hamburger__line"></span>
+                      <span class="hamburger__line"></span>
+                      <span class="hamburger__line"></span>
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
           <div class="nav-search-bar search-bar-inline" data-search-bar>
             <div class="nav-search-bar__inner">
               <div class="nav-search-field">
-                <input type="search" class="nav-search-input" placeholder="რა გაინტერესებს?" aria-label="ძებნა" data-search-input>
+                <input type="search" class="nav-search-input" placeholder="შეიყვანე საკვანძო სიტყვა" aria-label="ძებნა" data-search-input>
                 <span class="nav-search-field__icon" aria-hidden="true">${getIcon("search")}</span>
               </div>
             </div>
@@ -249,21 +356,57 @@
         <div class="mobile-nav__backdrop" data-nav-close></div>
         <div class="mobile-nav__panel">
           <div class="mobile-nav__header">
-            <a class="site-logo" href="${getPageHref("home")}">
-              <span class="site-logo__mark">${getIcon("logo")}</span>
-              <span>მაკა გორდელაძე</span>
-            </a>
-            <button class="nav-search" type="button" aria-label="მენიუს დახურვა" data-nav-close>
+            ${renderSiteLogo({ href: getPageHref("home"), variant: "site-logo--mobile" })}
+            <button class="nav-search mobile-nav__close" type="button" aria-label="მენიუს დახურვა" data-nav-close>
               ${getIcon("close")}
             </button>
           </div>
-          <nav class="mobile-nav__links" aria-label="მობილური ნავიგაცია">
-            ${navLinks.map((link) => `<a href="${link.href}"><span>${link.label}</span><span>↗</span></a>`).join("")}
-          </nav>
-          <div class="mobile-nav__footer stack-sm">
-            ${profileMarkup}
-            <a class="btn btn-primary" href="${getPageHref("therapy")}">დაჯავშნე სესია <span class="btn-arrow">↗</span></a>
+          <form class="mobile-nav__search" role="search" data-mobile-menu-search-form>
+            <span aria-hidden="true">${getIcon("search")}</span>
+            <label class="sr-only" for="mobile-menu-search">ძებნა</label>
+            <input id="mobile-menu-search" type="search" placeholder="ძიება" autocomplete="off" data-mobile-menu-search>
+          </form>
+          <div class="mobile-nav__links" aria-label="მობილური ნავიგაცია">
+            ${leftLinks.map((link) => `<a href="${link.href}"><span>${link.label}</span><span>↗</span></a>`).join("")}
+            <a class="btn btn-primary mobile-nav__booking" href="${getPageHref("therapy")}">დაჯავშნა <span class="btn-arrow">↗</span></a>
+            <div class="mobile-nav__group">
+              <strong>თერაპია</strong>
+              <div class="mobile-nav__sublinks">
+                ${therapyLinks.map((item) => `<a href="${item.href}"><span>${item.label}</span><span>↗</span></a>`).join("")}
+              </div>
+            </div>
+            <div class="mobile-nav__group">
+              <strong>კურსები</strong>
+              <div class="mobile-nav__sublinks">
+                ${courseLinks.map((item) => `<a href="${item.href}"><span>${item.label}</span><span>↗</span></a>`).join("")}
+              </div>
+            </div>
+            ${rightLinks.map((link) => `<a href="${link.href}"><span>${link.label}</span><span>↗</span></a>`).join("")}
           </div>
+          <footer class="mobile-nav__footer" aria-label="საკონტაქტო ინფორმაცია">
+            <div class="mobile-nav__contact">
+              <span class="mobile-nav__contact-label">კონტაქტი</span>
+              <a class="mobile-nav__contact-link" href="${SITE_CONTACT.phoneHref}">
+                <span class="mobile-nav__contact-icon" aria-hidden="true">${getIcon("phone")}</span>
+                <span data-latin>${SITE_CONTACT.phone}</span>
+              </a>
+              <a class="mobile-nav__contact-link" href="${SITE_CONTACT.emailHref}">
+                <span class="mobile-nav__contact-icon" aria-hidden="true">${getIcon("mail")}</span>
+                <span data-latin>${SITE_CONTACT.email}</span>
+              </a>
+              <a class="mobile-nav__contact-link" href="${getPageHref("contact")}">
+                <span class="mobile-nav__contact-icon" aria-hidden="true">${getIcon("location")}</span>
+                <span>${SITE_CONTACT.location}</span>
+              </a>
+              ${mobileMenuSocialMarkup
+                ? `
+                  <div class="mobile-nav__socials" aria-label="სოციალური ქსელები">
+                    ${mobileMenuSocialMarkup}
+                  </div>
+                `
+                : ""}
+            </div>
+          </footer>
         </div>
       </div>
     `;
@@ -281,39 +424,44 @@
     }
 
     const year = new Date().getFullYear();
+    const footerSocialMarkup = renderSocialLinks("footer");
     const markup = `
       <footer class="site-footer">
         <div class="footer__main">
           <div class="container footer__grid">
-            <div class="footer__column">
-              <a class="site-logo" href="${getPageHref("home")}" aria-label="მაკა გორდელაძე">
-                <span class="site-logo__mark">${getIcon("logo")}</span>
-                <span>მაკა გორდელაძე</span>
-              </a>
-              <p>მაკა გორდელაძე არის ფსიქოლოგი, პედაგოგი და კოუჩი, რომელიც გთავაზობს ონლაინ სესიებს, კურსებს და მშვიდ, თანმიმდევრულ მხარდაჭერას.</p>
-              <div class="social-links">${renderSocialLinks("footer")}</div>
+            <div class="footer__column footer__column--brand">
+              ${renderSiteLogo({ href: getPageHref("home"), variant: "site-logo--footer" })}
+              <p>ფსიქოლოგიური, თერაპიული და საგანმანათლებლო სივრცე, სადაც ყურადღება ეთმობა ნდობას, ემპათიას და შინაგანი ბალანსის მშვიდად პოვნას.</p>
+              <div class="footer__contact-list">
+                <a href="${SITE_CONTACT.phoneHref}"><span data-latin>${SITE_CONTACT.phone}</span></a>
+                <a href="${SITE_CONTACT.emailHref}"><span data-latin>${SITE_CONTACT.email}</span></a>
+              </div>
+              ${footerSocialMarkup ? `<div class="social-links">${footerSocialMarkup}</div>` : ""}
             </div>
             <div class="footer__column">
-              <strong class="footer__title">კომპანია</strong>
+              <strong class="footer__title">ნავიგაცია</strong>
               <div class="footer__links">
                 <a href="${getPageHref("home")}">მთავარი</a>
-                <a href="${getPageHref("about")}">ჩემ შესახებ</a>
-                <a href="${getPageHref("blog")}">ბლოგი</a>
+                <a href="${getPageHref("about")}">მაკას შესახებ</a>
+                <a href="${getPageHref("therapy")}">თერაპია</a>
+                <a href="${getPageHref("courses")}">კურსები</a>
                 <a href="${getPageHref("contact")}">კონტაქტი</a>
               </div>
             </div>
             <div class="footer__column">
-              <strong class="footer__title">სერვისები</strong>
+              <strong class="footer__title">მიმართულებები</strong>
               <div class="footer__links">
-                <a href="${getPageHref("therapy")}">ინდივიდუალური თერაპია</a>
-                <a href="${getPageHref("therapy")}">ჯგუფური თერაპია</a>
-                <a href="${getPageHref("courses")}">ონლაინ კურსები</a>
-                <a href="${getPageHref("courses")}">პრაქტიკული გაკვეთილები</a>
+                <a href="${getPageHref("therapy")}?type=individual">ინდივიდუალური თერაპია</a>
+                <a href="${getPageHref("therapy")}?type=group">ჯგუფური თერაპია</a>
+                <a href="${getPageHref("courses")}?category=${encodeURIComponent("არტთერაპია")}">არტთერაპია</a>
+                <a href="${getPageHref("courses")}?category=${encodeURIComponent("მშობლებისთვის")}">კურსი მშობლებისთვის</a>
+                <a href="${getPageHref("courses")}?category=${encodeURIComponent("კომუნიკაცია")}">ინტერპერსონალური კომუნიკაცია</a>
+                <a href="${getPageHref("courses")}?category=${encodeURIComponent("ფსიქოლოგია")}">ფსიქოლოგიის საფუძვლები</a>
               </div>
             </div>
-            <div class="footer__column">
-              <strong class="footer__title">სიახლეები</strong>
-              <p>მიიღე ახალი კურსები, ბლოგპოსტები და სასარგებლო რჩევები პირდაპირ ელ-ფოსტაზე.</p>
+            <div class="footer__column footer__column--newsletter">
+              <strong class="footer__title">სიახლეების გამოწერა</strong>
+              <p>მიიღე ახალი კურსების, ჯგუფური შეხვედრებისა და სასარგებლო მასალების შესახებ ინფორმაცია ელ-ფოსტაზე.</p>
               <form class="newsletter-form" data-newsletter-form novalidate>
                 <div class="newsletter-form__row">
                   <input type="email" name="email" placeholder="შენი ელ-ფოსტა" required>
@@ -322,7 +470,7 @@
                 <label class="custom-checkbox">
                   <input type="checkbox" name="consent" required>
                   <span class="checkmark"></span>
-                  <span class="label-text">ვეთანხმები გამოწერაზე</span>
+                  <span class="label-text">ვეთანხმები სიახლეების მიღებას</span>
                 </label>
               </form>
             </div>
@@ -342,6 +490,7 @@
   function renderSiteChrome() {
     renderSiteHeader();
     renderSiteFooter();
+    initDesktopNavDropdowns();
   }
 
   function getToastRegion() {
@@ -645,6 +794,126 @@
     return [...document.querySelectorAll("[data-nav-toggle]")];
   }
 
+  function getDesktopNavDropdowns() {
+    return [...document.querySelectorAll(".nav-dropdown")];
+  }
+
+  function clearDesktopNavDropdownCloseTimer() {
+    if (activeDesktopNavCloseTimer) {
+      window.clearTimeout(activeDesktopNavCloseTimer);
+      activeDesktopNavCloseTimer = 0;
+    }
+  }
+
+  function setDesktopNavDropdownState(dropdown, isOpen) {
+    if (!(dropdown instanceof HTMLElement)) {
+      return;
+    }
+
+    const trigger = dropdown.querySelector(".nav-link--dropdown");
+    dropdown.classList.toggle("is-open", isOpen);
+
+    if (trigger instanceof HTMLElement) {
+      trigger.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    }
+  }
+
+  function closeDesktopNavDropdown(dropdown) {
+    if (!(dropdown instanceof HTMLElement)) {
+      return;
+    }
+
+    setDesktopNavDropdownState(dropdown, false);
+
+    if (activeDesktopNavDropdown === dropdown) {
+      activeDesktopNavDropdown = null;
+    }
+  }
+
+  function initDesktopNavDropdowns() {
+    getDesktopNavDropdowns().forEach((dropdown, index) => {
+      if (dropdown.dataset.hoverReady === "true") {
+        return;
+      }
+
+      const trigger = dropdown.querySelector(".nav-link--dropdown");
+      const menu = dropdown.querySelector(".nav-dropdown__menu");
+
+      if (!(trigger instanceof HTMLElement) || !(menu instanceof HTMLElement)) {
+        return;
+      }
+
+      dropdown.dataset.hoverReady = "true";
+
+      if (!menu.id) {
+        menu.id = `nav-dropdown-menu-${index + 1}`;
+      }
+
+      trigger.setAttribute("aria-haspopup", "true");
+      trigger.setAttribute("aria-controls", menu.id);
+      trigger.setAttribute("aria-expanded", "false");
+
+      const openDropdown = () => {
+        clearDesktopNavDropdownCloseTimer();
+
+        if (activeDesktopNavDropdown && activeDesktopNavDropdown !== dropdown) {
+          closeDesktopNavDropdown(activeDesktopNavDropdown);
+        }
+
+        activeDesktopNavDropdown = dropdown;
+        setDesktopNavDropdownState(dropdown, true);
+      };
+
+      const scheduleClose = () => {
+        clearDesktopNavDropdownCloseTimer();
+        activeDesktopNavCloseTimer = window.setTimeout(() => {
+          if (activeDesktopNavDropdown !== dropdown) {
+            return;
+          }
+
+          if (dropdown.matches(":hover") || dropdown.matches(":focus-within")) {
+            return;
+          }
+
+          closeDesktopNavDropdown(dropdown);
+        }, NAV_DROPDOWN_CLOSE_DELAY);
+      };
+
+      dropdown.addEventListener("mouseenter", openDropdown);
+      dropdown.addEventListener("mouseleave", scheduleClose);
+      dropdown.addEventListener("focusin", openDropdown);
+      dropdown.addEventListener("focusout", () => {
+        window.setTimeout(() => {
+          if (activeDesktopNavDropdown !== dropdown) {
+            return;
+          }
+
+          if (dropdown.matches(":focus-within")) {
+            return;
+          }
+
+          scheduleClose();
+        }, 0);
+      });
+    });
+  }
+
+  function closeDesktopNavDropdowns({ immediate = false } = {}) {
+    clearDesktopNavDropdownCloseTimer();
+
+    if (immediate) {
+      getDesktopNavDropdowns().forEach((dropdown) => {
+        setDesktopNavDropdownState(dropdown, false);
+      });
+      activeDesktopNavDropdown = null;
+      return;
+    }
+
+    if (activeDesktopNavDropdown && !activeDesktopNavDropdown.matches(":hover") && !activeDesktopNavDropdown.matches(":focus-within")) {
+      closeDesktopNavDropdown(activeDesktopNavDropdown);
+    }
+  }
+
   function openMobileNav() {
     const nav = getMobileNav();
 
@@ -729,8 +998,7 @@
       { title: "მთავარი", tag: "გვერდი", href: getPageHref("home") },
       { title: "თერაპია", tag: "გვერდი", href: getPageHref("therapy") },
       { title: "კურსები", tag: "გვერდი", href: getPageHref("courses") },
-      { title: "ჩემ შესახებ", tag: "სექცია", href: getPageHref("about") },
-      { title: "ბლოგი", tag: "სექცია", href: getPageHref("blog") },
+      { title: "მაკას შესახებ", tag: "გვერდი", href: getPageHref("about") },
       { title: "კონტაქტი", tag: "გვერდი", href: getPageHref("contact") },
     ];
 
@@ -1047,14 +1315,53 @@
       const prevButton = carousel.querySelector("[data-carousel-prev]");
       const nextButton = carousel.querySelector("[data-carousel-next]");
       const dotsMount = carousel.querySelector("[data-carousel-dots]");
+      const isSwipeEnabled = carousel.dataset.carouselSwipe === "true";
       const items = track ? [...track.children] : [];
       let activeIndex = 0;
       let visibleCount = getVisibleCount(carousel);
       let maxIndex = Math.max(0, items.length - visibleCount);
       let dots = [];
+      let dragStartX = 0;
+      let dragStartY = 0;
+      let dragBaseOffset = 0;
+      let dragPointerId = null;
+      let dragDirection = "";
+      let isPointerDown = false;
 
       if (!track || !viewport || !items.length) {
         return;
+      }
+
+      function getTrackMetrics() {
+        const firstItem = items[0];
+        const gap =
+          Number.parseFloat(window.getComputedStyle(track).gap || "0") ||
+          Number.parseFloat(window.getComputedStyle(track).columnGap || "0") ||
+          0;
+        const itemWidth = firstItem ? firstItem.getBoundingClientRect().width : 0;
+
+        return {
+          gap,
+          itemWidth,
+          step: itemWidth + gap,
+        };
+      }
+
+      function setTrackOffset(offset, { immediate = false } = {}) {
+        if (immediate) {
+          track.style.transition = "none";
+        } else {
+          track.style.removeProperty("transition");
+        }
+
+        track.style.transform = `translateX(-${offset}px)`;
+      }
+
+      function resetDragState() {
+        isPointerDown = false;
+        dragPointerId = null;
+        dragDirection = "";
+        carousel.classList.remove("is-dragging");
       }
 
       function buildDots() {
@@ -1085,14 +1392,9 @@
         activeIndex = Math.min(activeIndex, maxIndex);
         carousel.style.setProperty("--visible-count", String(visibleCount));
 
-        const firstItem = items[0];
-        const gap =
-          Number.parseFloat(window.getComputedStyle(track).gap || "0") ||
-          Number.parseFloat(window.getComputedStyle(track).columnGap || "0") ||
-          0;
-        const itemWidth = firstItem ? firstItem.getBoundingClientRect().width : 0;
-        const offset = activeIndex * (itemWidth + gap);
-        track.style.transform = `translateX(-${offset}px)`;
+        const { step } = getTrackMetrics();
+        const offset = activeIndex * step;
+        setTrackOffset(offset);
 
         if (prevButton) {
           prevButton.disabled = activeIndex <= 0;
@@ -1113,17 +1415,99 @@
         if (dotsMount) {
           dotsMount.classList.toggle("hide", maxIndex === 0);
         }
+
       }
 
       prevButton?.addEventListener("click", () => {
+        resetDragState();
         activeIndex = Math.max(0, activeIndex - 1);
         updatePosition();
       });
 
       nextButton?.addEventListener("click", () => {
+        resetDragState();
         activeIndex = Math.min(maxIndex, activeIndex + 1);
         updatePosition();
       });
+
+      function handlePointerDown(event) {
+        if (!isSwipeEnabled || maxIndex <= 0) {
+          return;
+        }
+
+        if (event.pointerType === "mouse" && event.button !== 0) {
+          return;
+        }
+
+        dragPointerId = event.pointerId;
+        dragStartX = event.clientX;
+        dragStartY = event.clientY;
+        dragBaseOffset = activeIndex * getTrackMetrics().step;
+        dragDirection = "";
+        isPointerDown = true;
+      }
+
+      function handlePointerMove(event) {
+        if (!isPointerDown || event.pointerId !== dragPointerId) {
+          return;
+        }
+
+        const deltaX = event.clientX - dragStartX;
+        const deltaY = event.clientY - dragStartY;
+
+        if (!dragDirection) {
+          if (Math.abs(deltaX) < 8 && Math.abs(deltaY) < 8) {
+            return;
+          }
+
+          dragDirection = Math.abs(deltaX) > Math.abs(deltaY) ? "horizontal" : "vertical";
+        }
+
+        if (dragDirection !== "horizontal") {
+          return;
+        }
+
+        const { step } = getTrackMetrics();
+
+        if (!step) {
+          return;
+        }
+
+        const edgeResistance =
+          (activeIndex === 0 && deltaX > 0) || (activeIndex === maxIndex && deltaX < 0) ? 0.35 : 1;
+        const minOffset = 0;
+        const maxOffset = maxIndex * step;
+        const nextOffset = Math.min(maxOffset, Math.max(minOffset, dragBaseOffset - deltaX * edgeResistance));
+
+        carousel.classList.add("is-dragging");
+        setTrackOffset(nextOffset, { immediate: true });
+        event.preventDefault();
+      }
+
+      function handlePointerEnd(event) {
+        if (!isPointerDown || event.pointerId !== dragPointerId) {
+          return;
+        }
+
+        const deltaX = event.clientX - dragStartX;
+        const { step } = getTrackMetrics();
+        const threshold = Math.min(96, Math.max(52, step * 0.18));
+
+        if (dragDirection === "horizontal" && Math.abs(deltaX) > threshold) {
+          activeIndex = deltaX < 0 ? Math.min(maxIndex, activeIndex + 1) : Math.max(0, activeIndex - 1);
+        }
+
+        resetDragState();
+        updatePosition();
+      }
+
+      if (isSwipeEnabled) {
+        viewport.addEventListener("pointerdown", handlePointerDown);
+        viewport.addEventListener("dragstart", (event) => event.preventDefault());
+        window.addEventListener("pointermove", handlePointerMove, { passive: false });
+        window.addEventListener("pointerup", handlePointerEnd);
+        window.addEventListener("pointercancel", handlePointerEnd);
+      }
 
       const onResize = debounce(updatePosition, 90);
       window.addEventListener("resize", onResize);
@@ -1221,6 +1605,51 @@
     });
   }
 
+  function initHomeCourseFilters() {
+    const groups = [...document.querySelectorAll("[data-home-course-filter-group]")];
+
+    groups.forEach((group) => {
+      if (group.dataset.initialized === "true") {
+        return;
+      }
+
+      group.dataset.initialized = "true";
+
+      const buttons = [...group.querySelectorAll("[data-home-course-filter]")];
+      const switchControl = group.querySelector("[data-home-course-switch]");
+      const cards = [...document.querySelectorAll("[data-home-course-card]")];
+
+      function applyFilter(filter) {
+        group.dataset.activeFilter = filter;
+
+        buttons.forEach((button) => {
+          const isActive = button.dataset.homeCourseFilter === filter;
+          button.classList.toggle("is-active", isActive);
+          button.setAttribute("aria-pressed", String(isActive));
+        });
+
+        cards.forEach((card) => {
+          const kind = card.dataset.homeCourseCard || "all";
+          card.hidden = filter !== "all" && kind !== filter;
+        });
+      }
+
+      buttons.forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.classList.contains("is-active")));
+        button.addEventListener("click", () => {
+          applyFilter(button.dataset.homeCourseFilter || "free");
+        });
+      });
+
+      switchControl?.addEventListener("click", () => {
+        const currentFilter = group.dataset.activeFilter || group.dataset.defaultFilter || "free";
+        applyFilter(currentFilter === "paid" ? "free" : "paid");
+      });
+
+      applyFilter(group.dataset.defaultFilter || "free");
+    });
+  }
+
   function initHomepageInteractions() {
     if (!document.querySelector("[data-homepage]")) {
       return;
@@ -1230,9 +1659,14 @@
     initCarousels();
     initAccordions();
     initPricingToggle();
+    initHomeCourseFilters();
   }
 
   function handleDocumentClick(event) {
+    if (!event.target.closest(".nav-dropdown")) {
+      closeDesktopNavDropdowns({ immediate: true });
+    }
+
     const modalOpenTrigger = event.target.closest("[data-modal-open]");
 
     if (modalOpenTrigger) {
@@ -1298,6 +1732,25 @@
     }
   }
 
+  function handleDocumentSubmit(event) {
+    const form = event.target instanceof Element ? event.target.closest("[data-mobile-menu-search-form]") : null;
+
+    if (!form) {
+      return;
+    }
+
+    event.preventDefault();
+    const input = form.querySelector("[data-mobile-menu-search]");
+    const query = input instanceof HTMLInputElement ? input.value.trim() : "";
+
+    if (query) {
+      localStorage.setItem("courseSearchQuery", query);
+    }
+
+    closeMobileNav();
+    window.location.href = getPageHref("courses");
+  }
+
   function handleDocumentKeydown(event) {
     if (event.key === "Escape") {
       if (modalState.activeModal) {
@@ -1311,7 +1764,10 @@
 
       if (document.querySelector(".nav-search-bar.is-open")) {
         closeSearchBar();
+        return;
       }
+
+      closeDesktopNavDropdowns({ immediate: true });
     }
 
     if (event.key === "Enter" && event.target instanceof HTMLInputElement && event.target.matches("[data-search-input]")) {
@@ -1354,6 +1810,7 @@
     globalEventsBound = true;
     document.addEventListener("click", handleDocumentClick);
     document.addEventListener("click", handleSmoothAnchorClick);
+    document.addEventListener("submit", handleDocumentSubmit);
     document.addEventListener("keydown", handleDocumentKeydown);
     document.addEventListener("input", (event) => {
       const input = event.target.closest("[data-search-input]");

@@ -1,5 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap");
 
+@font-face {
+  font-family: "Nino Mtavruli";
+  src: url("../fonts/bpg_nino_mtavruli_normal.ttf") format("truetype");
+  font-display: swap;
+  unicode-range: U+10A0-10FF, U+1C90-1CBF, U+2D00-2D2F;
+}
+
 :root {
   --admin-sidebar-bg: #1c1917;
   --admin-sidebar-hover: #292524;
@@ -28,7 +35,7 @@ body[data-admin-page] {
   min-height: 100vh;
   background: var(--admin-content-bg);
   color: var(--admin-text);
-  font-family: "Kolketi", "Cormorant Garamond", Georgia, serif;
+  font-family: "Nino Mtavruli", "Cormorant Garamond", Georgia, serif;
   text-rendering: optimizeLegibility;
 }
 

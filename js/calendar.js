@@ -13,8 +13,9 @@
     "ნოემბერი",
     "დეკემბერი",
   ];
-  const WEEKDAYS_KA = ["ორშ", "სამ", "ოთხ", "ხუთ", "პარ", "შაბ", "კვ"];
+
   const SLOT_OPTIONS = ["10:00", "11:00", "13:00", "15:00", "16:00", "18:00"];
+
   const THERAPY_TYPES = {
     individual: {
       key: "individual",
@@ -113,22 +114,27 @@
     const summaryTime = root.querySelector("[data-summary-time]");
     const summaryType = root.querySelector("[data-summary-type]");
     const summaryPrice = root.querySelector("[data-summary-price]");
+    const summaryDuration = root.querySelector("[data-summary-duration]");
+    const summaryStatus = root.querySelector("[data-summary-status]");
+    const summaryPlaceholder = root.querySelector("[data-summary-placeholder]");
+    const summaryContent = root.querySelector("[data-summary-content]");
     const summaryNote = root.querySelector("[data-summary-note]");
     const payButton = root.querySelector("[data-open-payment]");
     const typeButtons = [...root.querySelectorAll("[data-therapy-type]")];
     const prevButton = root.querySelector("[data-calendar-prev]");
     const nextButton = root.querySelector("[data-calendar-next]");
     const today = stripTime(new Date());
+    const params = new URLSearchParams(window.location.search);
+    const initialType = params.get("type") === "group" ? "group" : "individual";
     const state = {
       month: new Date(today.getFullYear(), today.getMonth(), 1),
-      typeKey: "individual",
+      typeKey: initialType,
       selectedDate: null,
       selectedTime: "",
     };
 
     function emitChange() {
-      const detail = api.getState();
-      document.dispatchEvent(new CustomEvent("therapy:booking-change", { detail }));
+      document.dispatchEvent(new CustomEvent("therapy:booking-change", { detail: api.getState() }));
     }
 
     function renderTypeCards() {
@@ -142,9 +148,19 @@
     function renderSummary() {
       const type = THERAPY_TYPES[state.typeKey];
       const currentUser = window.Auth?.getCurrentUser?.() || null;
+      const hasSelection = Boolean(state.selectedDate);
+      const isReady = Boolean(state.selectedDate && state.selectedTime);
+
+      if (summaryPlaceholder instanceof HTMLElement) {
+        summaryPlaceholder.hidden = hasSelection;
+      }
+
+      if (summaryContent instanceof HTMLElement) {
+        summaryContent.hidden = !hasSelection;
+      }
 
       if (summaryDate) {
-        summaryDate.textContent = state.selectedDate ? formatDateLabel(state.selectedDate) : "არ არის არჩეული";
+        summaryDate.textContent = hasSelection ? formatDateLabel(state.selectedDate) : "აირჩიე თარიღი";
       }
 
       if (summaryTime) {
@@ -155,24 +171,35 @@
         summaryType.textContent = type.label;
       }
 
+      if (summaryDuration) {
+        summaryDuration.textContent = type.duration;
+      }
+
       if (summaryPrice) {
         summaryPrice.textContent = `₾${type.price}`;
       }
 
+      if (summaryStatus) {
+        summaryStatus.textContent = hasSelection ? "ხელმისაწვდომია" : "აირჩიე დღე";
+      }
+
       if (summaryNote) {
-        summaryNote.textContent = currentUser
-          ? `დაჯავშნა შეინახება ანგარიშზე: ${currentUser.email}`
-          : "დაჯავშნის დასასრულებლად საჭირო იქნება შესვლა.";
+        if (!hasSelection) {
+          summaryNote.textContent = "აირჩიე თარიღი, რომ დაჯავშნა გააქტიურდეს.";
+        } else if (currentUser) {
+          summaryNote.textContent = `ჯავშანი შენს ანგარიშზე შეინახება: ${currentUser.email}`;
+        } else {
+          summaryNote.textContent = "დაჯავშნის დასასრულებლად საჭირო იქნება შესვლა.";
+        }
       }
 
       if (payButton instanceof HTMLButtonElement) {
-        const ready = Boolean(state.selectedDate && state.selectedTime);
-        payButton.disabled = !ready;
+        payButton.disabled = !isReady;
       }
     }
 
     function renderSlots() {
-      if (!slotsGrid) {
+      if (!(slotsGrid instanceof HTMLElement)) {
         return;
       }
 
@@ -180,14 +207,15 @@
 
       if (!state.selectedDate) {
         if (slotsTitle) {
-          slotsTitle.textContent = "აირჩიე დღე, რათა დროები გამოჩნდეს";
+          slotsTitle.textContent = "აირჩიე დრო";
         }
+
         slotsGrid.innerHTML = '<div class="calendar-empty">ჯერ თარიღი არ არის არჩეული.</div>';
         return;
       }
 
       if (slotsTitle) {
-        slotsTitle.textContent = `${formatDateLabel(state.selectedDate)} — თავისუფალი დროები`;
+        slotsTitle.textContent = `${formatDateLabel(state.selectedDate)} — დრო`;
       }
 
       SLOT_OPTIONS.forEach((slot) => {
@@ -206,7 +234,7 @@
     }
 
     function renderCalendar() {
-      if (!grid) {
+      if (!(grid instanceof HTMLElement)) {
         return;
       }
 
@@ -229,13 +257,15 @@
       for (let day = 1; day <= daysInMonth; day += 1) {
         const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
         const available = isDateAvailable(date, today);
-        const disabled = !available;
         const button = document.createElement("button");
         button.type = "button";
         button.className = "calendar-day";
 
-        if (disabled) {
+        if (available) {
+          button.classList.add("is-available");
+        } else {
           button.classList.add("is-disabled");
+          button.disabled = true;
         }
 
         if (isSameDay(date, today)) {
@@ -251,12 +281,10 @@
           <span class="calendar-day__dot" aria-hidden="true"></span>
         `;
 
-        if (disabled) {
-          button.disabled = true;
-        } else {
+        if (available) {
           button.addEventListener("click", () => {
             state.selectedDate = date;
-            state.selectedTime = "";
+            state.selectedTime = SLOT_OPTIONS[0];
             renderCalendar();
             renderSlots();
             renderSummary();
@@ -274,6 +302,11 @@
       }
 
       state.typeKey = typeKey;
+
+      if (state.selectedDate && !state.selectedTime) {
+        state.selectedTime = SLOT_OPTIONS[0];
+      }
+
       renderTypeCards();
       renderSummary();
       renderSlots();
@@ -303,7 +336,7 @@
           typeKey: state.typeKey,
           type,
           selectedDate: state.selectedDate ? toIsoDate(state.selectedDate) : "",
-          selectedDateLabel: state.selectedDate ? formatDateLabel(state.selectedDate) : "არ არის არჩეული",
+          selectedDateLabel: state.selectedDate ? formatDateLabel(state.selectedDate) : "აირჩიე თარიღი",
           selectedTime: state.selectedTime,
           price: type.price,
           ready: Boolean(state.selectedDate && state.selectedTime),

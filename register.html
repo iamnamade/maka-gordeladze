@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>რეგისტრაცია | მაკა გორდელაძე</title>
-    <meta name="description" content="შექმენი ანგარიში მაკა გორდელაძის ფსიქოლოგიურ და საგანმანათლებლო პლატფორმაზე.">
+    <meta name="description" content="შექმენით ახალი ანგარიში მაკა გორდელაძის პლატფორმაზე და დაიწყეთ მშვიდი, გააზრებული სივრცით სარგებლობა.">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/redesign.css">
     <script src="js/main.js" defer></script>
     <script src="js/auth.js" defer></script>
   </head>
@@ -15,180 +16,104 @@
 
     <main class="auth-page" data-register-page>
       <section class="container">
-        <div class="auth-shell">
-          <div class="auth-layout">
-            <aside class="auth-side animate-on-scroll">
-              <span class="section-label" style="color: rgba(255,255,255,0.78);">ახალი წევრი</span>
-              <h2>შექმენი შენზე მორგებული სივრცე <em style="color:#ffd2bc;">ზრდისთვის</em></h2>
-              <p>
-                რეგისტრაციის შემდეგ მიიღებ ხელმისაწვდომობას ონლაინ კურსებზე, თერაპიის დაჯავშნაზე და შენს პირად პროფილზე.
-              </p>
-              <ul class="check-list">
-                <li>ონლაინ სესიების დაჯავშნა რამდენიმე ნაბიჯში</li>
-                <li>პერსონალიზებული კურსების რეკომენდაციები</li>
-                <li>დავალებების, პროგრესისა და შეფასებების ერთიანი სივრცე</li>
-              </ul>
-              <div class="auth-side__stats">
-                <div class="auth-side__stat">
-                  <strong>6</strong>
-                  <span>აქტიური კურსი</span>
-                </div>
-                <div class="auth-side__stat">
-                  <strong>250+</strong>
-                  <span>ონლაინ სესია</span>
-                </div>
-              </div>
-            </aside>
-
-            <div class="auth-card auth-card--narrow animate-on-scroll">
-              <div class="auth-header">
-                <div class="auth-brand">
-                  <span class="auth-brand__mark">
-                    <svg viewBox="0 0 48 48" aria-hidden="true">
-                      <path d="M12 16c0-4.42 3.58-8 8-8 3.67 0 6.77 2.47 7.72 5.84A8 8 0 1 1 34 28h-4.5A7.5 7.5 0 0 0 24 22a7.5 7.5 0 0 0-5.5 6H14a8 8 0 0 1-2-5.33V16z"></path>
-                      <path d="M34 32a8 8 0 0 1-16 0h4.5A7.5 7.5 0 0 0 24 38a7.5 7.5 0 0 0 5.5-6H34z"></path>
-                    </svg>
-                  </span>
-                  <span>მაკა გორდელაძე</span>
-                </div>
-                <div class="stack-sm">
-                  <h2>შექმენი ანგარიში</h2>
-                  <p>შეავსე ძირითადი ინფორმაცია და შემდეგ აირჩიე შენთვის საინტერესო მიმართულებები.</p>
+        <div class="auth-login-wrap">
+          <article class="auth-card auth-card--login auth-card--register animate-on-scroll">
+            <header class="auth-header auth-header--login auth-header--register">
+              <div class="auth-brand auth-brand--compact">
+                <span class="auth-brand__mark">
+                  <svg viewBox="0 0 48 48" aria-hidden="true">
+                    <path d="M7 24c0-5 4-9 9-9 3.6 0 6.3 1.8 8 5.3C22.3 25.2 19.6 27 16 27c-5 0-9-4-9-9Z"></path>
+                    <path d="M41 24c0 5-4 9-9 9-3.6 0-6.3-1.8-8-5.3C25.7 22.8 28.4 21 32 21c5 0 9 4 9 9Z"></path>
+                    <path d="M16 24c2.2-4.2 4.9-6.3 8-6.3S29.8 19.8 32 24c-2.2 4.2-4.9 6.3-8 6.3S18.2 28.2 16 24Z"></path>
+                    <path d="M20.5 29.5 16.6 33.4"></path>
+                  </svg>
+                </span>
+                <div class="auth-brand__copy">
+                  <strong>მაკა გორდელაძე</strong>
+                  <span>ახალი ანგარიში</span>
                 </div>
               </div>
 
-              <div class="auth-steps">
-                <div class="auth-step is-active" data-register-step-item="1">
-                  <span class="auth-step__number">1</span>
-                  <div class="auth-step__meta">
-                    <strong>ინფორმაცია</strong>
-                    <span class="help-text">ძირითადი მონაცემები</span>
-                  </div>
-                </div>
-                <div class="auth-step" data-register-step-item="2">
-                  <span class="auth-step__number">2</span>
-                  <div class="auth-step__meta">
-                    <strong>ინტერესები</strong>
-                    <span class="help-text">შენი მიმართულებები</span>
-                  </div>
-                </div>
+              <div class="auth-copy">
+                <h1>რეგისტრაცია</h1>
+                <p>შეავსეთ საჭირო ველები და შექმენით ახალი ანგარიში.</p>
+              </div>
+            </header>
+
+            <form class="auth-form auth-form--login auth-form--register" data-register-form novalidate>
+              <div class="field">
+                <label class="field-label" for="register-name">სახელი <span class="required-mark" aria-hidden="true">*</span></label>
+                <input id="register-name" name="name" type="text" autocomplete="given-name" placeholder="მაგ: ნინო" required>
+                <span class="error-text" data-error-for="name"></span>
               </div>
 
-              <form class="auth-form" data-register-form novalidate>
-                <div class="auth-panel is-active" data-register-panel="1">
-                  <button class="google-btn w-full" type="button" data-google-register>
-                    <span class="google-btn__icon">G</span>
-                    <span>Google-ით რეგისტრაცია</span>
-                  </button>
-                  <div class="divider-text"><span>ან შეავსე ფორმა</span></div>
+              <div class="field">
+                <label class="field-label" for="register-surname">გვარი <span class="required-mark" aria-hidden="true">*</span></label>
+                <input id="register-surname" name="surname" type="text" autocomplete="family-name" placeholder="მაგ: ბერიძე" required>
+                <span class="error-text" data-error-for="surname"></span>
+              </div>
 
-                  <div class="field">
-                    <label class="field-label" for="register-name">სახელი <span class="required-mark" aria-hidden="true">*</span></label>
-                    <input id="register-name" name="name" type="text" autocomplete="given-name" placeholder="მაგ: ნინო" required>
-                    <span class="error-text" data-error-for="name"></span>
-                  </div>
+              <div class="field">
+                <label class="field-label" for="register-email">ელ-ფოსტა <span class="required-mark" aria-hidden="true">*</span></label>
+                <input id="register-email" name="email" type="email" autocomplete="email" placeholder="მაგ: nino@example.ge" required>
+                <span class="error-text" data-error-for="email"></span>
+              </div>
 
-                  <div class="field">
-                    <label class="field-label" for="register-surname">გვარი <span class="required-mark" aria-hidden="true">*</span></label>
-                    <input id="register-surname" name="surname" type="text" autocomplete="family-name" placeholder="მაგ: ბერიძე" required>
-                    <span class="error-text" data-error-for="surname"></span>
-                  </div>
-
-                  <div class="field">
-                    <label class="field-label" for="register-email">ელ-ფოსტა <span class="required-mark" aria-hidden="true">*</span></label>
-                    <input id="register-email" name="email" type="email" autocomplete="email" placeholder="მაგ: nino@example.ge" required>
-                    <span class="error-text" data-error-for="email"></span>
-                  </div>
-
-                <div class="field password-field">
-                  <label class="field-label" for="register-password">პაროლი <span class="required-mark" aria-hidden="true">*</span></label>
+              <div class="field field--password">
+                <label class="field-label" for="register-password">პაროლი <span class="required-mark" aria-hidden="true">*</span></label>
+                <div class="field-control field-control--password">
                   <input id="register-password" name="password" type="password" autocomplete="new-password" placeholder="მინიმუმ 6 სიმბოლო" required>
                   <button class="password-toggle" type="button" aria-label="პაროლის ჩვენება" aria-pressed="false" data-password-toggle="register-password">
                     <span data-password-toggle-icon>
                       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 12s4-7 10.5-7 10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12z"></path><circle cx="12" cy="12" r="3.5"></circle></svg>
                     </span>
                   </button>
-                  <div class="password-strength" data-password-strength>
-                    <div class="strength-bars">
-                      <span></span><span></span><span></span><span></span>
-                    </div>
-                    <span class="strength-label" data-strength-label>სუსტი</span>
-                  </div>
-                  <span class="error-text" data-error-for="password"></span>
                 </div>
+                <span class="error-text" data-error-for="password"></span>
+              </div>
 
-                <div class="field password-field">
-                  <label class="field-label" for="register-confirm-password">პაროლის დადასტურება <span class="required-mark" aria-hidden="true">*</span></label>
-                  <input id="register-confirm-password" name="confirmPassword" type="password" autocomplete="new-password" placeholder="გაიმეორე პაროლი" required>
+              <div class="field field--password">
+                <label class="field-label" for="register-confirm-password">პაროლის დადასტურება <span class="required-mark" aria-hidden="true">*</span></label>
+                <div class="field-control field-control--password">
+                  <input id="register-confirm-password" name="confirmPassword" type="password" autocomplete="new-password" placeholder="გაიმეორეთ პაროლი" required>
                   <button class="password-toggle" type="button" aria-label="პაროლის ჩვენება" aria-pressed="false" data-password-toggle="register-confirm-password">
                     <span data-password-toggle-icon>
                       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 12s4-7 10.5-7 10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12z"></path><circle cx="12" cy="12" r="3.5"></circle></svg>
                     </span>
                   </button>
-                  <span class="error-text" data-error-for="confirmPassword"></span>
                 </div>
+                <span class="error-text" data-error-for="confirmPassword"></span>
+              </div>
 
-                  <div class="auth-form__actions">
-                    <button class="btn btn-primary" type="submit">შემდეგი <span class="btn-arrow">→</span></button>
-                  </div>
-                </div>
+              <div class="auth-status" data-register-status></div>
 
-                <div class="auth-panel" data-register-panel="2">
-                  <div class="stack-sm" style="margin-bottom: 1rem;">
-                    <h3>შეარჩიე შენთვის სასურველი სფერო</h3>
-                    <p>ეს დაგვეხმარება შეთავაზებები მოვარგოთ შენს საჭიროებებს. რამდენიმე არჩევანიც შეგიძლია.</p>
-                  </div>
+              <div class="auth-form__actions auth-form__actions--login">
+                <button class="btn btn-primary auth-submit" type="submit">რეგისტრაცია</button>
+              </div>
 
-                  <div class="interest-grid">
-                    <button class="interest-card" type="button" data-interest-option="ბავშვის ფსიქოლოგია" aria-pressed="false">
-                      <span class="interest-card__icon">🧒</span>
-                      <strong>ბავშვის ფსიქოლოგია</strong>
-                      <span class="help-text">ემოციური განვითარება და მხარდაჭერა</span>
-                    </button>
-                    <button class="interest-card" type="button" data-interest-option="მშობლობა" aria-pressed="false">
-                      <span class="interest-card__icon">👨‍👩‍👧</span>
-                      <strong>მშობლობა</strong>
-                      <span class="help-text">ურთიერთობები და საზღვრები</span>
-                    </button>
-                    <button class="interest-card" type="button" data-interest-option="ინდივიდუალური თერაპია" aria-pressed="false">
-                      <span class="interest-card__icon">🧠</span>
-                      <strong>ინდივიდუალური თერაპია</strong>
-                      <span class="help-text">ღრმა პირადი პროცესი</span>
-                    </button>
-                    <button class="interest-card" type="button" data-interest-option="ჯგუფური თერაპია" aria-pressed="false">
-                      <span class="interest-card__icon">👥</span>
-                      <strong>ჯგუფური თერაპია</strong>
-                      <span class="help-text">ერთობლივი სწავლა და მხარდაჭერა</span>
-                    </button>
-                    <button class="interest-card" type="button" data-interest-option="არტთერაპია" aria-pressed="false">
-                      <span class="interest-card__icon">🎨</span>
-                      <strong>არტთერაპია</strong>
-                      <span class="help-text">შემოქმედებითი გამოხატვა</span>
-                    </button>
-                    <button class="interest-card" type="button" data-interest-option="კომუნიკაცია" aria-pressed="false">
-                      <span class="interest-card__icon">💬</span>
-                      <strong>კომუნიკაცია</strong>
-                      <span class="help-text">საკუთარი ხმის გაძლიერება</span>
-                    </button>
-                  </div>
+              <div class="divider-text divider-text--login"><span>ან</span></div>
 
-                  <div class="selection-error" data-selection-error></div>
+              <button class="google-btn google-btn--login" type="button" data-google-register>
+                <span class="google-btn__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.55-.21-2.27H12v4.3h6.44a5.51 5.51 0 0 1-2.39 3.62v3.01h3.87c2.27-2.09 3.57-5.18 3.57-8.66Z"></path>
+                    <path fill="#34A853" d="M12 24c3.24 0 5.96-1.07 7.95-2.91l-3.87-3.01c-1.08.72-2.46 1.15-4.08 1.15-3.14 0-5.8-2.12-6.75-4.96H1.26v3.11A12 12 0 0 0 12 24Z"></path>
+                    <path fill="#FBBC05" d="M5.25 14.27A7.18 7.18 0 0 1 4.87 12c0-.79.14-1.55.38-2.27V6.62H1.26A12 12 0 0 0 0 12c0 1.94.46 3.78 1.26 5.38l3.99-3.11Z"></path>
+                    <path fill="#EA4335" d="M12 4.77c1.76 0 3.34.61 4.59 1.8l3.44-3.44C17.95 1.19 15.24 0 12 0A12 12 0 0 0 1.26 6.62l3.99 3.11c.95-2.84 3.61-4.96 6.75-4.96Z"></path>
+                  </svg>
+                </span>
+                <span class="google-btn__label">Google-ით რეგისტრაცია</span>
+                <span class="google-btn__spacer" aria-hidden="true"></span>
+              </button>
+            </form>
 
-                  <div class="auth-form__actions">
-                    <button class="btn btn-outline" type="button" data-register-back>← უკან</button>
-                    <button class="btn btn-primary" type="submit">დარეგისტრირება <span class="btn-arrow">→</span></button>
-                  </div>
-                </div>
-
-                <div class="auth-status" data-register-status></div>
-              </form>
-
+            <div class="auth-secondary-links">
               <div class="auth-inline-links">
-                <span>უკვე გაქვს ანგარიში?</span>
+                <span>უკვე გაქვთ ანგარიში?</span>
                 <a href="login.html"><strong>შესვლა</strong></a>
               </div>
             </div>
-          </div>
+          </article>
         </div>
       </section>
     </main>
