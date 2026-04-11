@@ -3007,18 +3007,39 @@ body[data-page="home"] .hero-slider__frame {
 
 body[data-page="home"] .hero-slide {
   min-height: clamp(760px, 54vw, 980px);
+  isolation: isolate;
+}
+
+body[data-page="home"] .hero-slide__media {
+  z-index: 0;
 }
 
 body[data-page="home"] .hero-slide__media::after {
   background:
-    linear-gradient(90deg, rgba(20, 17, 15, 0.04) 0%, rgba(20, 17, 15, 0.18) 42%, rgba(23, 17, 14, 0.72) 100%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.18));
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.52) 0%,
+      rgba(0, 0, 0, 0.32) 40%,
+      rgba(0, 0, 0, 0.56) 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(20, 17, 15, 0.1) 0%,
+      rgba(20, 17, 15, 0.08) 38%,
+      rgba(23, 17, 14, 0.5) 100%
+    );
+  z-index: 1;
+}
+
+body[data-page="home"] .hero-slide__media img {
+  filter: brightness(0.88);
 }
 
 body[data-page="home"] .hero-slide__content {
   justify-content: flex-end;
   align-items: center;
   padding: clamp(15.25rem, 20vw, 17.5rem) clamp(2rem, 6vw, 7rem) clamp(4rem, 7vw, 6rem);
+  z-index: 2;
 }
 
 body[data-page="home"] .hero-slide__panel {
@@ -3040,6 +3061,7 @@ body[data-page="home"] .home-hero .section-label,
 body[data-page="home"] .home-hero .hero-slide__title h1,
 body[data-page="home"] .home-hero .hero-slide__summary {
   color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 body[data-page="home"] .home-hero .section-label {
@@ -3139,7 +3161,7 @@ body[data-page="home"] .hero-slide .hero-slide__summary {
   font-size: clamp(0.88rem, 0.82vw, 0.98rem);
   font-weight: 400;
   line-height: 1.55;
-  opacity: 0.92;
+  opacity: 0.96;
 }
 
 body[data-page="home"] .hero-slide .hero-slide__actions {
@@ -4995,6 +5017,26 @@ body[data-page="home"] .newsletter-form__row .btn .btn-arrow {
     width: 44px;
     height: 44px;
     border-radius: 15px;
+  }
+
+  body[data-page="home"] .hero-slide__media::after {
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.62) 0%,
+        rgba(0, 0, 0, 0.44) 42%,
+        rgba(0, 0, 0, 0.66) 100%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(20, 17, 15, 0.22) 0%,
+        rgba(20, 17, 15, 0.16) 42%,
+        rgba(23, 17, 14, 0.42) 100%
+      );
+  }
+
+  body[data-page="home"] .hero-slide__media img {
+    filter: brightness(0.84);
   }
 
   body[data-page="home"] .hero-slide__content {
