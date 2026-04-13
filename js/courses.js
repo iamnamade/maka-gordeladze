@@ -23,8 +23,8 @@
       freeLessons: 12,
       price: 0,
       originalPrice: 0,
-      image: "https://images.pexels.com/photos/29247752/pexels-photo-29247752/free-photo-of-young-girl-engaged-in-creative-drawing-indoors.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      imageFallback: "https://picsum.photos/seed/arttherapy/400/225",
+      image: "../images/home/art-theraphy.webp",
+      imageFallback: "../images/home/art-theraphy.webp",
       imageAlt: "არტთერაპიისთვის განკუთვნილი ფერადი შემოქმედებითი მასალები",
       heroImage: "https://mentalist.wpengine.com/wp-content/uploads/2025/08/Mentalist-Slider-img-02.jpg",
       rating: 4.9,
@@ -45,8 +45,8 @@
       freeLessons: 2,
       price: 120,
       originalPrice: 180,
-      image: "https://images.pexels.com/photos/7447257/pexels-photo-7447257.jpeg",
-      imageFallback: "https://picsum.photos/seed/parentscourse/400/225",
+      image: "../images/home/course-for-parents.jpg",
+      imageFallback: "../images/home/course-for-parents.jpg",
       imageAlt: "მშობელი და ბავშვი ყურადღებიანი კომუნიკაციის პროცესში",
       heroImage: "https://mentalist.wpengine.com/wp-content/uploads/2025/08/Mentalist-Service-img-01.jpg",
       rating: 4.8,
@@ -67,8 +67,8 @@
       freeLessons: 2,
       price: 90,
       originalPrice: 0,
-      image: "https://images.pexels.com/photos/9870769/pexels-photo-9870769.jpeg",
-      imageFallback: "https://picsum.photos/seed/interpersonal/400/225",
+      image: "../images/home/interpersonal.jpeg",
+      imageFallback: "../images/home/interpersonal.jpeg",
       imageAlt: "ორი ადამიანი დიალოგისა და ურთიერთკავშირის პროცესში",
       heroImage: "https://mentalist.wpengine.com/wp-content/uploads/2025/08/Mentalist-Service-img-02.jpg",
       rating: 4.8,
@@ -89,8 +89,8 @@
       freeLessons: 8,
       price: 0,
       originalPrice: 0,
-      image: "https://images.pexels.com/photos/36460459/pexels-photo-36460459.jpeg",
-      imageFallback: "https://picsum.photos/seed/psychbasics/400/225",
+      image: "../images/home/pyschology.jpeg",
+      imageFallback: "../images/home/pyschology.jpeg",
       imageAlt: "ფსიქოლოგიის საფუძვლების სასწავლო და დაკვირვების კონტექსტი",
       heroImage: "https://mentalist.wpengine.com/wp-content/uploads/2025/12/Mentalist-Breadcrumb.jpg",
       rating: 4.9,
@@ -160,6 +160,17 @@
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#39;");
+  }
+
+  function renderArrowIcon(direction = "up-right", className = "") {
+    const icons = {
+      right:
+        '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 8h10"></path><path d="m9 4 4 4-4 4"></path></svg>',
+      "up-right":
+        '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12 12 4"></path><path d="M6 4h6v6"></path></svg>',
+    };
+    const classes = ["icon-arrow", `icon-arrow--${direction}`, className].filter(Boolean).join(" ");
+    return `<span class="${classes}" aria-hidden="true">${icons[direction] || icons["up-right"]}</span>`;
   }
 
   function debounce(callback, wait = 150) {
@@ -1033,7 +1044,7 @@
             <span class="course-catalog-card__meta-item">${escapeHtml(course.hours)} საათი</span>
             <span class="course-catalog-card__meta-item">ონლაინ ფორმატი</span>
           </div>
-          <span class="course-catalog-card__cta" aria-hidden="true">${actionLabel} <span aria-hidden="true">→</span></span>
+          <span class="course-catalog-card__cta" aria-hidden="true">${actionLabel} ${renderArrowIcon("right")}</span>
         </div>
         <div class="course-catalog-card__media">
           <img class="optimized-media" src="${escapeHtml(course.image)}" alt="${escapeHtml(course.imageAlt || course.title)}" onerror="this.onerror=null;this.src='${IMAGE_FALLBACK_URL}';">
@@ -1234,7 +1245,7 @@
               <p>ვიდეო, პრაქტიკული დავალებები, ფაილების ატვირთვა და კომენტარების სივრცე ხელმისაწვდომი გახდება სრული წვდომის აქტივაციის შემდეგ.</p>
               <button class="btn btn-primary" type="button" data-course-purchase>კურსის გახსნა ${escapeHtml(
                 toCurrency(course.price),
-              )} <span class="btn-arrow">→</span></button>
+              )} ${renderArrowIcon("right", "btn-arrow")}</button>
             </div>
           </div>
         </section>
@@ -1602,7 +1613,7 @@
             <div class="purchase-card__price">
               <strong>${escapeHtml(toCurrency(course.price))}</strong>
             </div>
-            <button class="btn btn-primary" type="button" data-course-purchase>შეიძინე კურსი <span class="btn-arrow">→</span></button>
+            <button class="btn btn-primary" type="button" data-course-purchase>შეიძინე კურსი ${renderArrowIcon("right", "btn-arrow")}</button>
           </div>
           <div class="lesson-sidebar-card__facts">
             <span>${escapeHtml(course.lessons)} გაკვეთილი</span>

@@ -39,6 +39,23 @@
       .replaceAll("'", "&#39;");
   }
 
+  function renderArrowIcon(direction = "up-right", className = "") {
+    const icons = {
+      left:
+        '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M13 8H3"></path><path d="M7 4 3 8l4 4"></path></svg>',
+      right:
+        '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 8h10"></path><path d="m9 4 4 4-4 4"></path></svg>',
+      up:
+        '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 13V3"></path><path d="M4 7 8 3l4 4"></path></svg>',
+      down:
+        '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 3v10"></path><path d="m4 9 4 4 4-4"></path></svg>',
+      "up-right":
+        '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12 12 4"></path><path d="M6 4h6v6"></path></svg>',
+    };
+    const classes = ["icon-arrow", `icon-arrow--${direction}`, className].filter(Boolean).join(" ");
+    return `<span class="${classes}" aria-hidden="true">${icons[direction] || icons["up-right"]}</span>`;
+  }
+
   function getCurrentUser() {
     return window.Auth?.getCurrentUser?.() || null;
   }
@@ -399,7 +416,7 @@
                         </div>
                         <p class="muted">${enrolled ? `${progress}% პროგრესი` : "ჯერ არ არის დაწყებული"}</p>
                         <div class="progress"><span style="width: ${enrolled ? progress : 6}%"></span></div>
-                        <a class="link-arrow" href="${enrolled ? `course-detail.html?id=${course.id}` : `courses.html`}">${enrolled ? "გაგრძელება →" : "დაიწყე →"}</a>
+                        <a class="link-arrow" href="${enrolled ? `course-detail.html?id=${course.id}` : `courses.html`}"><span>${enrolled ? "გაგრძელება" : "დაიწყე"}</span>${renderArrowIcon("right", "link-arrow__icon")}</a>
                       </div>
                     </article>
                   `;
@@ -423,7 +440,7 @@
                     <div class="empty-state">
                       ჯერ აქტიური სესია არ გაქვს.
                       <div class="empty-state__actions">
-                        <a class="btn btn-primary" href="therapy.html">ახალი დაჯავშნა <span class="btn-arrow">↗</span></a>
+                        <a class="btn btn-primary" href="therapy.html">ახალი დაჯავშნა ${renderArrowIcon("up-right", "btn-arrow")}</a>
                       </div>
                     </div>
                   `
@@ -490,7 +507,7 @@
                               <a class="btn btn-outline btn-sm" href="course-detail.html?id=${course.id}">გაგრძელება</a>
                               ${
                                 course.progress >= 100
-                                  ? `<button class="btn btn-primary btn-sm" type="button" data-certificate-course="${course.id}">სერტიფიკატი ↓</button>`
+                                  ? `<button class="btn btn-primary btn-sm" type="button" data-certificate-course="${course.id}">სერტიფიკატი ${renderArrowIcon("down", "btn-arrow")}</button>`
                                   : ""
                               }
                             </div>
@@ -505,7 +522,7 @@
                 <div class="empty-state">
                   ამ ფილტრში კურსი არ მოიძებნა.
                   <div class="empty-state__actions">
-                    <a class="btn btn-primary" href="courses.html">კურსების ნახვა <span class="btn-arrow">↗</span></a>
+                    <a class="btn btn-primary" href="courses.html">კურსების ნახვა ${renderArrowIcon("up-right", "btn-arrow")}</a>
                   </div>
                 </div>
               `
@@ -527,7 +544,7 @@
               <h3>ჩემი სესიები</h3>
               <p class="muted">ცხრილი აჩვენებს შენს ყველა აქტიურ და დასრულებულ ჩანაწერს.</p>
             </div>
-            <a class="btn btn-primary btn-sm" href="therapy.html">ახალი დაჯავშნა <span class="btn-arrow">↗</span></a>
+            <a class="btn btn-primary btn-sm" href="therapy.html">ახალი დაჯავშნა ${renderArrowIcon("up-right", "btn-arrow")}</a>
           </div>
 
           ${
@@ -572,7 +589,7 @@
                 <div class="empty-state">
                   ჯერ დაჯავშნა არ გაქვს.
                   <div class="empty-state__actions">
-                    <a class="btn btn-primary" href="therapy.html">ახალი დაჯავშნა <span class="btn-arrow">↗</span></a>
+                    <a class="btn btn-primary" href="therapy.html">ახალი დაჯავშნა ${renderArrowIcon("up-right", "btn-arrow")}</a>
                   </div>
                 </div>
               `
@@ -637,7 +654,7 @@
                 <div class="empty-state">
                   ამ დროისთვის დავალებები ჯერ არ გაქვს.
                   <div class="empty-state__actions">
-                    <a class="btn btn-primary" href="courses.html">კურსების ნახვა <span class="btn-arrow">↗</span></a>
+                    <a class="btn btn-primary" href="courses.html">კურსების ნახვა ${renderArrowIcon("up-right", "btn-arrow")}</a>
                   </div>
                 </div>
               </section>
@@ -713,7 +730,7 @@
                 <div class="empty-state">
                   ჯერ შეფასება არ გაქვს დატოვებული.
                   <div class="empty-state__actions">
-                    <a class="btn btn-primary" href="courses.html">კურსების ნახვა <span class="btn-arrow">↗</span></a>
+                    <a class="btn btn-primary" href="courses.html">კურსების ნახვა ${renderArrowIcon("up-right", "btn-arrow")}</a>
                   </div>
                 </div>
               `

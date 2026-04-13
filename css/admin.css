@@ -1,13 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap");
-
-@font-face {
-  font-family: "Nino Mtavruli";
-  src: url("../fonts/bpg_nino_mtavruli_normal.ttf") format("truetype");
-  font-display: swap;
-  unicode-range: U+10A0-10FF, U+1C90-1CBF, U+2D00-2D2F;
-}
-
 :root {
+  --font-family-base: "BPG Nino Medium", sans-serif;
   --admin-sidebar-bg: #1c1917;
   --admin-sidebar-hover: #292524;
   --admin-sidebar-active: #8b3a2a;
@@ -35,7 +27,7 @@ body[data-admin-page] {
   min-height: 100vh;
   background: var(--admin-content-bg);
   color: var(--admin-text);
-  font-family: "Nino Mtavruli", "Cormorant Garamond", Georgia, serif;
+  font-family: var(--font-family-base);
   text-rendering: optimizeLegibility;
 }
 
@@ -298,10 +290,19 @@ body[data-admin-page] a {
 }
 
 .stat-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 12px;
   padding: 4px 10px;
   border-radius: 20px;
   font-weight: 600;
+}
+
+.stat-trend svg {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
 }
 
 .stat-trend.positive {

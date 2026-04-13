@@ -50,6 +50,12 @@
         <polyline points="16 7 22 7 22 13"></polyline>
       </svg>
     `,
+    arrowUp: `
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="M8 13V3"></path>
+        <path d="M4 7 8 3l4 4"></path>
+      </svg>
+    `,
     eye: `
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path>
@@ -391,7 +397,7 @@
           <div class="stat-card">
             <div class="stat-card__top">
               <div class="stat-icon">${ICONS.revenue}</div>
-              <span class="stat-trend positive">↑ 12%</span>
+              <span class="stat-trend positive">${ICONS.arrowUp}<span>12%</span></span>
             </div>
             <div class="stat-value">${formatCurrency(revenue)}</div>
             <div class="stat-label">ამ თვის შემოსავალი (${escapeHtml(month)})</div>
@@ -399,7 +405,7 @@
           <div class="stat-card">
             <div class="stat-card__top">
               <div class="stat-icon">${ICONS.users}</div>
-              <span class="stat-trend positive">↑ 8%</span>
+              <span class="stat-trend positive">${ICONS.arrowUp}<span>8%</span></span>
             </div>
             <div class="stat-value">${users.length}</div>
             <div class="stat-label">სულ მომხმარებელი</div>
@@ -407,7 +413,7 @@
           <div class="stat-card">
             <div class="stat-card__top">
               <div class="stat-icon">${ICONS.courses}</div>
-              <span class="stat-trend positive">↑ 6%</span>
+              <span class="stat-trend positive">${ICONS.arrowUp}<span>6%</span></span>
             </div>
             <div class="stat-value">${courses.length}</div>
             <div class="stat-label">აქტიური კურსი</div>
@@ -415,7 +421,7 @@
           <div class="stat-card">
             <div class="stat-card__top">
               <div class="stat-icon">${ICONS.bookings}</div>
-              <span class="stat-trend positive">↑ 4%</span>
+              <span class="stat-trend positive">${ICONS.arrowUp}<span>4%</span></span>
             </div>
             <div class="stat-value">${bookings.length}</div>
             <div class="stat-label">ამ კვირის დაჯავშნა</div>
@@ -975,7 +981,7 @@
           <div class="stat-card">
             <div class="stat-card__top">
               <div class="stat-icon">${ICONS.revenue}</div>
-              <span class="stat-trend positive">↑ 10%</span>
+              <span class="stat-trend positive">${ICONS.arrowUp}<span>10%</span></span>
             </div>
             <div class="stat-value">₾4,850</div>
             <div class="stat-label">შემოსავალი</div>
@@ -983,7 +989,7 @@
           <div class="stat-card">
             <div class="stat-card__top">
               <div class="stat-icon">${ICONS.courses}</div>
-              <span class="stat-trend positive">↑ 6%</span>
+              <span class="stat-trend positive">${ICONS.arrowUp}<span>6%</span></span>
             </div>
             <div class="stat-value">132</div>
             <div class="stat-label">გაყიდვები</div>
@@ -991,7 +997,7 @@
           <div class="stat-card">
             <div class="stat-card__top">
               <div class="stat-icon">${ICONS.users}</div>
-              <span class="stat-trend positive">↑ 4%</span>
+              <span class="stat-trend positive">${ICONS.arrowUp}<span>4%</span></span>
             </div>
             <div class="stat-value">28</div>
             <div class="stat-label">ახალი მომხმარებელი</div>
@@ -999,7 +1005,7 @@
           <div class="stat-card">
             <div class="stat-card__top">
               <div class="stat-icon">${ICONS.trend}</div>
-              <span class="stat-trend positive">↑ 2%</span>
+              <span class="stat-trend positive">${ICONS.arrowUp}<span>2%</span></span>
             </div>
             <div class="stat-value">4.8%</div>
             <div class="stat-label">Conversion Rate</div>

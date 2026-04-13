@@ -1,13 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap");
-
 @font-face {
-  font-family: "Nino Mtavruli";
-  src: url("../fonts/bpg_nino_mtavruli_normal.ttf") format("truetype");
+  font-family: "BPG Nino Medium";
+  src: url("../fonts/bpg_nino_medium.otf") format("opentype");
+  font-style: normal;
+  font-weight: 500;
   font-display: swap;
   unicode-range: U+10A0-10FF, U+1C90-1CBF, U+2D00-2D2F;
 }
 
 :root {
+  --font-family-base: "BPG Nino Medium", sans-serif;
   --color-bg: #faf7f2;
   --color-bg-alt: #f0ebe1;
   --color-primary: #8b3a2a;
@@ -56,7 +57,7 @@ body {
     radial-gradient(circle at top right, rgba(139, 58, 42, 0.06), transparent 28%),
     var(--color-bg);
   color: var(--color-text-muted);
-  font-family: "Nino Mtavruli", Georgia, serif;
+  font-family: var(--font-family-base);
   font-size: 17px;
   line-height: 1.7;
   text-rendering: optimizeLegibility;
@@ -73,7 +74,7 @@ input,
 select,
 textarea,
 nav {
-  font-family: "Nino Mtavruli", Georgia, serif;
+  font-family: var(--font-family-base);
 }
 
 h1,
@@ -82,16 +83,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Nino Mtavruli", "Cormorant Garamond", Georgia, serif;
-}
-
-:lang(en),
-:lang(la),
-:lang(fr),
-:lang(de),
-.latin,
-[data-latin] {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--font-family-base);
 }
 
 body.modal-open,
@@ -563,9 +555,25 @@ code {
   border-radius: 50%;
 }
 
-.btn-arrow {
-  font-size: 1.05em;
+.btn-arrow,
+.icon-arrow {
+  --icon-size: 1.05em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  flex: 0 0 auto;
   line-height: 1;
+}
+
+.btn-arrow svg,
+.icon-arrow svg,
+.slider-arrow svg,
+.calendar-nav button svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .link-arrow {
@@ -576,8 +584,17 @@ code {
   font-weight: 600;
 }
 
+.link-arrow__icon {
+  --icon-size: 1rem;
+  transition: transform 0.35s ease;
+}
+
 .link-arrow:hover {
   gap: 0.7rem;
+}
+
+.link-arrow:hover .link-arrow__icon {
+  transform: translate(2px, -2px);
 }
 
 .icon-box {
@@ -627,7 +644,7 @@ code {
 .required-mark {
   margin-inline-start: 0.15em;
   color: var(--color-primary);
-  font-family: "Segoe UI Symbol", "Segoe UI", Arial, sans-serif;
+  font-family: inherit;
 }
 
 .input-row {
@@ -1215,6 +1232,11 @@ code {
   box-shadow: 0 10px 18px rgba(139, 58, 42, 0.2);
 }
 
+.slider-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
 .slider-arrow:hover {
   background: #7b3123;
   color: var(--color-white);
@@ -1492,25 +1514,9 @@ section[id] {
   transform: scale(1);
 }
 
-.hero-slide__media {
-  position: relative;
-  min-height: 100%;
-}
-
-.hero-slide__media::after {
-  content: "";
+.hero-slide__content {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(17, 14, 12, 0.02), rgba(17, 14, 12, 0.18));
-}
-
-.hero-slide__media img {
-  width: 100%;
-  height: 100%;
-  border-radius: 16px;
-}
-
-.hero-slide__content {
   display: flex;
   align-items: center;
   padding: clamp(2rem, 5vw, 4.5rem);
@@ -1659,7 +1665,7 @@ section[id] {
   background: rgba(255, 255, 255, 0.8);
   color: var(--color-text-muted);
   text-align: center;
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-family-base);
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -3315,10 +3321,6 @@ section[id] {
     grid-template-columns: 1fr;
   }
 
-  .hero-slide__media {
-    min-height: 360px;
-  }
-
   .hero-slide__content {
     min-height: 0;
   }
@@ -3548,10 +3550,6 @@ section[id] {
 
   .hero-slider__frame {
     min-height: 0;
-  }
-
-  .hero-slide__media {
-    min-height: 280px;
   }
 
   .hero-stats {

@@ -26,9 +26,15 @@
   };
   const SITE_SOCIALS = [];
   const NAV_DROPDOWN_CLOSE_DELAY = 160;
+  const NAV_TABLET_MAX_WIDTH = 1024;
+  const NAV_MOBILE_MAX_WIDTH = 767;
+  const SEARCH_CLOSE_ANIMATION_DELAY = 120;
+  const MOBILE_NAV_CLOSE_ANIMATION_DELAY = 140;
+  const MOBILE_NAV_CLOSE_ROTATION_DURATION = 800;
   let globalEventsBound = false;
   let activeDesktopNavDropdown = null;
   let activeDesktopNavCloseTimer = 0;
+  let mobileNavCloseTimer = 0;
 
   function onReady(callback) {
     if (document.readyState === "loading") {
@@ -61,6 +67,10 @@
       window.clearTimeout(timeoutId);
       timeoutId = window.setTimeout(() => callback(...args), wait);
     };
+  }
+
+  function normalizeSearchValue(value) {
+    return String(value ?? "").trim().toLocaleLowerCase("ka-GE").normalize("NFC");
   }
 
   function normalizePath(pathname = window.location.pathname) {
@@ -97,6 +107,21 @@
     }
 
     return "home";
+  }
+
+  function isElementActuallyVisible(element) {
+    if (!(element instanceof HTMLElement)) {
+      return false;
+    }
+
+    const style = window.getComputedStyle(element);
+
+    if (style.display === "none" || style.visibility === "hidden" || style.opacity === "0") {
+      return false;
+    }
+
+    const rect = element.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0;
   }
 
   function getPageHref(pageId) {
@@ -139,11 +164,22 @@
         '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8v9"></path><path d="M7 5.5a1 1 0 1 0 0 .01"></path><path d="M12 17v-5a2 2 0 0 1 4 0v5"></path><path d="M12 10v7"></path><path d="M12 12a3 3 0 0 1 5-2.3"></path></svg>',
       x:
         '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 5 14 14"></path><path d="M19 5 5 19"></path></svg>',
+      "arrow-left":
+        '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M13 8H3"></path><path d="M7 4 3 8l4 4"></path></svg>',
+      "arrow-right":
+        '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 8h10"></path><path d="m9 4 4 4-4 4"></path></svg>',
+      "arrow-up-right":
+        '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12 12 4"></path><path d="M6 4h6v6"></path></svg>',
       logo:
         '<svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M7 24c0-5 4-9 9-9 3.6 0 6.3 1.8 8 5.3C22.3 25.2 19.6 27 16 27c-5 0-9-4-9-9Z"></path><path d="M41 24c0 5-4 9-9 9-3.6 0-6.3-1.8-8-5.3C25.7 22.8 28.4 21 32 21c5 0 9 4 9 9Z"></path><path d="M16 24c2.2-4.2 4.9-6.3 8-6.3S29.8 19.8 32 24c-2.2 4.2-4.9 6.3-8 6.3S18.2 28.2 16 24Z"></path><path d="M20.5 29.5 16.6 33.4"></path></svg>',
     };
 
     return icons[name] || "";
+  }
+
+  function renderArrowIcon(direction = "up-right", className = "") {
+    const classes = ["icon-arrow", `icon-arrow--${direction}`, className].filter(Boolean).join(" ");
+    return `<span class="${classes}" aria-hidden="true">${getIcon(`arrow-${direction}`)}</span>`;
   }
 
   function renderSocialLinks(variant = "header") {
@@ -206,11 +242,8 @@
 
     return items
       .map(
-        (item) => `
-          <a class="mobile-nav__social-link" href="${escapeHtml(item.href)}" aria-label="${escapeHtml(item.label)}" target="_blank" rel="noreferrer noopener">
-            ${item.svg}
-          </a>
-        `,
+        (item) =>
+          `<a class="mobile-nav__social-link" href="${escapeHtml(item.href)}" aria-label="${escapeHtml(item.label)}" target="_blank" rel="noreferrer noopener">${item.svg}</a>`,
       )
       .join("");
   }
@@ -255,20 +288,39 @@
     const mobileMenuSocialMarkup = renderMobileMenuSocialLinks();
 
     const currentHash = window.location.hash || "";
+    const currentQuery = new URLSearchParams(window.location.search);
+    const therapyType = currentQuery.get("type") || "";
+    const courseCategory = currentQuery.get("category") || "";
     const topbarSocialLabel = socialMarkup ? "გამოგვყევი:" : "";
+    const isTopLevelLinkActive = (link) =>
+      (link.id === "home" && currentPage === "home" && (!currentHash || currentHash === "#home")) ||
+      (link.id === "about" && (currentPage === "maka" || (currentPage === "home" && currentHash === "#about"))) ||
+      (link.id === "contact" && ["contact", "login", "register"].includes(currentPage));
     const renderDesktopLink = (link) => {
-      const isActive =
-        (link.id === "home" && currentPage === "home" && (!currentHash || currentHash === "#home")) ||
-        (link.id === "about" && (currentPage === "maka" || (currentPage === "home" && currentHash === "#about"))) ||
-        (link.id === "contact" && ["contact", "login", "register"].includes(currentPage));
+      const isActive = isTopLevelLinkActive(link);
 
       return `<a class="nav-link${isActive ? " is-active" : ""}" href="${link.href}">${link.label}</a>`;
     };
+    const renderMobilePrimaryLink = (link) => {
+      const isActive = isTopLevelLinkActive(link);
+
+      return `
+        <a class="mobile-nav__link${isActive ? " is-active" : ""}" href="${link.href}">
+          <span>${link.label}</span>
+          ${renderArrowIcon("up-right")}
+        </a>
+      `;
+    };
+    const renderMobileSubLink = (item, isActive = false) => `
+      <a class="mobile-nav__subitem${isActive ? " is-active" : ""}" href="${item.href}">
+        <span>${item.label}</span>
+        ${renderArrowIcon("up-right")}
+      </a>
+    `;
     const renderDropdown = (label, href, items, isActive) => `
       <div class="nav-dropdown${isActive ? " is-active" : ""}">
         <a class="nav-link nav-link--dropdown${isActive ? " is-active" : ""}" href="${href}">
           <span>${label}</span>
-          <span class="nav-caret" aria-hidden="true">▪</span>
         </a>
         <div class="nav-dropdown__menu">
           ${items
@@ -276,7 +328,7 @@
               (item) => `
                 <a class="nav-dropdown__item" href="${item.href}">
                   <span>${item.label}</span>
-                  <span aria-hidden="true">↗</span>
+                  ${renderArrowIcon("up-right")}
                 </a>
               `,
             )
@@ -326,7 +378,7 @@
                   <button class="nav-search" type="button" aria-label="ძიება" aria-expanded="false" data-search-trigger>
                     ${getIcon("search")}
                   </button>
-                  <a class="btn btn-primary" href="${getPageHref("therapy")}">დაჯავშნა <span class="btn-arrow">↗</span></a>
+                  <a class="btn btn-primary" href="${getPageHref("therapy")}">დაჯავშნა ${renderArrowIcon("up-right", "btn-arrow")}</a>
                   <button class="hamburger" type="button" aria-label="მენიუს გახსნა" aria-expanded="false" data-nav-toggle>
                     <span class="hamburger__box" aria-hidden="true">
                       <span class="hamburger__line"></span>
@@ -338,18 +390,21 @@
               </div>
             </div>
           </div>
-          <div class="nav-search-bar search-bar-inline" data-search-bar>
-            <div class="nav-search-bar__inner">
-              <div class="nav-search-field">
-                <input type="search" class="nav-search-input" placeholder="შეიყვანე საკვანძო სიტყვა" aria-label="ძებნა" data-search-input>
-                <span class="nav-search-field__icon" aria-hidden="true">${getIcon("search")}</span>
+          <div class="nav-search-layer" data-search-layer aria-hidden="true">
+            <div class="nav-search-backdrop" data-search-backdrop></div>
+            <div class="nav-search-bar search-bar-inline" data-search-bar role="search" aria-hidden="true">
+              <div class="nav-search-bar__inner">
+                <div class="nav-search-field">
+                  <span class="nav-search-field__icon" aria-hidden="true">${getIcon("search")}</span>
+                  <input type="search" class="nav-search-input" placeholder="შეიყვანე საკვანძო სიტყვა" aria-label="ძებნა" data-search-input>
+                </div>
+                <button class="nav-search-close" type="button" aria-label="დახურვა" data-search-close>
+                  ${getIcon("close")}
+                </button>
               </div>
+              <div class="nav-search-results" data-search-results></div>
             </div>
-            <button class="nav-search-close" type="button" aria-label="დახურვა" data-search-close>
-              ${getIcon("close")}
-            </button>
           </div>
-          <div class="nav-search-results" data-search-results></div>
         </div>
       </header>
       <div class="mobile-nav" data-mobile-nav>
@@ -367,21 +422,39 @@
             <input id="mobile-menu-search" type="search" placeholder="ძიება" autocomplete="off" data-mobile-menu-search>
           </form>
           <div class="mobile-nav__links" aria-label="მობილური ნავიგაცია">
-            ${leftLinks.map((link) => `<a href="${link.href}"><span>${link.label}</span><span>↗</span></a>`).join("")}
-            <a class="btn btn-primary mobile-nav__booking" href="${getPageHref("therapy")}">დაჯავშნა <span class="btn-arrow">↗</span></a>
-            <div class="mobile-nav__group">
-              <strong>თერაპია</strong>
-              <div class="mobile-nav__sublinks">
-                ${therapyLinks.map((item) => `<a href="${item.href}"><span>${item.label}</span><span>↗</span></a>`).join("")}
+            <div class="mobile-nav__primary-links">
+              ${leftLinks.map(renderMobilePrimaryLink).join("")}
+              ${rightLinks.map(renderMobilePrimaryLink).join("")}
+            </div>
+            <a class="btn btn-primary mobile-nav__booking${currentPage === "therapy" ? " is-active" : ""}" href="${getPageHref("therapy")}">დაჯავშნა ${renderArrowIcon("up-right", "btn-arrow")}</a>
+            <div class="mobile-nav__groups">
+              <div class="mobile-nav__group${currentPage === "therapy" ? " is-active" : ""}">
+                <strong class="mobile-nav__group-title">თერაპია</strong>
+                <div class="mobile-nav__sublinks">
+                  ${therapyLinks
+                    .map((item) =>
+                      renderMobileSubLink(
+                        item,
+                        currentPage === "therapy" && therapyType && item.href.includes(`type=${encodeURIComponent(therapyType)}`),
+                      ),
+                    )
+                    .join("")}
+                </div>
+              </div>
+              <div class="mobile-nav__group${currentPage === "courses" ? " is-active" : ""}">
+                <strong class="mobile-nav__group-title">კურსები</strong>
+                <div class="mobile-nav__sublinks">
+                  ${courseLinks
+                    .map((item) =>
+                      renderMobileSubLink(
+                        item,
+                        currentPage === "courses" && courseCategory && item.href.includes(`category=${encodeURIComponent(courseCategory)}`),
+                      ),
+                    )
+                    .join("")}
+                </div>
               </div>
             </div>
-            <div class="mobile-nav__group">
-              <strong>კურსები</strong>
-              <div class="mobile-nav__sublinks">
-                ${courseLinks.map((item) => `<a href="${item.href}"><span>${item.label}</span><span>↗</span></a>`).join("")}
-              </div>
-            </div>
-            ${rightLinks.map((link) => `<a href="${link.href}"><span>${link.label}</span><span>↗</span></a>`).join("")}
           </div>
           <footer class="mobile-nav__footer" aria-label="საკონტაქტო ინფორმაცია">
             <div class="mobile-nav__contact">
@@ -413,6 +486,14 @@
 
     mounts.forEach((mount) => {
       mount.innerHTML = markup;
+
+      const navLinks = mount.querySelector(".mobile-nav__links");
+      const contactFooter = mount.querySelector(".mobile-nav__footer");
+
+      if (navLinks instanceof HTMLElement && contactFooter instanceof HTMLElement) {
+        contactFooter.classList.add("mobile-nav__contact-block");
+        navLinks.append(contactFooter);
+      }
     });
   }
 
@@ -465,7 +546,7 @@
               <form class="newsletter-form" data-newsletter-form novalidate>
                 <div class="newsletter-form__row">
                   <input type="email" name="email" placeholder="შენი ელ-ფოსტა" required>
-                  <button class="btn btn-primary" type="submit">გამოწერა <span class="btn-arrow">↗</span></button>
+                  <button class="btn btn-primary" type="submit">გამოწერა ${renderArrowIcon("up-right", "btn-arrow")}</button>
                 </div>
                 <label class="custom-checkbox">
                   <input type="checkbox" name="consent" required>
@@ -590,8 +671,10 @@
   function syncBodyLockState() {
     const hasOpenModal = Boolean(document.querySelector(".modal.is-open"));
     const hasOpenNav = Boolean(document.querySelector(".mobile-nav.is-open"));
+    const hasOpenSearch = Boolean(document.querySelector(".nav-search-layer.is-open"));
     document.body.classList.toggle("modal-open", hasOpenModal);
     document.body.classList.toggle("nav-open", hasOpenNav);
+    document.body.classList.toggle("search-open", hasOpenSearch);
   }
 
   function focusFirstInModal(modal) {
@@ -914,6 +997,33 @@
     }
   }
 
+  function clearMobileNavCloseTimer() {
+    if (mobileNavCloseTimer) {
+      window.clearTimeout(mobileNavCloseTimer);
+      mobileNavCloseTimer = 0;
+    }
+  }
+
+  function getMobileNavCloseButton() {
+    return document.querySelector(".mobile-nav__close");
+  }
+
+  function resetButtonRotation(button) {
+    if (button instanceof HTMLElement) {
+      button.classList.remove("is-rotating");
+    }
+  }
+
+  function restartButtonRotation(button) {
+    if (!(button instanceof HTMLElement)) {
+      return;
+    }
+
+    button.classList.remove("is-rotating");
+    void button.offsetWidth;
+    button.classList.add("is-rotating");
+  }
+
   function openMobileNav() {
     const nav = getMobileNav();
 
@@ -921,6 +1031,9 @@
       return null;
     }
 
+    clearMobileNavCloseTimer();
+    resetButtonRotation(getMobileNavCloseButton());
+    syncMobileNavSearchVisibility();
     nav.classList.add("is-open");
     getNavToggleButtons().forEach((button) => {
       button.classList.add("is-active");
@@ -930,11 +1043,17 @@
     return nav;
   }
 
-  function closeMobileNav() {
+  function closeMobileNav({ preserveCloseButtonRotation = false } = {}) {
     const nav = getMobileNav();
 
     if (!nav) {
       return null;
+    }
+
+    clearMobileNavCloseTimer();
+
+    if (!preserveCloseButtonRotation) {
+      resetButtonRotation(getMobileNavCloseButton());
     }
 
     nav.classList.remove("is-open");
@@ -960,6 +1079,10 @@
     return document.querySelector("[data-search-bar]");
   }
 
+  function getSearchLayer() {
+    return document.querySelector("[data-search-layer]");
+  }
+
   function getSearchComponent() {
     return document.querySelector("[data-search-component]");
   }
@@ -981,15 +1104,10 @@
   }
 
   function updateSearchBarOffset() {
-    const topbar = document.querySelector(".topbar");
-    const navbar = document.querySelector(".navbar");
-    const topbarHeight =
-      topbar && window.getComputedStyle(topbar).display !== "none" ? Math.round(topbar.getBoundingClientRect().height) : 0;
-    const navbarHeight = navbar ? Math.round(navbar.getBoundingClientRect().height) : 0;
     const searchBar = getSearchBar();
     const isSearchOpen = searchBar?.classList.contains("is-open") || searchBar?.classList.contains("search-open");
-    const searchBarHeight = isSearchOpen && searchBar ? Math.round(searchBar.getBoundingClientRect().height) + 8 : 0;
-    document.documentElement.style.setProperty("--search-dropdown-top", `${topbarHeight + navbarHeight + searchBarHeight}px`);
+    const searchBarHeight = isSearchOpen && searchBar ? Math.round(searchBar.getBoundingClientRect().height) : 0;
+    document.documentElement.style.setProperty("--search-dropdown-top", `${searchBarHeight}px`);
   }
 
   function getSearchablePages() {
@@ -1035,7 +1153,7 @@
   }
 
   function findSearchMatches(query) {
-    const normalized = query.trim().toLowerCase();
+    const normalized = normalizeSearchValue(query);
 
     if (normalized.length < 2) {
       return [];
@@ -1044,7 +1162,10 @@
     const seen = new Set();
 
     return [...getSearchablePages(), ...getSearchableCourses()]
-      .filter((item) => String(item.title || "").toLowerCase().includes(normalized))
+      .filter((item) => {
+        const haystack = normalizeSearchValue(`${item.title || ""} ${item.tag || ""}`);
+        return haystack.includes(normalized);
+      })
       .filter((item) => {
         const key = `${item.title}|${item.href}`;
 
@@ -1094,32 +1215,117 @@
 
   function openSearchBar() {
     const component = getSearchComponent();
+    const layer = getSearchLayer();
     const bar = getSearchBar();
-    if (!component || !bar) return;
+    if (!component || !layer || !bar) return;
     component.classList.add("is-open");
+    layer.classList.add("is-open");
+    layer.setAttribute("aria-hidden", "false");
     bar.classList.add("is-open");
+    bar.setAttribute("aria-hidden", "false");
     updateSearchBarOffset();
     getSearchTriggerButtons().forEach((button) => {
       button.classList.add("is-active");
       button.setAttribute("aria-expanded", "true");
     });
+    syncBodyLockState();
     const input = bar.querySelector("[data-search-input]");
     renderSearchResults(input instanceof HTMLInputElement ? input.value : "");
-    input?.focus();
+    window.setTimeout(() => {
+      input?.focus({ preventScroll: true });
+    }, 40);
   }
 
   function closeSearchBar() {
     const component = getSearchComponent();
+    const layer = getSearchLayer();
     const bar = getSearchBar();
-    if (!component || !bar) return;
+    if (!component || !layer || !bar) return;
     component.classList.remove("is-open");
+    layer.classList.remove("is-open");
+    layer.setAttribute("aria-hidden", "true");
     bar.classList.remove("is-open");
+    bar.setAttribute("aria-hidden", "true");
     getSearchTriggerButtons().forEach((button) => {
       button.classList.remove("is-active");
       button.setAttribute("aria-expanded", "false");
     });
     renderSearchResults("");
     updateSearchBarOffset();
+    syncBodyLockState();
+  }
+
+  function syncMobileNavSearchVisibility() {
+    const form = document.querySelector("[data-mobile-menu-search-form]");
+    const input = form?.querySelector("[data-mobile-menu-search]");
+    const nav = getMobileNav();
+    const navbarSearchTrigger = getSearchTriggerButtons().find((button) => !button.closest(".mobile-nav"));
+    const showDrawerSearch = !isElementActuallyVisible(navbarSearchTrigger);
+
+    if (!(form instanceof HTMLElement)) {
+      return;
+    }
+
+    form.hidden = !showDrawerSearch;
+    form.classList.toggle("is-hidden", !showDrawerSearch);
+    form.setAttribute("aria-hidden", String(!showDrawerSearch));
+
+    if (input instanceof HTMLInputElement) {
+      input.disabled = !showDrawerSearch;
+
+      if (!showDrawerSearch) {
+        input.value = "";
+      }
+    }
+
+    if (nav) {
+      nav.classList.toggle("mobile-nav--has-search", showDrawerSearch);
+      nav.classList.toggle("mobile-nav--search-hidden", !showDrawerSearch);
+    }
+  }
+
+  function syncResponsiveHeaderState() {
+    if (window.innerWidth > NAV_TABLET_MAX_WIDTH) {
+      closeMobileNav();
+    }
+
+    if (window.innerWidth <= NAV_MOBILE_MAX_WIDTH) {
+      closeSearchBar();
+    }
+
+    syncMobileNavSearchVisibility();
+  }
+
+  function rotateCloseButtonAndClose(button) {
+    if (!(button instanceof HTMLElement)) {
+      closeSearchBar();
+      return;
+    }
+
+    restartButtonRotation(button);
+    window.setTimeout(() => {
+      closeSearchBar();
+      window.setTimeout(() => {
+        resetButtonRotation(button);
+      }, 340);
+    }, SEARCH_CLOSE_ANIMATION_DELAY);
+  }
+
+  function rotateMobileNavCloseAndClose(button) {
+    if (!(button instanceof HTMLElement)) {
+      closeMobileNav();
+      return;
+    }
+
+    clearMobileNavCloseTimer();
+    restartButtonRotation(button);
+    window.setTimeout(() => {
+      resetButtonRotation(button);
+    }, MOBILE_NAV_CLOSE_ROTATION_DURATION);
+    mobileNavCloseTimer = window.setTimeout(() => {
+      mobileNavCloseTimer = 0;
+      closeMobileNav({ preserveCloseButtonRotation: true });
+    }, MOBILE_NAV_CLOSE_ANIMATION_DELAY);
   }
 
   function applyCourseSearch(query) {
@@ -1327,6 +1533,8 @@
       let dragPointerId = null;
       let dragDirection = "";
       let isPointerDown = false;
+      let suppressClick = false;
+      let suppressClickTimeoutId = 0;
 
       if (!track || !viewport || !items.length) {
         return;
@@ -1357,7 +1565,35 @@
         track.style.transform = `translateX(-${offset}px)`;
       }
 
+      function clearSuppressedClick() {
+        suppressClick = false;
+
+        if (suppressClickTimeoutId) {
+          window.clearTimeout(suppressClickTimeoutId);
+          suppressClickTimeoutId = 0;
+        }
+      }
+
+      function armSuppressedClick() {
+        clearSuppressedClick();
+        suppressClick = true;
+        suppressClickTimeoutId = window.setTimeout(() => {
+          suppressClick = false;
+          suppressClickTimeoutId = 0;
+        }, 250);
+      }
+
       function resetDragState() {
+        if (dragPointerId !== null && typeof viewport.releasePointerCapture === "function") {
+          try {
+            if (viewport.hasPointerCapture?.(dragPointerId)) {
+              viewport.releasePointerCapture(dragPointerId);
+            }
+          } catch (error) {
+            // Ignore pointer capture release errors from browsers that already released it.
+          }
+        }
+
         isPointerDown = false;
         dragPointerId = null;
         dragDirection = "";
@@ -1439,12 +1675,21 @@
           return;
         }
 
+        clearSuppressedClick();
         dragPointerId = event.pointerId;
         dragStartX = event.clientX;
         dragStartY = event.clientY;
         dragBaseOffset = activeIndex * getTrackMetrics().step;
         dragDirection = "";
         isPointerDown = true;
+
+        if (typeof viewport.setPointerCapture === "function") {
+          try {
+            viewport.setPointerCapture(event.pointerId);
+          } catch (error) {
+            // Pointer capture is a progressive enhancement; dragging still works without it.
+          }
+        }
       }
 
       function handlePointerMove(event) {
@@ -1492,9 +1737,15 @@
         const deltaX = event.clientX - dragStartX;
         const { step } = getTrackMetrics();
         const threshold = Math.min(96, Math.max(52, step * 0.18));
+        const clickThreshold = 10;
 
-        if (dragDirection === "horizontal" && Math.abs(deltaX) > threshold) {
-          activeIndex = deltaX < 0 ? Math.min(maxIndex, activeIndex + 1) : Math.max(0, activeIndex - 1);
+        if (dragDirection === "horizontal" && Math.abs(deltaX) > clickThreshold) {
+          armSuppressedClick();
+        }
+
+        if (dragDirection === "horizontal" && Math.abs(deltaX) > threshold && step > 0) {
+          const slidesMoved = Math.max(1, Math.round(Math.abs(deltaX) / step));
+          activeIndex = deltaX < 0 ? Math.min(maxIndex, activeIndex + slidesMoved) : Math.max(0, activeIndex - slidesMoved);
         }
 
         resetDragState();
@@ -1504,6 +1755,19 @@
       if (isSwipeEnabled) {
         viewport.addEventListener("pointerdown", handlePointerDown);
         viewport.addEventListener("dragstart", (event) => event.preventDefault());
+        viewport.addEventListener(
+          "click",
+          (event) => {
+            if (!suppressClick) {
+              return;
+            }
+
+            clearSuppressedClick();
+            event.preventDefault();
+            event.stopPropagation();
+          },
+          true,
+        );
         window.addEventListener("pointermove", handlePointerMove, { passive: false });
         window.addEventListener("pointerup", handlePointerEnd);
         window.addEventListener("pointercancel", handlePointerEnd);
@@ -1694,30 +1958,29 @@
       return;
     }
 
-    if (event.target.closest("[data-nav-close]")) {
+    const navCloseTarget = event.target.closest("[data-nav-close]");
+
+    if (navCloseTarget) {
       event.preventDefault();
-      closeMobileNav();
+
+      if (navCloseTarget.closest(".mobile-nav__close")) {
+        rotateMobileNavCloseAndClose(navCloseTarget.closest(".mobile-nav__close"));
+      } else {
+        closeMobileNav();
+      }
+
       return;
     }
 
     if (event.target.closest("[data-search-trigger]")) {
       event.preventDefault();
-      if (getSearchBar()?.classList.contains("is-open")) {
-        closeSearchBar();
-      } else {
-        openSearchBar();
-      }
+      openSearchBar();
       return;
     }
 
     if (event.target.closest("[data-search-close]")) {
       event.preventDefault();
-      closeSearchBar();
-      return;
-    }
-
-    if (event.target.closest("[data-search-result]")) {
-      closeSearchBar();
+      rotateCloseButtonAndClose(event.target.closest("[data-search-close]"));
       return;
     }
 
@@ -1725,10 +1988,6 @@
 
     if (navLink) {
       closeMobileNav();
-    }
-
-    if (getSearchComponent()?.classList.contains("is-open") && !getSearchComponent().contains(event.target)) {
-      closeSearchBar();
     }
   }
 
@@ -1762,11 +2021,6 @@
         closeMobileNav();
       }
 
-      if (document.querySelector(".nav-search-bar.is-open")) {
-        closeSearchBar();
-        return;
-      }
-
       closeDesktopNavDropdowns({ immediate: true });
     }
 
@@ -1776,7 +2030,6 @@
         localStorage.setItem("courseSearchQuery", query);
         window.location.href = getPageHref("courses");
       }
-      closeSearchBar();
     }
 
     if (event.key === "Tab" && modalState.activeModal) {
@@ -1820,12 +2073,14 @@
       }
     });
     window.addEventListener("resize", debounce(updateSearchBarOffset, 100));
+    window.addEventListener("resize", debounce(syncResponsiveHeaderState, 100));
   }
 
   function init() {
     renderSiteChrome();
     bindGlobalEvents();
     updateSearchBarOffset();
+    syncResponsiveHeaderState();
     initStickyHeader();
     initBackToTop();
     initNewsletterForms();
