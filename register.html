@@ -41,16 +41,18 @@
             </header>
 
             <form class="auth-form auth-form--login auth-form--register" data-register-form novalidate>
-              <div class="field">
-                <label class="field-label" for="register-name">სახელი <span class="required-mark" aria-hidden="true">*</span></label>
-                <input id="register-name" name="name" type="text" autocomplete="given-name" placeholder="მაგ: ნინო" required>
-                <span class="error-text" data-error-for="name"></span>
-              </div>
+              <div class="auth-form__row auth-form__row--identity">
+                <div class="field">
+                  <label class="field-label" for="register-name">სახელი <span class="required-mark" aria-hidden="true">*</span></label>
+                  <input id="register-name" name="name" type="text" autocomplete="given-name" placeholder="მაგ: ნინო" required>
+                  <span class="error-text" data-error-for="name"></span>
+                </div>
 
-              <div class="field">
-                <label class="field-label" for="register-surname">გვარი <span class="required-mark" aria-hidden="true">*</span></label>
-                <input id="register-surname" name="surname" type="text" autocomplete="family-name" placeholder="მაგ: ბერიძე" required>
-                <span class="error-text" data-error-for="surname"></span>
+                <div class="field">
+                  <label class="field-label" for="register-surname">გვარი <span class="required-mark" aria-hidden="true">*</span></label>
+                  <input id="register-surname" name="surname" type="text" autocomplete="family-name" placeholder="მაგ: ბერიძე" required>
+                  <span class="error-text" data-error-for="surname"></span>
+                </div>
               </div>
 
               <div class="field">

@@ -182,8 +182,8 @@
     return `<span class="${classes}" aria-hidden="true">${getIcon(`arrow-${direction}`)}</span>`;
   }
 
-  function renderSocialLinks(variant = "header") {
-    return SITE_SOCIALS.filter((item) => item?.href)
+  function renderSocialLinks(variant = "header", items = SITE_SOCIALS) {
+    return items.filter((item) => item?.href)
       .map(
         (item) => `
           <a class="social-link social-link--${variant}" href="${escapeHtml(item.href)}" aria-label="${escapeHtml(item.label)}" target="_blank" rel="noreferrer noopener">
@@ -505,55 +505,81 @@
     }
 
     const year = new Date().getFullYear();
-    const footerSocialMarkup = renderSocialLinks("footer");
+    const footerSocialMarkup = renderSocialLinks("footer", getTopbarSocialItems());
     const markup = `
       <footer class="site-footer">
         <div class="footer__main">
           <div class="container footer__grid">
             <div class="footer__column footer__column--brand">
-              ${renderSiteLogo({ href: getPageHref("home"), variant: "site-logo--footer" })}
-              <p>ფსიქოლოგიური, თერაპიული და საგანმანათლებლო სივრცე, სადაც ყურადღება ეთმობა ნდობას, ემპათიას და შინაგანი ბალანსის მშვიდად პოვნას.</p>
-              <div class="footer__contact-list">
-                <a href="${SITE_CONTACT.phoneHref}"><span data-latin>${SITE_CONTACT.phone}</span></a>
-                <a href="${SITE_CONTACT.emailHref}"><span data-latin>${SITE_CONTACT.email}</span></a>
+              <div class="footer__column-head footer__column-head--brand">
+                <a class="footer__brand-mark" href="${getPageHref("home")}" aria-label="მაკა გორდელაძე">
+                  ${getIcon("logo")}
+                </a>
+                <strong class="footer__title footer__title--brand">მაკა გორდელაძე</strong>
               </div>
-              ${footerSocialMarkup ? `<div class="social-links">${footerSocialMarkup}</div>` : ""}
+              <div class="footer__column-body footer__column-body--brand">
+                <p>ფსიქოლოგიური, თერაპიული და საგანმანათლებლო სივრცე, სადაც ყურადღება ეთმობა ნდობას, ემპათიას და შინაგანი ბალანსის მშვიდად პოვნას.</p>
+              </div>
+              ${footerSocialMarkup
+                ? `
+                  <div class="footer__column-foot footer__column-foot--social">
+                    <div class="footer__social-stack">
+                      <span class="footer__social-label">გამოგვყევით:</span>
+                      <div class="social-links">${footerSocialMarkup}</div>
+                    </div>
+                  </div>
+                `
+                : ""}
             </div>
-            <div class="footer__column">
-              <strong class="footer__title">ნავიგაცია</strong>
-              <div class="footer__links">
-                <a href="${getPageHref("home")}">მთავარი</a>
-                <a href="${getPageHref("about")}">მაკას შესახებ</a>
-                <a href="${getPageHref("therapy")}">თერაპია</a>
-                <a href="${getPageHref("courses")}">კურსები</a>
-                <a href="${getPageHref("contact")}">კონტაქტი</a>
+            <div class="footer__column footer__column--nav">
+              <div class="footer__column-head">
+                <strong class="footer__title">ნავიგაცია</strong>
+              </div>
+              <div class="footer__column-body">
+                <div class="footer__links">
+                  <a href="${getPageHref("home")}">მთავარი</a>
+                  <a href="${getPageHref("about")}">მაკას შესახებ</a>
+                  <a href="${getPageHref("therapy")}">თერაპია</a>
+                  <a href="${getPageHref("courses")}">კურსები</a>
+                  <a href="${getPageHref("contact")}">კონტაქტი</a>
+                </div>
               </div>
             </div>
-            <div class="footer__column">
-              <strong class="footer__title">მიმართულებები</strong>
-              <div class="footer__links">
-                <a href="${getPageHref("therapy")}?type=individual">ინდივიდუალური თერაპია</a>
-                <a href="${getPageHref("therapy")}?type=group">ჯგუფური თერაპია</a>
-                <a href="${getPageHref("courses")}?category=${encodeURIComponent("არტთერაპია")}">არტთერაპია</a>
-                <a href="${getPageHref("courses")}?category=${encodeURIComponent("მშობლებისთვის")}">კურსი მშობლებისთვის</a>
-                <a href="${getPageHref("courses")}?category=${encodeURIComponent("კომუნიკაცია")}">ინტერპერსონალური კომუნიკაცია</a>
-                <a href="${getPageHref("courses")}?category=${encodeURIComponent("ფსიქოლოგია")}">ფსიქოლოგიის საფუძვლები</a>
+            <div class="footer__column footer__column--services">
+              <div class="footer__column-head">
+                <strong class="footer__title">მიმართულებები</strong>
+              </div>
+              <div class="footer__column-body">
+                <div class="footer__links">
+                  <a href="${getPageHref("therapy")}?type=individual">ინდივიდუალური თერაპია</a>
+                  <a href="${getPageHref("therapy")}?type=group">ჯგუფური თერაპია</a>
+                  <a href="${getPageHref("courses")}?category=${encodeURIComponent("არტთერაპია")}">არტთერაპია</a>
+                  <a href="${getPageHref("courses")}?category=${encodeURIComponent("მშობლებისთვის")}">კურსი მშობლებისთვის</a>
+                  <a href="${getPageHref("courses")}?category=${encodeURIComponent("კომუნიკაცია")}">ინტერპერსონალური კომუნიკაცია</a>
+                  <a href="${getPageHref("courses")}?category=${encodeURIComponent("ფსიქოლოგია")}">ფსიქოლოგიის საფუძვლები</a>
+                </div>
               </div>
             </div>
             <div class="footer__column footer__column--newsletter">
-              <strong class="footer__title">სიახლეების გამოწერა</strong>
-              <p>მიიღე ახალი კურსების, ჯგუფური შეხვედრებისა და სასარგებლო მასალების შესახებ ინფორმაცია ელ-ფოსტაზე.</p>
-              <form class="newsletter-form" data-newsletter-form novalidate>
-                <div class="newsletter-form__row">
-                  <input type="email" name="email" placeholder="შენი ელ-ფოსტა" required>
-                  <button class="btn btn-primary" type="submit">გამოწერა ${renderArrowIcon("up-right", "btn-arrow")}</button>
-                </div>
-                <label class="custom-checkbox">
-                  <input type="checkbox" name="consent" required>
-                  <span class="checkmark"></span>
-                  <span class="label-text">ვეთანხმები სიახლეების მიღებას</span>
-                </label>
-              </form>
+              <div class="footer__column-head">
+                <strong class="footer__title">სიახლეების გამოწერა</strong>
+              </div>
+              <div class="footer__column-body footer__column-body--newsletter">
+                <p>მიიღე ახალი კურსების, ჯგუფური შეხვედრებისა და სასარგებლო მასალების შესახებ ინფორმაცია ელ-ფოსტაზე.</p>
+              </div>
+              <div class="footer__column-foot footer__column-foot--newsletter">
+                <form class="newsletter-form" data-newsletter-form novalidate>
+                  <div class="newsletter-form__row">
+                    <input type="email" name="email" placeholder="შენი ელ-ფოსტა" required>
+                    <button class="btn btn-primary" type="submit">გამოწერა ${renderArrowIcon("up-right", "btn-arrow")}</button>
+                  </div>
+                  <label class="custom-checkbox">
+                    <input type="checkbox" name="consent" required>
+                    <span class="checkmark"></span>
+                    <span class="label-text">ვეთანხმები სიახლეების მიღებას</span>
+                  </label>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -1508,6 +1534,39 @@
     return desktop;
   }
 
+  function normalizeAudienceDesktopCarousel(carousel, track) {
+    if (!carousel?.classList.contains("audience-carousel--desktop") || !track) {
+      return;
+    }
+
+    if (carousel.dataset.cardStepNormalized === "true") {
+      return;
+    }
+
+    const groupedSlides = [...track.children].filter((item) => item.classList.contains("audience-carousel__slide"));
+    const hasGroupedCards = groupedSlides.some((slide) => slide.querySelectorAll(".audience-card").length > 1);
+
+    carousel.dataset.visibleTablet = "2";
+    carousel.dataset.visibleDesktop = "2";
+
+    if (!hasGroupedCards) {
+      carousel.dataset.cardStepNormalized = "true";
+      return;
+    }
+
+    const normalizedSlides = groupedSlides.flatMap((slide) =>
+      [...slide.querySelectorAll(".audience-card")].map((card) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = slide.className;
+        wrapper.append(card);
+        return wrapper;
+      }),
+    );
+
+    track.replaceChildren(...normalizedSlides);
+    carousel.dataset.cardStepNormalized = "true";
+  }
+
   function initCarousels() {
     document.querySelectorAll("[data-carousel]").forEach((carousel) => {
       if (carousel.dataset.initialized === "true") {
@@ -1522,6 +1581,7 @@
       const nextButton = carousel.querySelector("[data-carousel-next]");
       const dotsMount = carousel.querySelector("[data-carousel-dots]");
       const isSwipeEnabled = carousel.dataset.carouselSwipe === "true";
+      normalizeAudienceDesktopCarousel(carousel, track);
       const items = track ? [...track.children] : [];
       let activeIndex = 0;
       let visibleCount = getVisibleCount(carousel);
